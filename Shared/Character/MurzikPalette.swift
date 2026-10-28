@@ -7,6 +7,8 @@ enum MurzikPalette {
     static let furBottom = Color(red: 0.04, green: 0.04, blue: 0.05)
     /// Soft gray rim light that separates Murzik from dark backgrounds.
     static let rim = Color(red: 0.50, green: 0.50, blue: 0.56)
+    /// Brighter rim for tiny Dynamic Island sizes on a pure-black background.
+    static let rimBright = Color(red: 0.66, green: 0.66, blue: 0.72)
     static let innerEar = Color(red: 0.42, green: 0.25, blue: 0.31)
 
     // Eyes: classic black-cat amber center fading to yellow-green.

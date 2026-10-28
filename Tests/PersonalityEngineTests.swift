@@ -187,10 +187,17 @@ final class PersonalityEngineTests: XCTestCase {
         XCTAssertFalse(content.showsHungerCountdown(isStale: true, now: t0))
     }
 
-    func testSleepingCatStaysAsleepWhenStale() {
-        let s = PetState(isSleeping: true, lastUpdated: t0)
-        let content = MurzikAttributes.ContentState(state: s, now: t0)
-        XCTAssertEqual(content.displayMood(isStale: true), .sleeping)
+    func testSleepingCatStaysAsleepWhenStaleIfStillSleeping() {
+        // Low fullness, little sleep left to do? He wakes first -> hungry when stale.
+        let wakesFirst = PetState(fullness: 0.6, energy: 0.9, isSleeping: true, lastUpdated: t0)
+        let c1 = MurzikAttributes.ContentState(state: wakesFirst, now: t0)
+        XCTAssertNotNil(c1.wakesAt)
+        XCTAssertEqual(c1.displayMood(isStale: true), .hungry)
+
+        // Long sleep ahead and nearly hungry: still asleep when hunger arrives.
+        let sleepsOn = PetState(fullness: 0.3, energy: 0.0, isSleeping: true, lastUpdated: t0)
+        let c2 = MurzikAttributes.ContentState(state: sleepsOn, now: t0)
+        XCTAssertEqual(c2.displayMood(isStale: true), .sleeping)
     }
 
     func testContentStateRoundTripsAndFitsPayloadLimit() throws {

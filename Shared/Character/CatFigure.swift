@@ -46,7 +46,7 @@ struct CatFigure: View {
     }
 
     private func tail(width: CGFloat, height: CGFloat) -> some View {
-        let anchor = UnitPoint(x: 0.70, y: 1.22 / Self.aspect)
+        let anchor = UnitPoint(x: 0.68, y: 1.22 / Self.aspect)
         return ZStack {
             CatShape(.tail).stroke(MurzikPalette.rim, style: StrokeStyle(lineWidth: width * 0.115, lineCap: .round))
             CatShape(.tail).stroke(MurzikPalette.furMid, style: StrokeStyle(lineWidth: width * 0.075, lineCap: .round))

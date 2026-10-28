@@ -107,10 +107,10 @@ struct CatShape: Shape {
         case .innerEars:
             var p = Path()
             for side in [EyeSide.left, .right] {
-                p.move(to: u.p(side.x(0.185), 0.43))
+                p.move(to: u.p(side.x(0.18), 0.40))
                 p.addLine(to: u.p(side.x(0.20), 0.23))
                 p.addQuadCurve(to: u.p(side.x(0.25), 0.215), control: u.p(side.x(0.21), 0.17))
-                p.addLine(to: u.p(side.x(0.38), 0.355))
+                p.addLine(to: u.p(side.x(0.37), 0.33))
                 p.closeSubpath()
             }
             return p
@@ -120,7 +120,15 @@ struct CatShape: Shape {
 
         case let .halfEyeball(side):
             let eye = almond(u, cx: side.cx, cy: ey, w: ew, h: eh)
-            let lower = Path(u.rect(side.cx - ew, ey - 0.012, side.cx + ew, ey + eh))
+            // Below the eyelid curve (same curve as `.eyelid`).
+            var lower = Path()
+            lower.move(to: u.p(side.cx - ew, ey + 0.002))
+            lower.addLine(to: u.p(side.cx - ew / 2, ey + 0.002))
+            lower.addQuadCurve(to: u.p(side.cx + ew / 2, ey + 0.002), control: u.p(side.cx, ey - 0.03))
+            lower.addLine(to: u.p(side.cx + ew, ey + 0.002))
+            lower.addLine(to: u.p(side.cx + ew, ey + eh))
+            lower.addLine(to: u.p(side.cx - ew, ey + eh))
+            lower.closeSubpath()
             return eye.intersection(lower)
 
         case let .eyelid(side):
@@ -223,9 +231,9 @@ struct CatShape: Shape {
             return torso.union(paws)
         case .tail:
             var p = Path()
-            p.move(to: u.p(0.70, 1.22))
-            p.addCurve(to: u.p(1.00, 0.86), control1: u.p(1.00, 1.28), control2: u.p(1.07, 1.02))
-            p.addQuadCurve(to: u.p(0.93, 0.68), control: u.p(0.99, 0.70))
+            p.move(to: u.p(0.68, 1.22))
+            p.addCurve(to: u.p(0.90, 0.88), control1: u.p(0.92, 1.28), control2: u.p(0.97, 1.03))
+            p.addQuadCurve(to: u.p(0.84, 0.70), control: u.p(0.90, 0.72))
             return p
         default:
             return Path()

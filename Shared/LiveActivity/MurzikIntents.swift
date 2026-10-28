@@ -11,6 +11,7 @@ struct PetMurzikIntent: LiveActivityIntent {
 
     init() {}
 
+    @MainActor
     func perform() async throws -> some IntentResult {
         #if !WIDGET_EXTENSION
         let state = MurzikActions.apply(.pet)
@@ -26,6 +27,7 @@ struct FeedMurzikIntent: LiveActivityIntent {
 
     init() {}
 
+    @MainActor
     func perform() async throws -> some IntentResult {
         #if !WIDGET_EXTENSION
         let state = MurzikActions.apply(.feed)

@@ -119,7 +119,7 @@ final class RenderTests: XCTestCase {
     func testRenderExpandedIsland() throws {
         let views = VStack(spacing: 20) {
             ForEach([MurzikMood.loving, .hungry, .playful], id: \.self) { mood in
-                let state = content(for: mood)
+                let state = self.content(for: mood)
                 VStack(spacing: 6) {
                     HStack(alignment: .top) {
                         ExpandedLeadingView(mood: mood)

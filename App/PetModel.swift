@@ -1,6 +1,7 @@
 import ActivityKit
 import Combine
 import Foundation
+import UIKit
 
 /// UI-facing model. The source of truth is `PetStorage`; this object mirrors it for SwiftUI
 /// and keeps the Live Activity in sync.
@@ -21,6 +22,8 @@ final class PetModel: ObservableObject {
     private let storage: PetStorage
     private var observers: [NSObjectProtocol] = []
     private var settleTask: Task<Void, Never>?
+    private var backgroundTask: UIBackgroundTaskIdentifier = .invalid
+    private var tickCount = 0
 
     init(storage: PetStorage = PetStorage()) {
         self.storage = storage
@@ -55,8 +58,18 @@ final class PetModel: ObservableObject {
     func tick() {
         let newNow = Date.now
         now = newNow
+        tickCount += 1
         if newNow.timeIntervalSince(state.lastUpdated) > 60 {
+            let oldBase = PersonalityEngine.baseMood(for: state)
             state = PersonalityEngine.advance(state, to: newNow)
+            // Time alone changed his mood (sleepy, bored, woke up…): keep the island in step.
+            if PersonalityEngine.baseMood(for: state) != oldBase {
+                let snapshot = state
+                Task { await LiveActivityController.update(state: snapshot, now: newNow) }
+            }
+        }
+        if tickCount % 5 == 0 {
+            refreshIslandStatus()
         }
     }
 
@@ -75,9 +88,21 @@ final class PetModel: ObservableObject {
         now = .now
         lastAction = (action, now)
         settleTask?.cancel()
+        // Keep running briefly if the user leaves the app, so the island can settle after the reaction.
+        endBackgroundTask()
+        backgroundTask = UIApplication.shared.beginBackgroundTask(withName: "murzik.settle") { [weak self] in
+            Task { @MainActor in self?.endBackgroundTask() }
+        }
         settleTask = Task { [storage] in
             await MurzikActions.syncLiveActivity(with: newState, storage: storage)
+            if !Task.isCancelled { self.endBackgroundTask() }
         }
+    }
+
+    private func endBackgroundTask() {
+        guard backgroundTask != .invalid else { return }
+        UIApplication.shared.endBackgroundTask(backgroundTask)
+        backgroundTask = .invalid
     }
 
     // MARK: Dynamic Island
@@ -89,7 +114,8 @@ final class PetModel: ObservableObject {
             if enabled {
                 await syncIsland(allowStart: true)
             } else {
-                await LiveActivityController.endAll()
+                await LiveActivityController.endAll(storage: storage)
+                islandStatus = .off
                 refreshIslandStatus()
             }
         }
@@ -106,8 +132,8 @@ final class PetModel: ObservableObject {
         } else if allowStart {
             do {
                 // Clear any ended activity lingering on the Lock Screen before starting a fresh one.
-                await LiveActivityController.endAll()
-                try LiveActivityController.start(state: current)
+                await LiveActivityController.endAll(storage: storage)
+                try LiveActivityController.start(state: current, storage: storage)
             } catch {
                 islandStatus = .failed
                 return
@@ -116,7 +142,8 @@ final class PetModel: ObservableObject {
     }
 
     private func refreshIslandStatus() {
-        if case .failed = islandStatus, storage.islandEnabled, !LiveActivityController.isRunning {
+        if case .failed = islandStatus, storage.islandEnabled,
+           LiveActivityController.areActivitiesEnabled, !LiveActivityController.isRunning {
             return
         }
         if !LiveActivityController.areActivitiesEnabled {

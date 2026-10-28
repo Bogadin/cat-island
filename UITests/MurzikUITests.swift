@@ -2,6 +2,7 @@ import XCTest
 
 /// Runs the real app in the iOS Simulator and captures screenshots of the app and of the
 /// home screen with the Live Activity in the Dynamic Island.
+@MainActor
 final class MurzikUITests: XCTestCase {
     private var outputDir: URL? {
         guard let path = ProcessInfo.processInfo.environment["RENDER_DIR"] else { return nil }
@@ -21,11 +22,8 @@ final class MurzikUITests: XCTestCase {
         }
     }
 
-    override func setUp() {
-        continueAfterFailure = false
-    }
-
     func testAppAndDynamicIsland() throws {
+        continueAfterFailure = false
         let app = XCUIApplication()
         app.launch()
 

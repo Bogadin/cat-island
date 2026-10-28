@@ -33,14 +33,14 @@ enum LiveActivityController {
 
     /// Requests a new Live Activity. Must be called while the app is in the foreground.
     @discardableResult
-    static func start(state: PetState, now: Date = .now) throws -> Activity<MurzikAttributes> {
+    static func start(state: PetState, now: Date = .now, storage: PetStorage = PetStorage()) throws -> Activity<MurzikAttributes> {
         guard areActivitiesEnabled else { throw StartError.disabledBySystem }
         let activity = try Activity.request(
             attributes: MurzikAttributes(name: Strings.name),
             content: content(for: state, now: now),
             pushType: nil
         )
-        PetStorage().islandStartedAt = now
+        storage.islandStartedAt = now
         return activity
     }
 
@@ -51,11 +51,11 @@ enum LiveActivityController {
         }
     }
 
-    static func endAll() async {
+    static func endAll(storage: PetStorage = PetStorage()) async {
         for activity in Activity<MurzikAttributes>.activities {
             await activity.end(nil, dismissalPolicy: .immediate)
         }
-        PetStorage().islandStartedAt = nil
+        storage.islandStartedAt = nil
     }
 }
 
@@ -82,7 +82,11 @@ enum MurzikActions {
         let settleDate = reaction.date.addingTimeInterval(PersonalityEngine.reactionDuration + 0.2)
         let delay = settleDate.timeIntervalSinceNow
         if delay > 0 {
-            try? await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
+            do {
+                try await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
+            } catch {
+                return // superseded by a newer action
+            }
         }
         let now = Date.now
         let latest = PersonalityEngine.advance(storage.load(now: now), to: now)

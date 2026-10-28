@@ -97,6 +97,7 @@ struct ExpandedBottomView: View {
         }
         .padding(.horizontal, 6)
         .padding(.bottom, 2)
+        .environment(\.layoutDirection, .rightToLeft)
     }
 }
 
@@ -135,6 +136,7 @@ struct LockScreenView: View {
             .foregroundStyle(.white)
         }
         .padding(16)
+        .environment(\.layoutDirection, .rightToLeft)
     }
 }
 
@@ -181,18 +183,19 @@ struct HungerLabel: View {
     var isStale: Bool
 
     var body: some View {
-        if state.showsHungerCountdown(isStale: isStale) {
+        let now = Date.now
+        if state.showsHungerCountdown(isStale: isStale, now: now) {
             HStack(spacing: 4) {
                 Image(systemName: "fork.knife")
                     .font(.system(size: 10, weight: .bold))
-                Text(timerInterval: Date.now...state.hungryAt, countsDown: true)
+                Text(timerInterval: now...state.hungryAt, countsDown: true)
                     .monospacedDigit()
                     .frame(maxWidth: 62)
             }
             .font(.system(size: 12, weight: .semibold, design: .rounded))
             .foregroundStyle(.white.opacity(0.7))
             .accessibilityLabel(Text(Strings.hungryIn))
-        } else if !state.isSleeping {
+        } else if !state.sleepsThroughHunger {
             Text(Strings.hungryNow)
                 .font(.system(size: 12, weight: .bold, design: .rounded))
                 .foregroundStyle(MurzikPalette.amber)

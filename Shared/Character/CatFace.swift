@@ -88,7 +88,7 @@ private struct CatFaceLayers: View {
     let size: CGFloat
 
     private var isCompact: Bool { detail == .compact }
-    private var rimWidth: CGFloat { size * (isCompact ? 0.05 : 0.022) }
+    private var rimWidth: CGFloat { size * (isCompact ? 0.06 : 0.022) }
     private var lineWidth: CGFloat { size * (isCompact ? 0.07 : 0.036) }
 
     private var furFill: RadialGradient {
@@ -103,7 +103,7 @@ private struct CatFaceLayers: View {
     var body: some View {
         ZStack {
             CatShape(.head).fill(furFill)
-            CatShape(.head).stroke(MurzikPalette.rim, lineWidth: rimWidth)
+            CatShape(.head).stroke(isCompact ? MurzikPalette.rimBright : MurzikPalette.rim, lineWidth: rimWidth)
             CatShape(.innerEars).fill(MurzikPalette.innerEar)
 
             if spec.blush {
@@ -221,10 +221,10 @@ private struct CatFaceLayers: View {
         ZStack {
             Text("z")
                 .font(.system(size: size * 0.11, weight: .heavy, design: .rounded))
-                .position(x: size * 0.84, y: size * 0.24)
+                .position(x: size * 0.80, y: size * 0.25)
             Text("z")
                 .font(.system(size: size * 0.15, weight: .heavy, design: .rounded))
-                .position(x: size * 0.93, y: size * 0.09)
+                .position(x: size * 0.89, y: size * 0.11)
         }
         .foregroundStyle(MurzikPalette.sky)
         .frame(width: size, height: size)

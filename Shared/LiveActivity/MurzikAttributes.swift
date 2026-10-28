@@ -12,6 +12,8 @@ struct MurzikAttributes: ActivityAttributes {
         /// When Murzik becomes hungry. Drives a live countdown and the activity's stale date,
         /// so the island changes to "hungry" on time without any update from the app.
         var hungryAt: Date
+        /// When a sleeping Murzik wakes up on his own (nil when awake).
+        var wakesAt: Date?
     }
 
     var name: String
@@ -26,15 +28,23 @@ extension MurzikAttributes.ContentState {
             energy: state.energy,
             happiness: state.happiness,
             isSleeping: state.isSleeping,
-            hungryAt: PersonalityEngine.hungryDate(for: state)
+            hungryAt: PersonalityEngine.hungryDate(for: state),
+            wakesAt: PersonalityEngine.wakeDate(for: state)
         )
     }
 
     /// The mood to draw. Once the content is stale (past `hungryAt`) Murzik is hungry,
     /// unless he is asleep.
     func displayMood(isStale: Bool) -> MurzikMood {
-        if isStale && !isSleeping { return .hungry }
+        if isStale && !sleepsThroughHunger { return .hungry }
         return mood
+    }
+
+    /// True when he is asleep and will still be asleep when hunger arrives.
+    var sleepsThroughHunger: Bool {
+        guard isSleeping else { return false }
+        guard let wakesAt else { return true }
+        return wakesAt > hungryAt
     }
 
     /// Whether the hunger countdown should be shown.

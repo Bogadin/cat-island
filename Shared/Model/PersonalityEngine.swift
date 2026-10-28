@@ -191,5 +191,12 @@ enum PersonalityEngine {
         return state.lastUpdated.addingTimeInterval(hours * 3600)
     }
 
+    /// When a sleeping Murzik will wake up on his own (nil if awake).
+    static func wakeDate(for state: PetState) -> Date? {
+        guard state.isSleeping else { return nil }
+        let hours = max(0, (1 - state.energy) / rates(sleeping: true).energy)
+        return state.lastUpdated.addingTimeInterval(hours * 3600)
+    }
+
     static func clamp(_ v: Double) -> Double { min(1, max(0, v)) }
 }

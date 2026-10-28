@@ -47,6 +47,7 @@ jobs:
                   if not n.startswith("iPhone"): continue
                   score = (ver(runtime), "Pro Max" in n, "Pro" in n)
                   if best is None or score > best[0]: best = (score, d["udid"], n, runtime)
+          if best is None: sys.exit("No iPhone simulator available")
           print(best[1]); print(best[2], best[3], file=sys.stderr)
           ')
           echo "udid=$UDID" >> "$GITHUB_OUTPUT"
@@ -121,8 +122,8 @@ jobs:
           grep -E "error:" -A3 "$GITHUB_WORKSPACE"/build/test.log > logs/test-errors.txt 2>/dev/null || true
           printf "commit=%s\ntest=%s\nipa=%s\nrun=%s\n" "$GITHUB_SHA" "${{ steps.test.outcome }}" "${{ steps.ipa.outcome }}" "$GITHUB_RUN_ID" > logs/status.txt
           git add -A
-          git commit -qm "CI output for ${GITHUB_SHA::7} (run ${GITHUB_RUN_NUMBER})"
-          git push -q origin ci-output
+          git commit -qm "CI output for ${GITHUB_SHA::7} (run ${GITHUB_RUN_NUMBER})" || true
+          git push -q origin ci-output || echo "::warning::could not push ci-output"
 
       - name: Publish release
         if: steps.ipa.outcome == 'success' && github.ref == 'refs/heads/main'
