@@ -1,36 +1,36 @@
-    t =    89.27s     Synthesize event
-    t =    89.61s     Wait for com.bogadin.murzik to idle
-    t =    89.86s Added attachment named '5-app-after-pet'
-    t =    89.87s Pressing Home button
-    t =    93.33s Added attachment named '6-island-loving'
-    t =    93.33s Open com.bogadin.murzik
-    t =    93.34s     Activate com.bogadin.murzik
-    t =    94.00s         Wait for com.bogadin.murzik to idle
-    t =    94.00s Waiting 10.0s for "action.sleep" Button to exist
-    t =    95.04s     Checking `Expect predicate `existsNoRetry == 1` for object "action.sleep" Button`
-    t =    95.04s         Checking existence of `"action.sleep" Button`
-    t =    95.13s Tap "action.sleep" Button
-    t =    95.13s     Wait for com.bogadin.murzik to idle
-    t =    95.14s     Find the "action.sleep" Button
-    t =    95.29s     Check for interrupting elements affecting "action.sleep" Button
-    t =    95.39s     Synthesize event
-    t =    95.72s     Wait for com.bogadin.murzik to idle
-    t =    97.90s Waiting 5.0s for "action.wake" Button to exist
-    t =    99.08s     Checking `Expect predicate `existsNoRetry == 1` for object "action.wake" Button`
-    t =    99.08s         Checking existence of `"action.wake" Button`
-    t =    99.35s Pressing Home button
-    t =   102.67s Added attachment named '7-island-sleeping'
-    t =   102.69s Tear Down
-Test Case '-[MurzikUITests.MurzikUITests testAppAndDynamicIsland]' passed (109.252 seconds).
-Test Suite 'MurzikUITests' passed at 2026-10-28 22:02:45.367.
-	 Executed 1 test, with 0 failures (0 unexpected) in 109.252 (109.257) seconds
-Test Suite 'MurzikUITests.xctest' passed at 2026-10-28 22:02:45.368.
-	 Executed 1 test, with 0 failures (0 unexpected) in 109.252 (109.258) seconds
-Test Suite 'All tests' passed at 2026-10-28 22:02:45.368.
-	 Executed 1 test, with 0 failures (0 unexpected) in 109.252 (109.260) seconds
-2026-10-28 22:02:47.247 xcodebuild[1426:8046] [MT] IDETestOperationsObserverDebug: 491.920 elapsed -- Testing started completed.
-2026-10-28 22:02:47.247 xcodebuild[1426:8046] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
-2026-10-28 22:02:47.247 xcodebuild[1426:8046] [MT] IDETestOperationsObserverDebug: 491.920 sec, +491.920 sec -- end
+    t =    53.40s     Synthesize event
+    t =    53.74s     Wait for com.bogadin.murzik to idle
+    t =    54.02s Added attachment named '7-app-after-pet'
+    t =    55.03s Pressing Home button
+    t =    58.13s Added attachment named '8-island-loving'
+    t =    58.14s Open com.bogadin.murzik
+    t =    58.14s     Activate com.bogadin.murzik
+    t =    59.75s         Wait for com.bogadin.murzik to idle
+    t =    59.76s Waiting 10.0s for "action.sleep" Button to exist
+    t =    60.78s     Checking `Expect predicate `existsNoRetry == 1` for object "action.sleep" Button`
+    t =    60.78s         Checking existence of `"action.sleep" Button`
+    t =    60.99s Tap "action.sleep" Button
+    t =    60.99s     Wait for com.bogadin.murzik to idle
+    t =    60.99s     Find the "action.sleep" Button
+    t =    61.11s     Check for interrupting elements affecting "action.sleep" Button
+    t =    61.17s     Synthesize event
+    t =    61.49s     Wait for com.bogadin.murzik to idle
+    t =    61.50s Waiting 5.0s for "action.wake" Button to exist
+    t =    62.51s     Checking `Expect predicate `existsNoRetry == 1` for object "action.wake" Button`
+    t =    62.51s         Checking existence of `"action.wake" Button`
+    t =    62.56s Pressing Home button
+    t =    66.40s Added attachment named '9-island-sleeping'
+    t =    66.41s Tear Down
+Test Case '-[MurzikUITests.MurzikUITests testAppAndDynamicIsland]' passed (68.906 seconds).
+Test Suite 'MurzikUITests' passed at 2026-10-28 22:11:58.129.
+	 Executed 1 test, with 0 failures (0 unexpected) in 68.906 (68.911) seconds
+Test Suite 'MurzikUITests.xctest' passed at 2026-10-28 22:11:58.131.
+	 Executed 1 test, with 0 failures (0 unexpected) in 68.906 (68.912) seconds
+Test Suite 'All tests' passed at 2026-10-28 22:11:58.131.
+	 Executed 1 test, with 0 failures (0 unexpected) in 68.906 (68.915) seconds
+2026-10-28 22:11:59.432 xcodebuild[1380:8070] [MT] IDETestOperationsObserverDebug: 327.604 elapsed -- Testing started completed.
+2026-10-28 22:11:59.432 xcodebuild[1380:8070] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-28 22:11:59.432 xcodebuild[1380:8070] [MT] IDETestOperationsObserverDebug: 327.604 sec, +327.604 sec -- end
 
 Test session results, code coverage, and logs:
 	/Users/runner/work/cat-island/cat-island/build/Tests.xcresult
