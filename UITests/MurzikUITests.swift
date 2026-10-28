@@ -38,7 +38,7 @@ final class MurzikUITests: XCTestCase {
 
         // Home screen: the Live Activity shows a hungry Murzik in the Dynamic Island.
         XCUIDevice.shared.press(.home)
-        sleep(2)
+        sleep(4)
         snapshot("2-island-hungry")
 
         // Feed him, leave immediately: the island shows the excited reaction…
@@ -46,21 +46,20 @@ final class MurzikUITests: XCTestCase {
         XCTAssertTrue(feed.waitForExistence(timeout: 10))
         feed.tap()
         XCUIDevice.shared.press(.home)
-        sleep(1)
+        sleep(3)
         snapshot("3-island-fed-excited")
 
         // …then settles back to his base mood once the reaction is over.
-        sleep(8)
+        sleep(7)
         snapshot("4-island-settled")
 
         // Pet him: hearts in the island.
         app.activate()
         XCTAssertTrue(app.buttons["action.pet"].waitForExistence(timeout: 10))
         app.buttons["action.pet"].tap()
-        sleep(1)
         snapshot("5-app-after-pet")
         XCUIDevice.shared.press(.home)
-        sleep(1)
+        sleep(2)
         snapshot("6-island-loving")
 
         // Put him to sleep.

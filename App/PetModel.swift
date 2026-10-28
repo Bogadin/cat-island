@@ -51,6 +51,10 @@ final class PetModel: ObservableObject {
     /// Call when the app becomes active: catches up on elapsed time and restores the island.
     func becameActive() {
         reload()
+        #if DEBUG
+        // Unit tests use the app as a host; don't start a Live Activity there.
+        if ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil { return }
+        #endif
         Task { await syncIsland(allowStart: true) }
     }
 
