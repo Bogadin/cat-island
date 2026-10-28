@@ -6,6 +6,13 @@ A small black cat who lives in the iPhone's Dynamic Island.
   <img src="docs/character-sheet.png" width="720" alt="Murzik's moods">
 </p>
 
+<p align="center">
+  <img src="docs/sim-app.png" width="260" alt="App in the iOS Simulator">
+  <img src="docs/sim-island-sequence.png" width="300" alt="Dynamic Island in the iOS Simulator: hungry, excited, settled, loving, sleeping">
+</p>
+<p align="center"><img src="docs/sim-island-expanded.png" width="520" alt="Expanded Dynamic Island in the iOS Simulator"></p>
+<p align="center"><sub>Screenshots taken automatically by the UI test in the iOS Simulator (CI).</sub></p>
+
 ## מה זה
 
 מורזיק הוא חתול שחור קטן שגר ב-Dynamic Island של האייפון.
@@ -34,6 +41,9 @@ A small black cat who lives in the iPhone's Dynamic Island.
 - **חידוש כל 7 ימים:** עם Apple ID חינמי האפליקציה מפסיקה לעבוד אחרי 7 ימים. כדי לחדש, מחברים לכבל ולוחצים שוב **Start** ב-Sideloadly. אפשר גם להפעיל ב-Sideloadly חידוש אוטומטי ברשת ה-Wi-Fi. חשבון מפתח של אפל (99$ לשנה) מבטל את המגבלה.
 - **8 שעות:** iOS מוריד Live Activity מה-Dynamic Island אחרי 8 שעות לכל היותר. כשפותחים את האפליקציה, מורזיק חוזר.
 - **אם הוא לא מופיע:** הגדרות ← מורזיק ← לוודא ש**פעילויות חיות** מופעלות.
+- **אחרי הפעלה מחדש של הטלפון:** פותחים את האפליקציה פעם אחת ומורזיק חוזר.
+- **החלקה שלו ממסך הנעילה:** זה מכבה את המתג. כדי להחזיר אותו, מדליקים שוב את המתג באפליקציה.
+- **חידוש:** כדאי לחדש תמיד עם אותו Apple ID, כדי שמורזיק יזכור את המצב שלו.
 
 ## What iOS allows (and what it doesn't)
 
