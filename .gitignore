@@ -1,0 +1,6 @@
+Murzik.xcodeproj/
+build/
+renders/
+*.xcresult
+DerivedData/
+.DS_Store
