@@ -25,34 +25,51 @@ final class MurzikUITests: XCTestCase {
     func testAppAndDynamicIsland() throws {
         continueAfterFailure = false
         let app = XCUIApplication()
+        app.launchArguments = ["-uitest-hungry"]
         app.launch()
 
-        let pet = app.buttons["action.pet"]
-        XCTAssertTrue(pet.waitForExistence(timeout: 15), "Pet button not found")
-        XCTAssertTrue(app.buttons["action.feed"].exists)
+        let feed = app.buttons["action.feed"]
+        XCTAssertTrue(feed.waitForExistence(timeout: 15), "Feed button not found")
+        XCTAssertTrue(app.buttons["action.pet"].exists)
         XCTAssertTrue(app.buttons["action.play"].exists)
+        XCTAssertTrue(app.buttons["action.sleep"].exists)
         sleep(2)
-        snapshot("1-app")
+        snapshot("1-app-hungry")
 
-        pet.tap()
-        sleep(1)
-        snapshot("2-app-after-pet")
-
-        // Leave the app: the Live Activity should now be in the Dynamic Island.
+        // Home screen: the Live Activity shows a hungry Murzik in the Dynamic Island.
         XCUIDevice.shared.press(.home)
-        sleep(3)
-        snapshot("3-home-island")
+        sleep(2)
+        snapshot("2-island-hungry")
 
-        // Back in the app, feed him; the island should follow.
+        // Feed him, leave immediately: the island shows the excited reaction…
         app.activate()
-        XCTAssertTrue(app.buttons["action.feed"].waitForExistence(timeout: 10))
-        app.buttons["action.feed"].tap()
+        XCTAssertTrue(feed.waitForExistence(timeout: 10))
+        feed.tap()
+        XCUIDevice.shared.press(.home)
+        sleep(1)
+        snapshot("3-island-fed-excited")
+
+        // …then settles back to his base mood once the reaction is over.
+        sleep(8)
+        snapshot("4-island-settled")
+
+        // Pet him: hearts in the island.
+        app.activate()
+        XCTAssertTrue(app.buttons["action.pet"].waitForExistence(timeout: 10))
+        app.buttons["action.pet"].tap()
+        sleep(1)
+        snapshot("5-app-after-pet")
+        XCUIDevice.shared.press(.home)
+        sleep(1)
+        snapshot("6-island-loving")
+
+        // Put him to sleep.
+        app.activate()
+        XCTAssertTrue(app.buttons["action.sleep"].waitForExistence(timeout: 10))
+        app.buttons["action.sleep"].tap()
+        XCTAssertTrue(app.buttons["action.wake"].waitForExistence(timeout: 5))
         XCUIDevice.shared.press(.home)
         sleep(2)
-        snapshot("4-home-island-after-feed")
-
-        // After the reaction window the island settles back to the base mood.
-        sleep(8)
-        snapshot("5-home-island-settled")
+        snapshot("7-island-sleeping")
     }
 }

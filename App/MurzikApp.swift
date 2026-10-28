@@ -5,6 +5,15 @@ struct MurzikApp: App {
     @StateObject private var model = PetModel()
     @Environment(\.scenePhase) private var scenePhase
 
+    init() {
+        #if DEBUG
+        // UI tests start from a known state.
+        if CommandLine.arguments.contains("-uitest-hungry") {
+            PetStorage().save(PetState(fullness: 0.1, energy: 0.8, happiness: 0.5, lastUpdated: .now))
+        }
+        #endif
+    }
+
     var body: some Scene {
         WindowGroup {
             ContentView()

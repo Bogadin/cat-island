@@ -107,9 +107,9 @@ final class PersonalityEngineTests: XCTestCase {
         XCTAssertTrue(asleep.isSleeping)
         XCTAssertEqual(PersonalityEngine.mood(for: asleep, at: t0), .sleeping)
 
-        let awake = PersonalityEngine.apply(.wake, to: asleep, at: hours(0.5))
+        let awake = PersonalityEngine.apply(.wake, to: asleep, at: hours(0.25))
         XCTAssertFalse(awake.isSleeping)
-        XCTAssertEqual(PersonalityEngine.mood(for: awake, at: hours(0.5)), .surprised)
+        XCTAssertEqual(PersonalityEngine.mood(for: awake, at: hours(0.25)), .surprised)
     }
 
     func testWakingAnAwakeCatDoesNothing() {
