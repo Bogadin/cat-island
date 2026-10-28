@@ -18,8 +18,8 @@
             {
               "children" : [
                 {
-                  "duration" : "0.0019s",
-                  "durationInSeconds" : 0.0019019842147827148,
+                  "duration" : "0.0052s",
+                  "durationInSeconds" : 0.005221962928771973,
                   "name" : "testActionsNeverExceedBounds()",
                   "nodeIdentifier" : "PersonalityEngineTests/testActionsNeverExceedBounds()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/PersonalityEngineTests/testActionsNeverExceedBounds",
@@ -27,8 +27,8 @@
                   "result" : "Passed"
                 },
                 {
-                  "duration" : "0.0015s",
-                  "durationInSeconds" : 0.0014840364456176758,
+                  "duration" : "0.0006s",
+                  "durationInSeconds" : 0.0005970001220703125,
                   "name" : "testAwakeDecayPerHour()",
                   "nodeIdentifier" : "PersonalityEngineTests/testAwakeDecayPerHour()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/PersonalityEngineTests/testAwakeDecayPerHour",
@@ -36,8 +36,8 @@
                   "result" : "Passed"
                 },
                 {
-                  "duration" : "0.0017s",
-                  "durationInSeconds" : 0.0016829967498779297,
+                  "duration" : "0.0039s",
+                  "durationInSeconds" : 0.0038900375366210938,
                   "name" : "testBaseMoodPriority()",
                   "nodeIdentifier" : "PersonalityEngineTests/testBaseMoodPriority()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/PersonalityEngineTests/testBaseMoodPriority",
@@ -45,8 +45,8 @@
                   "result" : "Passed"
                 },
                 {
-                  "duration" : "0.0069s",
-                  "durationInSeconds" : 0.006862044334411621,
+                  "duration" : "0.032s",
+                  "durationInSeconds" : 0.0319899320602417,
                   "name" : "testClockGoingBackwardsDoesNotChangeNeeds()",
                   "nodeIdentifier" : "PersonalityEngineTests/testClockGoingBackwardsDoesNotChangeNeeds()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/PersonalityEngineTests/testClockGoingBackwardsDoesNotChangeNeeds",
@@ -54,8 +54,8 @@
                   "result" : "Passed"
                 },
                 {
-                  "duration" : "0.002s",
-                  "durationInSeconds" : 0.0019850730895996094,
+                  "duration" : "0.0031s",
+                  "durationInSeconds" : 0.0030930042266845703,
                   "name" : "testContentStateRoundTripsAndFitsPayloadLimit()",
                   "nodeIdentifier" : "PersonalityEngineTests/testContentStateRoundTripsAndFitsPayloadLimit()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/PersonalityEngineTests/testContentStateRoundTripsAndFitsPayloadLimit",
@@ -63,8 +63,8 @@
                   "result" : "Passed"
                 },
                 {
-                  "duration" : "0.0016s",
-                  "durationInSeconds" : 0.001550912857055664,
+                  "duration" : "0.00057s",
+                  "durationInSeconds" : 0.0005700588226318359,
                   "name" : "testContentStateUsesStaleToShowHunger()",
                   "nodeIdentifier" : "PersonalityEngineTests/testContentStateUsesStaleToShowHunger()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/PersonalityEngineTests/testContentStateUsesStaleToShowHunger",
@@ -72,8 +72,8 @@
                   "result" : "Passed"
                 },
                 {
-                  "duration" : "0.012s",
-                  "durationInSeconds" : 0.011523962020874023,
+                  "duration" : "0.0078s",
+                  "durationInSeconds" : 0.007753968238830566,
                   "name" : "testCorruptStorageFallsBackToDefaults()",
                   "nodeIdentifier" : "PersonalityEngineTests/testCorruptStorageFallsBackToDefaults()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/PersonalityEngineTests/testCorruptStorageFallsBackToDefaults",
@@ -81,8 +81,8 @@
                   "result" : "Passed"
                 },
                 {
-                  "duration" : "0.14s",
-                  "durationInSeconds" : 0.13814496994018555,
+                  "duration" : "0.15s",
+                  "durationInSeconds" : 0.15368199348449707,
                   "name" : "testEveryMoodHasTextAndSymbol()",
                   "nodeIdentifier" : "PersonalityEngineTests/testEveryMoodHasTextAndSymbol()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/PersonalityEngineTests/testEveryMoodHasTextAndSymbol",
@@ -91,7 +91,7 @@
                 },
                 {
                   "duration" : "0.0011s",
-                  "durationInSeconds" : 0.0011440515518188477,
+                  "durationInSeconds" : 0.0010739564895629883,
                   "name" : "testFeedingAHungryCatMakesHimExcited()",
                   "nodeIdentifier" : "PersonalityEngineTests/testFeedingAHungryCatMakesHimExcited()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/PersonalityEngineTests/testFeedingAHungryCatMakesHimExcited",
@@ -99,8 +99,8 @@
                   "result" : "Passed"
                 },
                 {
-                  "duration" : "0.00091s",
-                  "durationInSeconds" : 0.0009139776229858398,
+                  "duration" : "0.00058s",
+                  "durationInSeconds" : 0.0005819797515869141,
                   "name" : "testFeedingWakesHimUp()",
                   "nodeIdentifier" : "PersonalityEngineTests/testFeedingWakesHimUp()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/PersonalityEngineTests/testFeedingWakesHimUp",
@@ -108,8 +108,8 @@
                   "result" : "Passed"
                 },
                 {
-                  "duration" : "0.00091s",
-                  "durationInSeconds" : 0.0009109973907470703,
+                  "duration" : "0.00044s",
+                  "durationInSeconds" : 0.00043892860412597656,
                   "name" : "testHungryDateMatchesSimulation()",
                   "nodeIdentifier" : "PersonalityEngineTests/testHungryDateMatchesSimulation()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/PersonalityEngineTests/testHungryDateMatchesSimulation",
@@ -117,8 +117,8 @@
                   "result" : "Passed"
                 },
                 {
-                  "duration" : "0.00073s",
-                  "durationInSeconds" : 0.0007289648056030273,
+                  "duration" : "0.0011s",
+                  "durationInSeconds" : 0.0010908842086791992,
                   "name" : "testHungryDateWhenAlreadyHungryIsNow()",
                   "nodeIdentifier" : "PersonalityEngineTests/testHungryDateWhenAlreadyHungryIsNow()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/PersonalityEngineTests/testHungryDateWhenAlreadyHungryIsNow",
@@ -126,8 +126,8 @@
                   "result" : "Passed"
                 },
                 {
-                  "duration" : "0.0017s",
-                  "durationInSeconds" : 0.001734018325805664,
+                  "duration" : "0.0031s",
+                  "durationInSeconds" : 0.0030710697174072266,
                   "name" : "testHungryDateWhileAwake()",
                   "nodeIdentifier" : "PersonalityEngineTests/testHungryDateWhileAwake()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/PersonalityEngineTests/testHungryDateWhileAwake",
@@ -135,8 +135,8 @@
                   "result" : "Passed"
                 },
                 {
-                  "duration" : "0.0014s",
-                  "durationInSeconds" : 0.0013610124588012695,
+                  "duration" : "0.0024s",
+                  "durationInSeconds" : 0.002357006072998047,
                   "name" : "testPetMakesMurzikLoving()",
                   "nodeIdentifier" : "PersonalityEngineTests/testPetMakesMurzikLoving()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/PersonalityEngineTests/testPetMakesMurzikLoving",
@@ -144,8 +144,8 @@
                   "result" : "Passed"
                 },
                 {
-                  "duration" : "0.0012s",
-                  "durationInSeconds" : 0.0011900663375854492,
+                  "duration" : "0.0027s",
+                  "durationInSeconds" : 0.0026750564575195312,
                   "name" : "testPettingASleepingCatKeepsHimAsleep()",
                   "nodeIdentifier" : "PersonalityEngineTests/testPettingASleepingCatKeepsHimAsleep()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/PersonalityEngineTests/testPettingASleepingCatKeepsHimAsleep",
@@ -153,8 +153,8 @@
                   "result" : "Passed"
                 },
                 {
-                  "duration" : "0.00048s",
-                  "durationInSeconds" : 0.0004830360412597656,
+                  "duration" : "0.001s",
+                  "durationInSeconds" : 0.001049041748046875,
                   "name" : "testPetWhenVeryHappyIsExcited()",
                   "nodeIdentifier" : "PersonalityEngineTests/testPetWhenVeryHappyIsExcited()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/PersonalityEngineTests/testPetWhenVeryHappyIsExcited",
@@ -162,8 +162,8 @@
                   "result" : "Passed"
                 },
                 {
-                  "duration" : "1s",
-                  "durationInSeconds" : 1.9795280694961548,
+                  "duration" : "0.066s",
+                  "durationInSeconds" : 0.06600701808929443,
                   "name" : "testPlayCostsEnergyAndFood()",
                   "nodeIdentifier" : "PersonalityEngineTests/testPlayCostsEnergyAndFood()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/PersonalityEngineTests/testPlayCostsEnergyAndFood",
@@ -171,8 +171,8 @@
                   "result" : "Passed"
                 },
                 {
-                  "duration" : "0.00063s",
-                  "durationInSeconds" : 0.0006279945373535156,
+                  "duration" : "0.001s",
+                  "durationInSeconds" : 0.0010349750518798828,
                   "name" : "testReactionExpiresBackToBaseMood()",
                   "nodeIdentifier" : "PersonalityEngineTests/testReactionExpiresBackToBaseMood()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/PersonalityEngineTests/testReactionExpiresBackToBaseMood",
@@ -180,8 +180,8 @@
                   "result" : "Passed"
                 },
                 {
-                  "duration" : "0.00045s",
-                  "durationInSeconds" : 0.0004489421844482422,
+                  "duration" : "0.0015s",
+                  "durationInSeconds" : 0.0015479326248168945,
                   "name" : "testReactionFromTheFutureIsIgnored()",
                   "nodeIdentifier" : "PersonalityEngineTests/testReactionFromTheFutureIsIgnored()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/PersonalityEngineTests/testReactionFromTheFutureIsIgnored",
@@ -189,23 +189,17 @@
                   "result" : "Passed"
                 },
                 {
-                  "children" : [
-                    {
-                      "name" : "PersonalityEngineTests.swift:112: XCTAssertEqual failed: (\"happy\") is not equal to (\"surprised\")",
-                      "nodeType" : "Failure Message"
-                    }
-                  ],
-                  "duration" : "0.35s",
-                  "durationInSeconds" : 0.35406291484832764,
+                  "duration" : "0.00054s",
+                  "durationInSeconds" : 0.0005360841751098633,
                   "name" : "testSleepAndWake()",
                   "nodeIdentifier" : "PersonalityEngineTests/testSleepAndWake()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/PersonalityEngineTests/testSleepAndWake",
                   "nodeType" : "Test Case",
-                  "result" : "Failed"
+                  "result" : "Passed"
                 },
                 {
-                  "duration" : "0.0033s",
-                  "durationInSeconds" : 0.00333404541015625,
+                  "duration" : "0.0062s",
+                  "durationInSeconds" : 0.00622403621673584,
                   "name" : "testSleepingCatStaysAsleepWhenStaleIfStillSleeping()",
                   "nodeIdentifier" : "PersonalityEngineTests/testSleepingCatStaysAsleepWhenStaleIfStillSleeping()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/PersonalityEngineTests/testSleepingCatStaysAsleepWhenStaleIfStillSleeping",
@@ -213,8 +207,8 @@
                   "result" : "Passed"
                 },
                 {
-                  "duration" : "0.0005s",
-                  "durationInSeconds" : 0.000496983528137207,
+                  "duration" : "0.0017s",
+                  "durationInSeconds" : 0.0017200708389282227,
                   "name" : "testSleepRestoresEnergyAndWakesUpWhenFull()",
                   "nodeIdentifier" : "PersonalityEngineTests/testSleepRestoresEnergyAndWakesUpWhenFull()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/PersonalityEngineTests/testSleepRestoresEnergyAndWakesUpWhenFull",
@@ -222,8 +216,8 @@
                   "result" : "Passed"
                 },
                 {
-                  "duration" : "0.00071s",
-                  "durationInSeconds" : 0.0007070302963256836,
+                  "duration" : "0.00068s",
+                  "durationInSeconds" : 0.0006760358810424805,
                   "name" : "testStillSleepingBeforeRested()",
                   "nodeIdentifier" : "PersonalityEngineTests/testStillSleepingBeforeRested()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/PersonalityEngineTests/testStillSleepingBeforeRested",
@@ -231,8 +225,8 @@
                   "result" : "Passed"
                 },
                 {
-                  "duration" : "0.008s",
-                  "durationInSeconds" : 0.007973074913024902,
+                  "duration" : "0.018s",
+                  "durationInSeconds" : 0.01787889003753662,
                   "name" : "testStorageRoundTrip()",
                   "nodeIdentifier" : "PersonalityEngineTests/testStorageRoundTrip()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/PersonalityEngineTests/testStorageRoundTrip",
@@ -240,8 +234,8 @@
                   "result" : "Passed"
                 },
                 {
-                  "duration" : "0.002s",
-                  "durationInSeconds" : 0.0019600391387939453,
+                  "duration" : "0.001s",
+                  "durationInSeconds" : 0.0010410547256469727,
                   "name" : "testTooTiredToPlay()",
                   "nodeIdentifier" : "PersonalityEngineTests/testTooTiredToPlay()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/PersonalityEngineTests/testTooTiredToPlay",
@@ -249,8 +243,8 @@
                   "result" : "Passed"
                 },
                 {
-                  "duration" : "0.0019s",
-                  "durationInSeconds" : 0.0019239187240600586,
+                  "duration" : "0.7s",
+                  "durationInSeconds" : 0.697503924369812,
                   "name" : "testValuesClampAtZero()",
                   "nodeIdentifier" : "PersonalityEngineTests/testValuesClampAtZero()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/PersonalityEngineTests/testValuesClampAtZero",
@@ -258,8 +252,8 @@
                   "result" : "Passed"
                 },
                 {
-                  "duration" : "0.0017s",
-                  "durationInSeconds" : 0.0017399787902832031,
+                  "duration" : "0.0005s",
+                  "durationInSeconds" : 0.0004960298538208008,
                   "name" : "testWakingAnAwakeCatDoesNothing()",
                   "nodeIdentifier" : "PersonalityEngineTests/testWakingAnAwakeCatDoesNothing()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/PersonalityEngineTests/testWakingAnAwakeCatDoesNothing",
@@ -270,13 +264,13 @@
               "name" : "PersonalityEngineTests",
               "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/PersonalityEngineTests",
               "nodeType" : "Test Suite",
-              "result" : "Failed"
+              "result" : "Passed"
             },
             {
               "children" : [
                 {
-                  "duration" : "1s",
-                  "durationInSeconds" : 1.005323052406311,
+                  "duration" : "3s",
+                  "durationInSeconds" : 3.1625289916992188,
                   "name" : "testRenderAppIcon()",
                   "nodeIdentifier" : "RenderTests/testRenderAppIcon()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/RenderTests/testRenderAppIcon",
@@ -284,8 +278,8 @@
                   "result" : "Passed"
                 },
                 {
-                  "duration" : "0.23s",
-                  "durationInSeconds" : 0.23408997058868408,
+                  "duration" : "0.35s",
+                  "durationInSeconds" : 0.3492330312728882,
                   "name" : "testRenderCharacterSheet()",
                   "nodeIdentifier" : "RenderTests/testRenderCharacterSheet()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/RenderTests/testRenderCharacterSheet",
@@ -293,8 +287,8 @@
                   "result" : "Passed"
                 },
                 {
-                  "duration" : "0.13s",
-                  "durationInSeconds" : 0.13237404823303223,
+                  "duration" : "0.17s",
+                  "durationInSeconds" : 0.17014598846435547,
                   "name" : "testRenderDynamicIslandPresentations()",
                   "nodeIdentifier" : "RenderTests/testRenderDynamicIslandPresentations()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/RenderTests/testRenderDynamicIslandPresentations",
@@ -302,8 +296,8 @@
                   "result" : "Passed"
                 },
                 {
-                  "duration" : "0.28s",
-                  "durationInSeconds" : 0.27739107608795166,
+                  "duration" : "0.35s",
+                  "durationInSeconds" : 0.3499419689178467,
                   "name" : "testRenderExpandedIsland()",
                   "nodeIdentifier" : "RenderTests/testRenderExpandedIsland()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/RenderTests/testRenderExpandedIsland",
@@ -311,8 +305,8 @@
                   "result" : "Passed"
                 },
                 {
-                  "duration" : "0.14s",
-                  "durationInSeconds" : 0.14014005661010742,
+                  "duration" : "0.19s",
+                  "durationInSeconds" : 0.19017601013183594,
                   "name" : "testRenderFigureOnAppBackground()",
                   "nodeIdentifier" : "RenderTests/testRenderFigureOnAppBackground()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/RenderTests/testRenderFigureOnAppBackground",
@@ -320,8 +314,8 @@
                   "result" : "Passed"
                 },
                 {
-                  "duration" : "0.08s",
-                  "durationInSeconds" : 0.07962095737457275,
+                  "duration" : "0.1s",
+                  "durationInSeconds" : 0.10174500942230225,
                   "name" : "testRenderLockScreen()",
                   "nodeIdentifier" : "RenderTests/testRenderLockScreen()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/RenderTests/testRenderLockScreen",
@@ -338,15 +332,15 @@
           "name" : "MurzikTests",
           "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests",
           "nodeType" : "Unit test bundle",
-          "result" : "Failed"
+          "result" : "Passed"
         },
         {
           "children" : [
             {
               "children" : [
                 {
-                  "duration" : "35s",
-                  "durationInSeconds" : 35.66367793083191,
+                  "duration" : "1m 28s",
+                  "durationInSeconds" : 88.47913801670074,
                   "name" : "testAppAndDynamicIsland()",
                   "nodeIdentifier" : "MurzikUITests/testAppAndDynamicIsland()",
                   "nodeIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikUITests/MurzikUITests/testAppAndDynamicIsland",
@@ -368,7 +362,7 @@
       ],
       "name" : "Murzik",
       "nodeType" : "Test Plan",
-      "result" : "Failed"
+      "result" : "Passed"
     }
   ],
   "testPlanConfigurations" : [

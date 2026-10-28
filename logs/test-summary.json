@@ -11,8 +11,8 @@
         "platform" : "iOS Simulator"
       },
       "expectedFailures" : 0,
-      "failedTests" : 1,
-      "passedTests" : 33,
+      "failedTests" : 0,
+      "passedTests" : 34,
       "skippedTests" : 0,
       "testPlanConfiguration" : {
         "configurationId" : "1",
@@ -22,31 +22,24 @@
   ],
   "environmentDescription" : "Murzik · Built with macOS 26.6.2",
   "expectedFailures" : 0,
-  "failedTests" : 1,
-  "finishTime" : 1793222850.579,
-  "passedTests" : 33,
-  "result" : "Failed",
+  "failedTests" : 0,
+  "finishTime" : 1793224245.278,
+  "passedTests" : 34,
+  "result" : "Passed",
   "skippedTests" : 0,
-  "startTime" : 1793222402.435,
+  "startTime" : 1793223784.967,
   "statistics" : [
 
   ],
   "testFailures" : [
-    {
-      "failureText" : "XCTAssertEqual failed: (\"happy\") is not equal to (\"surprised\")",
-      "targetName" : "MurzikTests",
-      "testIdentifier" : 20,
-      "testIdentifierString" : "PersonalityEngineTests/testSleepAndWake()",
-      "testIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikTests/PersonalityEngineTests/testSleepAndWake",
-      "testName" : "testSleepAndWake()"
-    }
+
   ],
   "title" : "Test - Murzik",
   "topInsights" : [
     {
       "category" : "Longest Test Runs",
-      "impact" : "45% of duration",
-      "text" : "1 longest test run with outlier durations exceeding 1.26s (three standard deviations)"
+      "impact" : "59% of duration",
+      "text" : "1 longest test run with outlier durations exceeding 1.81s (three standard deviations)"
     }
   ],
   "totalTestCount" : 34

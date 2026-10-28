@@ -1,77 +1,76 @@
 Test Case '-[MurzikTests.PersonalityEngineTests testActionsNeverExceedBounds]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testActionsNeverExceedBounds]' passed (0.002 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testActionsNeverExceedBounds]' passed (0.005 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testAwakeDecayPerHour]' started.
 Test Case '-[MurzikTests.PersonalityEngineTests testAwakeDecayPerHour]' passed (0.001 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testBaseMoodPriority]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testBaseMoodPriority]' passed (0.002 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testBaseMoodPriority]' passed (0.004 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testClockGoingBackwardsDoesNotChangeNeeds]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testClockGoingBackwardsDoesNotChangeNeeds]' passed (0.007 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testClockGoingBackwardsDoesNotChangeNeeds]' passed (0.032 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testContentStateRoundTripsAndFitsPayloadLimit]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testContentStateRoundTripsAndFitsPayloadLimit]' passed (0.002 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testContentStateRoundTripsAndFitsPayloadLimit]' passed (0.003 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testContentStateUsesStaleToShowHunger]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testContentStateUsesStaleToShowHunger]' passed (0.002 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testContentStateUsesStaleToShowHunger]' passed (0.001 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testCorruptStorageFallsBackToDefaults]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testCorruptStorageFallsBackToDefaults]' passed (0.012 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testCorruptStorageFallsBackToDefaults]' passed (0.008 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testEveryMoodHasTextAndSymbol]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testEveryMoodHasTextAndSymbol]' passed (0.138 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testEveryMoodHasTextAndSymbol]' passed (0.154 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testFeedingAHungryCatMakesHimExcited]' started.
 Test Case '-[MurzikTests.PersonalityEngineTests testFeedingAHungryCatMakesHimExcited]' passed (0.001 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testFeedingWakesHimUp]' started.
 Test Case '-[MurzikTests.PersonalityEngineTests testFeedingWakesHimUp]' passed (0.001 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testHungryDateMatchesSimulation]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testHungryDateMatchesSimulation]' passed (0.001 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testHungryDateMatchesSimulation]' passed (0.000 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testHungryDateWhenAlreadyHungryIsNow]' started.
 Test Case '-[MurzikTests.PersonalityEngineTests testHungryDateWhenAlreadyHungryIsNow]' passed (0.001 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testHungryDateWhileAwake]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testHungryDateWhileAwake]' passed (0.002 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testHungryDateWhileAwake]' passed (0.003 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testPetMakesMurzikLoving]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testPetMakesMurzikLoving]' passed (0.001 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testPetMakesMurzikLoving]' passed (0.002 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testPettingASleepingCatKeepsHimAsleep]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testPettingASleepingCatKeepsHimAsleep]' passed (0.001 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testPettingASleepingCatKeepsHimAsleep]' passed (0.003 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testPetWhenVeryHappyIsExcited]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testPetWhenVeryHappyIsExcited]' passed (0.000 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testPetWhenVeryHappyIsExcited]' passed (0.001 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testPlayCostsEnergyAndFood]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testPlayCostsEnergyAndFood]' passed (1.980 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testPlayCostsEnergyAndFood]' passed (0.066 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testReactionExpiresBackToBaseMood]' started.
 Test Case '-[MurzikTests.PersonalityEngineTests testReactionExpiresBackToBaseMood]' passed (0.001 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testReactionFromTheFutureIsIgnored]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testReactionFromTheFutureIsIgnored]' passed (0.000 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testReactionFromTheFutureIsIgnored]' passed (0.002 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testSleepAndWake]' started.
-/Users/runner/work/cat-island/cat-island/Tests/PersonalityEngineTests.swift:112: error: -[MurzikTests.PersonalityEngineTests testSleepAndWake] : XCTAssertEqual failed: ("happy") is not equal to ("surprised")
-Test Case '-[MurzikTests.PersonalityEngineTests testSleepAndWake]' failed (0.354 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testSleepAndWake]' passed (0.001 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testSleepingCatStaysAsleepWhenStaleIfStillSleeping]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testSleepingCatStaysAsleepWhenStaleIfStillSleeping]' passed (0.003 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testSleepingCatStaysAsleepWhenStaleIfStillSleeping]' passed (0.006 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testSleepRestoresEnergyAndWakesUpWhenFull]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testSleepRestoresEnergyAndWakesUpWhenFull]' passed (0.000 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testSleepRestoresEnergyAndWakesUpWhenFull]' passed (0.002 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testStillSleepingBeforeRested]' started.
 Test Case '-[MurzikTests.PersonalityEngineTests testStillSleepingBeforeRested]' passed (0.001 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testStorageRoundTrip]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testStorageRoundTrip]' passed (0.008 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testStorageRoundTrip]' passed (0.018 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testTooTiredToPlay]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testTooTiredToPlay]' passed (0.002 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testTooTiredToPlay]' passed (0.001 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testValuesClampAtZero]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testValuesClampAtZero]' passed (0.002 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testValuesClampAtZero]' passed (0.698 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testWakingAnAwakeCatDoesNothing]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testWakingAnAwakeCatDoesNothing]' passed (0.002 seconds).
-	 Executed 27 tests, with 1 failure (0 unexpected) in 2.526 (4.553) seconds
+Test Case '-[MurzikTests.PersonalityEngineTests testWakingAnAwakeCatDoesNothing]' passed (0.000 seconds).
+	 Executed 27 tests, with 0 failures (0 unexpected) in 1.014 (8.097) seconds
 Test Case '-[MurzikTests.RenderTests testRenderAppIcon]' started.
-Test Case '-[MurzikTests.RenderTests testRenderAppIcon]' passed (1.005 seconds).
+Test Case '-[MurzikTests.RenderTests testRenderAppIcon]' passed (3.163 seconds).
 Test Case '-[MurzikTests.RenderTests testRenderCharacterSheet]' started.
-Test Case '-[MurzikTests.RenderTests testRenderCharacterSheet]' passed (0.234 seconds).
+Test Case '-[MurzikTests.RenderTests testRenderCharacterSheet]' passed (0.349 seconds).
 Test Case '-[MurzikTests.RenderTests testRenderDynamicIslandPresentations]' started.
-Test Case '-[MurzikTests.RenderTests testRenderDynamicIslandPresentations]' passed (0.132 seconds).
+Test Case '-[MurzikTests.RenderTests testRenderDynamicIslandPresentations]' passed (0.170 seconds).
 Test Case '-[MurzikTests.RenderTests testRenderExpandedIsland]' started.
-Test Case '-[MurzikTests.RenderTests testRenderExpandedIsland]' passed (0.277 seconds).
+Test Case '-[MurzikTests.RenderTests testRenderExpandedIsland]' passed (0.350 seconds).
 Test Case '-[MurzikTests.RenderTests testRenderFigureOnAppBackground]' started.
-Test Case '-[MurzikTests.RenderTests testRenderFigureOnAppBackground]' passed (0.140 seconds).
+Test Case '-[MurzikTests.RenderTests testRenderFigureOnAppBackground]' passed (0.190 seconds).
 Test Case '-[MurzikTests.RenderTests testRenderLockScreen]' started.
-Test Case '-[MurzikTests.RenderTests testRenderLockScreen]' passed (0.080 seconds).
-	 Executed 6 tests, with 0 failures (0 unexpected) in 1.869 (1.871) seconds
-	 Executed 33 tests, with 1 failure (0 unexpected) in 4.395 (7.293) seconds
-	 Executed 33 tests, with 1 failure (0 unexpected) in 4.395 (7.294) seconds
+Test Case '-[MurzikTests.RenderTests testRenderLockScreen]' passed (0.102 seconds).
+	 Executed 6 tests, with 0 failures (0 unexpected) in 4.324 (4.335) seconds
+	 Executed 33 tests, with 0 failures (0 unexpected) in 5.338 (12.433) seconds
+	 Executed 33 tests, with 0 failures (0 unexpected) in 5.338 (12.435) seconds
 Test Case '-[MurzikUITests.MurzikUITests testAppAndDynamicIsland]' started.
-Test Case '-[MurzikUITests.MurzikUITests testAppAndDynamicIsland]' passed (35.664 seconds).
-	 Executed 1 test, with 0 failures (0 unexpected) in 35.664 (35.669) seconds
-	 Executed 1 test, with 0 failures (0 unexpected) in 35.664 (35.670) seconds
-	 Executed 1 test, with 0 failures (0 unexpected) in 35.664 (35.672) seconds
-** TEST FAILED **
+Test Case '-[MurzikUITests.MurzikUITests testAppAndDynamicIsland]' passed (88.479 seconds).
+	 Executed 1 test, with 0 failures (0 unexpected) in 88.479 (88.485) seconds
+	 Executed 1 test, with 0 failures (0 unexpected) in 88.479 (88.487) seconds
+	 Executed 1 test, with 0 failures (0 unexpected) in 88.479 (88.490) seconds
+** TEST SUCCEEDED **

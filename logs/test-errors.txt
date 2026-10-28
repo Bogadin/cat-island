@@ -1,4 +1,0 @@
-/Users/runner/work/cat-island/cat-island/Tests/PersonalityEngineTests.swift:112: error: -[MurzikTests.PersonalityEngineTests testSleepAndWake] : XCTAssertEqual failed: ("happy") is not equal to ("surprised")
-Test Case '-[MurzikTests.PersonalityEngineTests testSleepAndWake]' failed (0.354 seconds).
-Test Case '-[MurzikTests.PersonalityEngineTests testSleepingCatStaysAsleepWhenStaleIfStillSleeping]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testSleepingCatStaysAsleepWhenStaleIfStillSleeping]' passed (0.003 seconds).
