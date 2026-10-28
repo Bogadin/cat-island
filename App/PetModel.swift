@@ -68,8 +68,7 @@ final class PetModel: ObservableObject {
             state = PersonalityEngine.advance(state, to: newNow)
             // Time alone changed his mood (sleepy, bored, woke up…): keep the island in step.
             if PersonalityEngine.baseMood(for: state) != oldBase {
-                let snapshot = state
-                Task { await LiveActivityController.update(state: snapshot, now: newNow) }
+                Task { await syncIsland(allowStart: false) }
             }
         }
         if tickCount % 5 == 0 {
@@ -113,36 +112,19 @@ final class PetModel: ObservableObject {
 
     func setIslandEnabled(_ enabled: Bool) {
         storage.islandEnabled = enabled
+        if !enabled { islandStatus = .off }
         objectWillChange.send()
-        Task {
-            if enabled {
-                await syncIsland(allowStart: true)
-            } else {
-                await LiveActivityController.endAll(storage: storage)
-                islandStatus = .off
-                refreshIslandStatus()
-            }
-        }
+        Task { await syncIsland(allowStart: true) }
     }
 
     private func syncIsland(allowStart: Bool) async {
-        defer { refreshIslandStatus() }
-        guard storage.islandEnabled else { return }
-        guard LiveActivityController.areActivitiesEnabled else { return }
-
-        let current = PersonalityEngine.advance(storage.load(now: .now), to: .now)
-        if LiveActivityController.isRunning {
-            await LiveActivityController.update(state: current)
-        } else if allowStart {
-            do {
-                // Clear any ended activity lingering on the Lock Screen before starting a fresh one.
-                await LiveActivityController.endAll(storage: storage)
-                try LiveActivityController.start(state: current, storage: storage)
-            } catch {
-                islandStatus = .failed
-                return
-            }
+        do {
+            try await LiveActivityController.reconcile(storage: storage, allowStart: allowStart)
+            if case .failed = islandStatus { islandStatus = .off }
+        } catch {
+            islandStatus = .failed
         }
+        refreshIslandStatus()
     }
 
     private func refreshIslandStatus() {
