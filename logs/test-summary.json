@@ -1,0 +1,24 @@
+{
+  "devicesAndConfigurations" : [
+
+  ],
+  "environmentDescription" : "Murzik · Built with macOS 26.6.2",
+  "expectedFailures" : 0,
+  "failedTests" : 0,
+  "finishTime" : 1793222228.095,
+  "passedTests" : 0,
+  "result" : "unknown",
+  "skippedTests" : 0,
+  "startTime" : 1793222189.063,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+
+  ],
+  "title" : "Test - Murzik",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 0
+}

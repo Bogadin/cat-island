@@ -1,0 +1,4 @@
+/Users/runner/work/cat-island/cat-island/Tests/RenderTests.swift:122:29: error: implicit use of 'self' in closure; use 'self.' to make capture semantics explicit
+                let state = content(for: mood)
+                            ^
+
