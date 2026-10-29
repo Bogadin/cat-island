@@ -1,40 +1,40 @@
-    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/Library/Developer/Xcode/DerivedData/Murzik-godrylvsbhpbrkajpxqswasefsxa/Build/Intermediates.noindex/Murzik.build/Debug-iphonesimulator/MurzikTests.build/Objects-normal/arm64/MurzikTests.swiftmodule /Users/runner/Library/Developer/Xcode/DerivedData/Murzik-godrylvsbhpbrkajpxqswasefsxa/Build/Products/Debug-iphonesimulator/MurzikTests.swiftmodule/arm64-apple-ios-simulator.swiftmodule
-
-Copy /Users/runner/Library/Developer/Xcode/DerivedData/Murzik-godrylvsbhpbrkajpxqswasefsxa/Build/Products/Debug-iphonesimulator/MurzikTests.swiftmodule/arm64-apple-ios-simulator.swiftdoc /Users/runner/Library/Developer/Xcode/DerivedData/Murzik-godrylvsbhpbrkajpxqswasefsxa/Build/Intermediates.noindex/Murzik.build/Debug-iphonesimulator/MurzikTests.build/Objects-normal/arm64/MurzikTests.swiftdoc (in target 'MurzikTests' from project 'Murzik')
-    cd /Users/runner/work/cat-island/cat-island
-    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/Library/Developer/Xcode/DerivedData/Murzik-godrylvsbhpbrkajpxqswasefsxa/Build/Intermediates.noindex/Murzik.build/Debug-iphonesimulator/MurzikTests.build/Objects-normal/arm64/MurzikTests.swiftdoc /Users/runner/Library/Developer/Xcode/DerivedData/Murzik-godrylvsbhpbrkajpxqswasefsxa/Build/Products/Debug-iphonesimulator/MurzikTests.swiftmodule/arm64-apple-ios-simulator.swiftdoc
-
-Copy /Users/runner/Library/Developer/Xcode/DerivedData/Murzik-godrylvsbhpbrkajpxqswasefsxa/Build/Products/Debug-iphonesimulator/MurzikTests.swiftmodule/arm64-apple-ios-simulator.abi.json /Users/runner/Library/Developer/Xcode/DerivedData/Murzik-godrylvsbhpbrkajpxqswasefsxa/Build/Intermediates.noindex/Murzik.build/Debug-iphonesimulator/MurzikTests.build/Objects-normal/arm64/MurzikTests.abi.json (in target 'MurzikTests' from project 'Murzik')
-    cd /Users/runner/work/cat-island/cat-island
-    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/Library/Developer/Xcode/DerivedData/Murzik-godrylvsbhpbrkajpxqswasefsxa/Build/Intermediates.noindex/Murzik.build/Debug-iphonesimulator/MurzikTests.build/Objects-normal/arm64/MurzikTests.abi.json /Users/runner/Library/Developer/Xcode/DerivedData/Murzik-godrylvsbhpbrkajpxqswasefsxa/Build/Products/Debug-iphonesimulator/MurzikTests.swiftmodule/arm64-apple-ios-simulator.abi.json
-
-Copy /Users/runner/Library/Developer/Xcode/DerivedData/Murzik-godrylvsbhpbrkajpxqswasefsxa/Build/Products/Debug-iphonesimulator/MurzikTests.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo /Users/runner/Library/Developer/Xcode/DerivedData/Murzik-godrylvsbhpbrkajpxqswasefsxa/Build/Intermediates.noindex/Murzik.build/Debug-iphonesimulator/MurzikTests.build/Objects-normal/arm64/MurzikTests.swiftsourceinfo (in target 'MurzikTests' from project 'Murzik')
-    cd /Users/runner/work/cat-island/cat-island
-    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/Library/Developer/Xcode/DerivedData/Murzik-godrylvsbhpbrkajpxqswasefsxa/Build/Intermediates.noindex/Murzik.build/Debug-iphonesimulator/MurzikTests.build/Objects-normal/arm64/MurzikTests.swiftsourceinfo /Users/runner/Library/Developer/Xcode/DerivedData/Murzik-godrylvsbhpbrkajpxqswasefsxa/Build/Products/Debug-iphonesimulator/MurzikTests.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo
-
-SwiftCompile normal arm64 Compiling\ MurzikUITests.swift /Users/runner/work/cat-island/cat-island/UITests/MurzikUITests.swift (in target 'MurzikUITests' from project 'Murzik')
-
-SwiftCompile normal arm64 /Users/runner/work/cat-island/cat-island/UITests/MurzikUITests.swift (in target 'MurzikUITests' from project 'Murzik')
-    cd /Users/runner/work/cat-island/cat-island
-    
-
-SwiftCompile normal arm64 Compiling\ PersonalityEngineTests.swift /Users/runner/work/cat-island/cat-island/Tests/PersonalityEngineTests.swift (in target 'MurzikTests' from project 'Murzik')
-
-SwiftDriverJobDiscovery normal arm64 Compiling MurzikUITests.swift (in target 'MurzikUITests' from project 'Murzik')
-
+    t =    48.82s     Checking `Expect predicate `existsNoRetry == 1` for object "action.sleep" Button`
+    t =    48.83s         Checking existence of `"action.sleep" Button`
+    t =    49.44s Tap "action.sleep" Button
+    t =    49.44s     Wait for com.bogadin.murzik to idle
+    t =    49.50s     Find the "action.sleep" Button
+    t =    49.73s     Check for interrupting elements affecting "action.sleep" Button
+    t =    49.81s     Open com.bogadin.murzik
+    t =    49.82s         Activate com.bogadin.murzik
+    t =    49.97s             Wait for com.bogadin.murzik to idle
+    t =    49.97s     Synthesize event
+    t =    50.31s     Wait for com.bogadin.murzik to idle
+    t =    50.31s Waiting 5.0s for "action.wake" Button to exist
+    t =    51.36s     Checking `Expect predicate `existsNoRetry == 1` for object "action.wake" Button`
+    t =    51.36s         Checking existence of `"action.wake" Button`
+    t =    51.62s Pressing Home button
+    t =    55.38s Added attachment named '9-island-sleeping'
+    t =    55.38s Tear Down
+Test Case '-[MurzikUITests.MurzikUITests testAppAndDynamicIsland]' passed (56.129 seconds).
+Test Suite 'MurzikUITests' passed at 2026-10-29 17:39:38.487.
+	 Executed 1 test, with 0 failures (0 unexpected) in 56.129 (56.130) seconds
+Test Suite 'MurzikUITests.xctest' passed at 2026-10-29 17:39:38.488.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 261.840 (261.856) seconds
+Test Suite 'All tests' passed at 2026-10-29 17:39:38.488.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 261.840 (261.856) seconds
+2026-10-29 17:40:34.505 xcodebuild[1395:7529] [MT] IDETestOperationsObserverDebug: 465.264 elapsed -- Testing started completed.
+2026-10-29 17:40:34.505 xcodebuild[1395:7529] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-29 17:40:34.505 xcodebuild[1395:7529] [MT] IDETestOperationsObserverDebug: 465.264 sec, +465.264 sec -- end
 
 Test session results, code coverage, and logs:
 	/Users/runner/work/cat-island/cat-island/build/Tests.xcresult
 
-Testing failed:
-	Value of type 'XCUIScreen' has no member 'scale'
-	Testing cancelled because the build failed.
+Failing tests:
+	IslandWalkerTests.testSimulationRunsAndReactsToPetAndDrag()
+	IslandWalkerTests.testSimulationRunsAndReactsToPetAndDrag()
+	IslandWalkerTests.testSimulationRunsAndReactsToPetAndDrag()
+	IslandWalkerTests.testSimulationRunsAndReactsToPetAndDrag()
 
 ** TEST FAILED **
 
-
-The following build commands failed:
-	SwiftCompile normal arm64 Compiling\ IslandWalkerUITests.swift /Users/runner/work/cat-island/cat-island/UITests/IslandWalkerUITests.swift (in target 'MurzikUITests' from project 'Murzik')
-	SwiftCompile normal arm64 /Users/runner/work/cat-island/cat-island/UITests/IslandWalkerUITests.swift (in target 'MurzikUITests' from project 'Murzik')
-	Testing project Murzik with scheme Murzik
-(3 failures)
+Testing started
