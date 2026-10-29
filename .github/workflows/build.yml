@@ -2,7 +2,7 @@ name: Build & Test
 
 on:
   push:
-    branches: [main]
+    branches-ignore: [ci-output]
   workflow_dispatch:
 
 permissions:
@@ -116,18 +116,23 @@ jobs:
           else
             git checkout -q --orphan ci-output && git rm -rfq . || true
           fi
-          rm -rf renders logs && mkdir -p renders logs
-          cp "$GITHUB_WORKSPACE"/renders/*.png renders/ 2>/dev/null || true
-          for f in renders/sim-*.png; do [ -f "$f" ] && sips -Z 1400 "$f" >/dev/null; done
-          cp "$GITHUB_WORKSPACE"/build/*.txt "$GITHUB_WORKSPACE"/build/*.json logs/ 2>/dev/null || true
-          grep -E "error:" -A3 "$GITHUB_WORKSPACE"/build/ipa.log > logs/ipa-errors.txt 2>/dev/null || true
-          grep -E "error:" -A3 "$GITHUB_WORKSPACE"/build/test.log > logs/test-errors.txt 2>/dev/null || true
-          printf "commit=%s\ntest=%s\nipa=%s\nrun=%s\n" "$GITHUB_SHA" "${{ steps.test.outcome }}" "${{ steps.ipa.outcome }}" "$GITHUB_RUN_ID" > logs/status.txt
+          # Each branch gets its own folder: branches/<branch-name-with-dashes>/{renders,logs}
+          BR="${GITHUB_REF_NAME//\//-}"
+          OUT="branches/$BR"
+          rm -rf "$OUT" && mkdir -p "$OUT/renders" "$OUT/logs"
+          cp -R "$GITHUB_WORKSPACE"/renders/. "$OUT/renders/" 2>/dev/null || true
+          find "$OUT/renders" -name 'sim-*.png' -exec sips -Z 1400 {} \; >/dev/null 2>&1 || true
+          cp "$GITHUB_WORKSPACE"/build/*.txt "$GITHUB_WORKSPACE"/build/*.json "$OUT/logs/" 2>/dev/null || true
+          grep -E "error:" -A3 "$GITHUB_WORKSPACE"/build/ipa.log > "$OUT/logs/ipa-errors.txt" 2>/dev/null || true
+          grep -E "error:" -A3 "$GITHUB_WORKSPACE"/build/test.log > "$OUT/logs/test-errors.txt" 2>/dev/null || true
+          grep -E "warning:.*\.swift" "$GITHUB_WORKSPACE"/build/ipa.log | sort -u | head -200 > "$OUT/logs/swift-warnings.txt" 2>/dev/null || true
+          printf "commit=%s\nbranch=%s\ntest=%s\nipa=%s\nrun=%s\n" "$GITHUB_SHA" "$GITHUB_REF_NAME" "${{ steps.test.outcome }}" "${{ steps.ipa.outcome }}" "$GITHUB_RUN_ID" > "$OUT/logs/status.txt"
           git add -A
           git commit -qm "CI output for ${GITHUB_SHA::7} (run ${GITHUB_RUN_NUMBER})" || true
-          for attempt in 1 2 3; do
+          for attempt in 1 2 3 4 5; do
             if git push origin ci-output 2>&1; then break; fi
             echo "::warning::push attempt $attempt failed, rebasing"
+            sleep $((attempt * 3))
             git fetch origin ci-output && git rebase -X theirs FETCH_HEAD || git rebase --abort
           done
 
