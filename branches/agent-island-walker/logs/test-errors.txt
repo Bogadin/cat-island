@@ -1,0 +1,4 @@
+/Users/runner/work/cat-island/cat-island/UITests/IslandWalkerUITests.swift:25:37: error: value of type 'XCUIScreen' has no member 'scale'
+        let scale = XCUIScreen.main.scale
+                    ~~~~~~~~~~~~~~~ ^~~~~
+
