@@ -30,11 +30,18 @@ final class MurzikUITests: XCTestCase {
     func testAppAndDynamicIsland() throws {
         continueAfterFailure = false
         let app = XCUIApplication()
-        app.launchArguments = ["-uitest-hungry"]
+        // Hungry, and away for 9 hours: he greets her ("I missed you").
+        app.launchArguments = ["-uitest-hungry", "-uitest-missed"]
         app.launch()
 
         let feed = app.buttons["action.feed"]
         XCTAssertTrue(feed.waitForExistence(timeout: 15), "Feed button not found")
+        let greeting = app.descendants(matching: .any)["moment.greeting"]
+        XCTAssertTrue(greeting.waitForExistence(timeout: 5), "Greeting not shown")
+        sleep(1)
+        snapshot("0-greeting")
+        // The greeting goes away by itself.
+        sleep(7)
         XCTAssertTrue(app.buttons["action.pet"].exists)
         XCTAssertTrue(app.buttons["action.play"].exists)
         XCTAssertTrue(app.buttons["action.sleep"].exists)
@@ -88,5 +95,53 @@ final class MurzikUITests: XCTestCase {
         XCTAssertTrue(app.buttons["action.wake"].waitForExistence(timeout: 5))
         goHome(wait: 3)
         snapshot("9-island-sleeping")
+
+        // Wake him up and play: toy mode with the feather, then the laser.
+        app.activate()
+        XCTAssertTrue(app.buttons["action.wake"].waitForExistence(timeout: 10))
+        app.buttons["action.wake"].tap()
+        XCTAssertTrue(app.buttons["action.play"].waitForExistence(timeout: 5))
+        app.buttons["action.play"].tap()
+        let toyDone = app.buttons["toy.done"]
+        XCTAssertTrue(toyDone.waitForExistence(timeout: 5), "Toy mode did not open")
+        drag(app, from: CGVector(dx: 0.78, dy: 0.25), to: CGVector(dx: 0.3, dy: 0.3))
+        sleep(1)
+        snapshot("10-toy-feather")
+        app.buttons["toy.laser"].tap()
+        drag(app, from: CGVector(dx: 0.3, dy: 0.3), to: CGVector(dx: 0.58, dy: 0.47))
+        snapshot("11-toy-laser")
+        toyDone.tap()
+        XCTAssertTrue(app.buttons["action.pet"].waitForExistence(timeout: 5))
+
+        // Settings sheet.
+        app.buttons["settings.open"].tap()
+        let settingsDone = app.buttons["settings.done"]
+        XCTAssertTrue(settingsDone.waitForExistence(timeout: 5), "Settings did not open")
+        XCTAssertTrue(app.switches["settings.walker"].exists)
+        XCTAssertTrue(app.switches["settings.island"].exists)
+        sleep(1)
+        snapshot("12-settings")
+        app.swipeUp()
+        sleep(1)
+        snapshot("13-settings-us")
+        if !settingsDone.isHittable { app.swipeDown() }
+        if settingsDone.waitForExistence(timeout: 2), settingsDone.isHittable { settingsDone.tap() }
+        XCTAssertTrue(app.buttons["action.feed"].waitForExistence(timeout: 5))
+        sleep(2)
+        snapshot("14-main")
+
+        // The room at night.
+        app.terminate()
+        app.launchArguments = ["-uitest-phase", "night"]
+        app.launch()
+        XCTAssertTrue(app.buttons["action.feed"].waitForExistence(timeout: 15))
+        sleep(3)
+        snapshot("15-main-night")
+    }
+
+    private func drag(_ app: XCUIApplication, from: CGVector, to: CGVector) {
+        let start = app.coordinate(withNormalizedOffset: from)
+        let end = app.coordinate(withNormalizedOffset: to)
+        start.press(forDuration: 0.15, thenDragTo: end)
     }
 }

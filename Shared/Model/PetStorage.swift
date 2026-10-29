@@ -9,6 +9,7 @@ struct PetStorage {
     static let stateKey = "murzik.state.v1"
     static let islandEnabledKey = "murzik.island.enabled"
     static let islandStartedKey = "murzik.island.startedAt"
+    static let bondKey = "murzik.bond.v1"
 
     let defaults: UserDefaults
 
@@ -29,6 +30,23 @@ struct PetStorage {
     func save(_ state: PetState) {
         if let data = try? JSONEncoder().encode(state) {
             defaults.set(data, forKey: Self.stateKey)
+        }
+    }
+
+    /// Visits, love streak, gifts and mood diary (separate key, so the state JSON stays as it was).
+    func loadBond() -> BondState {
+        guard
+            let data = defaults.data(forKey: Self.bondKey),
+            let bond = try? JSONDecoder().decode(BondState.self, from: data)
+        else {
+            return BondState()
+        }
+        return bond
+    }
+
+    func saveBond(_ bond: BondState) {
+        if let data = try? JSONEncoder().encode(bond) {
+            defaults.set(data, forKey: Self.bondKey)
         }
     }
 
