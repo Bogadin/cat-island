@@ -1,5 +1,5 @@
-commit=ce6b020b1792497a9b0098db1ce48f11bddfafa9
+commit=5bd9605472f24bf95487a226d6fdbf51ce03117c
 branch=agent/live-activity
 test=success
 ipa=success
-run=40919070983
+run=40921326678
