@@ -45,7 +45,7 @@ final class MurzikSpriteRenderer {
     // MARK: Specs
 
     static func spec(for sprite: MurzikSprite) -> Spec {
-        let side: Float = .pi / 2
+        let side: Float = 1.22  // side view facing right, turned slightly toward the viewer
         let q: Float = 0.66
         switch sprite {
         case .walk0, .walk1, .walk2, .walk3, .walk4, .walk5, .walk6, .walk7:

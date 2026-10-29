@@ -97,7 +97,7 @@ final class MurzikRig {
         let m = SCNMaterial()
         m.lightingModel = .physicallyBased
         m.diffuse.contents = base
-        m.roughness.contents = NSNumber(value: 0.58)
+        m.roughness.contents = NSNumber(value: 0.68)
         m.metalness.contents = NSNumber(value: 0.0)
         let r = String(format: "%.3f", style.rimColor.x * style.rimStrength)
         let g = String(format: "%.3f", style.rimColor.y * style.rimStrength)
@@ -135,6 +135,40 @@ final class MurzikRig {
     }
 
     // MARK: - Geometry helpers
+
+    /// Upper hemisphere (y ≥ 0), open at the equator, unit-ish radius for eyelids.
+    static func hemisphere(radius: Float, rings: Int = 14, segments: Int = 40) -> SCNGeometry {
+        var verts: [SCNVector3] = []
+        var normals: [SCNVector3] = []
+        var idx: [Int32] = []
+        for r in 0...rings {
+            let phi = Float(r) / Float(rings) * (CM.pi / 2)
+            for sg in 0...segments {
+                let th = Float(sg) / Float(segments) * CM.tau
+                let n = SIMD3<Float>(sin(phi) * cos(th), cos(phi), sin(phi) * sin(th))
+                verts.append(SCNVector3(n.x * radius, n.y * radius, n.z * radius))
+                normals.append(SCNVector3(n.x, n.y, n.z))
+            }
+        }
+        let row = Int32(segments + 1)
+        for r in 0..<Int32(rings) {
+            for sg in 0..<Int32(segments) {
+                let a = r * row + sg
+                let b = a + row
+                idx += [a, a + 1, b, a + 1, b + 1, b]
+            }
+        }
+        let el = SCNGeometryElement(indices: idx, primitiveType: .triangles)
+        return SCNGeometry(sources: [SCNGeometrySource(vertices: verts), SCNGeometrySource(normals: normals)], elements: [el])
+    }
+
+    private lazy var lidGeometry: SCNGeometry = {
+        let g = MurzikRig.hemisphere(radius: 0.064)
+        let m = fur.copy() as! SCNMaterial
+        m.isDoubleSided = true
+        g.materials = [m]
+        return g
+    }()
 
     static func sphere(_ r: Float, _ m: SCNMaterial, segments: Int = 48) -> SCNNode {
         let g = SCNSphere(radius: CGFloat(r))
@@ -177,9 +211,13 @@ final class MurzikRig {
 
         // Torso
         let belly = MurzikRig.sphere(1, fur)
-        belly.simdScale = SIMD3(0.205, 0.15, 0.155)
+        belly.simdScale = SIMD3(0.27, 0.163, 0.158)
         bellyMesh.addChildNode(belly)
         bellyMesh.simdPosition = SIMD3(-0.005, -0.012, 0)
+        let back = MurzikRig.sphere(1, fur)
+        back.simdScale = SIMD3(0.25, 0.12, 0.145)
+        back.simdPosition = SIMD3(0, 0.05, 0)
+        bellyMesh.addChildNode(back)
         bodyNode.addChildNode(bellyMesh)
         addCollider(bellyMesh, 0.14)
 
@@ -188,8 +226,8 @@ final class MurzikRig {
         let chestBall = MurzikRig.sphere(0.165, fur)
         chestBall.simdScale = SIMD3(1.0, 1.02, 0.94)
         chestMesh.addChildNode(chestBall)
-        let bib = MurzikRig.sphere(0.12, furLight)
-        bib.simdPosition = SIMD3(0.075, -0.035, 0)
+        let bib = MurzikRig.sphere(0.11, fur)
+        bib.simdPosition = SIMD3(0.055, -0.03, 0)
         bib.simdScale = SIMD3(0.9, 1.05, 1.0)
         chestMesh.addChildNode(bib)
         chestNode.addChildNode(chestMesh)
@@ -233,12 +271,12 @@ final class MurzikRig {
         skull.simdScale = SIMD3(0.93, 0.88, 1.05)
         headNode.addChildNode(skull)
         for s: Float in [-1, 1] {
-            let cheek = MurzikRig.sphere(0.098, fur)
-            cheek.simdPosition = SIMD3(0.045, -0.07, s * 0.098)
+            let cheek = MurzikRig.sphere(0.088, fur)
+            cheek.simdPosition = SIMD3(0.05, -0.068, s * 0.086)
             cheek.simdScale = SIMD3(1.0, 0.92, 1.0)
             headNode.addChildNode(cheek)
-            let pad = MurzikRig.sphere(0.046, furLight)
-            pad.simdPosition = SIMD3(0.152, -0.066, s * 0.036)
+            let pad = MurzikRig.sphere(0.036, fur)
+            pad.simdPosition = SIMD3(0.15, -0.064, s * 0.03)
             headNode.addChildNode(pad)
             // Blush
             let b = MurzikRig.sphere(0.034, MurzikRig.flat(UIColor(red: 1.0, green: 0.42, blue: 0.56, alpha: 1)), segments: 24)
@@ -249,8 +287,8 @@ final class MurzikRig {
             headNode.addChildNode(b)
             blush.append(b)
         }
-        let chin = MurzikRig.sphere(0.036, fur)
-        chin.simdPosition = SIMD3(0.132, -0.103, 0)
+        let chin = MurzikRig.sphere(0.03, fur)
+        chin.simdPosition = SIMD3(0.128, -0.098, 0)
         headNode.addChildNode(chin)
 
         // Nose: rounded inverted triangle, facing +X.
@@ -340,13 +378,13 @@ final class MurzikRig {
             outer.materials = [fur]
             let outerN = SCNNode(geometry: outer)
             outerN.simdPosition = SIMD3(0, 0.0675, 0)
-            outerN.simdScale = SIMD3(0.42, 1, 1)
+            outerN.simdScale = SIMD3(0.5, 1, 1)
             pivot.addChildNode(outerN)
             let inner = SCNCone(topRadius: 0.004, bottomRadius: 0.056, height: 0.1)
             inner.radialSegmentCount = 30
             inner.materials = [innerEar]
             let innerN = SCNNode(geometry: inner)
-            innerN.simdPosition = SIMD3(0.019, 0.055, 0)
+            innerN.simdPosition = SIMD3(0.022, 0.054, 0)
             innerN.simdScale = SIMD3(0.3, 1, 1)
             pivot.addChildNode(innerN)
             earPivots.append(pivot)
@@ -360,7 +398,7 @@ final class MurzikRig {
         let arcMat = MurzikRig.flat(UIColor(red: 0.98, green: 0.80, blue: 0.36, alpha: 1))
         for s: Float in [-1, 1] {
             let e = Eye()
-            let n = simd_normalize(SIMD3<Float>(0.80, 0.10, s * 0.58))
+            let n = simd_normalize(SIMD3<Float>(0.78, 0.10, s * 0.62))
             e.socket.simdPosition = SIMD3(0.125, 0.018, s * 0.083)
             e.socket.simdOrientation = simd_quatf(from: SIMD3(0, 0, 1), to: n)
             e.socket.simdScale = SIMD3(repeating: style.eyeScale)
@@ -391,12 +429,15 @@ final class MurzikRig {
             h2.simdScale = SIMD3(1, 1, 0.4)
             e.highlights.addChildNode(h2)
 
-            for lid in [e.upperLid, e.lowerLid] {
-                let l = MurzikRig.sphere(0.067, fur)
-                l.simdScale = SIMD3(1.04, 1.0, 0.64)
-                lid.addChildNode(l)
-                lid.isHidden = true
-                e.socket.addChildNode(lid)
+            // Eyelids: fur-coloured hemispherical shells hugging the eye that rotate over it.
+            for (i, lid) in [e.upperLid, e.lowerLid].enumerated() {
+                let holder = SCNNode()
+                holder.simdScale = SIMD3(1.02, 1.1, 0.64)
+                e.socket.addChildNode(holder)
+                holder.addChildNode(lid)
+                let hemi = SCNNode(geometry: lidGeometry)
+                if i == 1 { hemi.simdOrientation = simd_quatf(angle: .pi, axis: SIMD3(0, 0, 1)) }
+                lid.addChildNode(hemi)
             }
 
             // Closed-eye arcs (stroked paths, cm units).
@@ -579,14 +620,17 @@ final class MurzikRig {
             let w = CM.mix(0.22, 1.05, f.pupil)
             let h = CM.mix(1.25, 1.1, f.pupil)
             e.pupil.simdScale = SIMD3(w, h, 0.3)
-            e.rot.simdOrientation = simd_quatf(angle: f.gaze.x * 0.42, axis: SIMD3(0, 1, 0)) *
-                simd_quatf(angle: -f.gaze.y * 0.35, axis: SIMD3(1, 0, 0))
+            // Gaze: slide the iris/pupil across the eye (rotation of a flattened eye looks wrong).
+            let gx = CM.clamp(f.gaze.x, -1, 1), gy = CM.clamp(f.gaze.y, -1, 1)
+            e.rot.simdPosition = SIMD3(gx * 0.013, gy * 0.011, 0)
+            e.rot.simdOrientation = simd_quatf(angle: gx * 0.12, axis: SIMD3(0, 1, 0)) *
+                simd_quatf(angle: -gy * 0.1, axis: SIMD3(1, 0, 0))
             let up = CM.sat(f.lidUpper)
-            e.upperLid.isHidden = up < 0.02 || closedAmt > 0.99
-            e.upperLid.simdPosition = SIMD3(0, CM.mix(0.125, 0.0, up), 0.003)
+            e.upperLid.isHidden = closedAmt > 0.99
+            e.upperLid.simdOrientation = simd_quatf(angle: -CM.pi / 2 + CM.pi * up, axis: SIMD3(1, 0, 0))
             let low = CM.sat(f.lidLower)
-            e.lowerLid.isHidden = low < 0.02 || closedAmt > 0.99
-            e.lowerLid.simdPosition = SIMD3(0, CM.mix(-0.125, -0.06, low), 0.003)
+            e.lowerLid.isHidden = closedAmt > 0.99
+            e.lowerLid.simdOrientation = simd_quatf(angle: CM.pi / 2 - CM.pi / 2 * 0.8 * low, axis: SIMD3(1, 0, 0))
             e.open.isHidden = closedAmt > 0.99
             e.highlights.isHidden = up > 0.7
             e.closedArc.isHidden = happy || closedAmt < 0.01

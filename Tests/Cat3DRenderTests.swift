@@ -93,6 +93,9 @@ final class Cat3DRenderTests: XCTestCase {
             Shot(name: "hero-meow-hungry", behavior: .meow, t: 0.7, mood: .hungry, azimuth: q, look: true),
             Shot(name: "hero-lie", behavior: .lie, t: 0, azimuth: q, look: true),
             Shot(name: "hero-front", behavior: .sit, t: 0, azimuth: 0.0, elevation: 0.12, look: true),
+            Shot(name: "diag-top-sit", behavior: .sit, t: 0, azimuth: 0.6, elevation: 1.4),
+            Shot(name: "diag-top-sleep", behavior: .sleep, t: 0, mood: .sleeping, azimuth: 0.6, elevation: 1.4),
+            Shot(name: "diag-top-loaf", behavior: .loaf, t: 0, azimuth: 0.6, elevation: 1.4),
         ]
         let size = 1000
         for shot in shots {

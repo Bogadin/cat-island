@@ -246,12 +246,19 @@ enum Poses {
         ]
         p.pawTilt = [0, 0, 0, 0]
         // Tail wrapped around the front, on the floor (toward the cat's right / camera side).
-        let n = CatPose.tailCount
-        for i in 0..<n {
-            let k = Float(i) / Float(n - 1)
-            p.tail[i] = SIMD2(i == 0 ? -0.55 : 0.07 - 0.02 * k, i == 0 ? -0.35 : -0.24)
-        }
+        p.tail = Poses.floorTail(side: -1)
         return p
+    }
+
+    /// Tail that drops to the floor and wraps around the body (side -1 = cat's right, +1 = left).
+    static func floorTail(side: Float, wrap: Float = 0.3) -> [SIMD2<Float>] {
+        let lifts: [Float] = [-0.8, 0.26, 0.25, 0.22, 0.12, 0.02, 0.0, 0.0, 0.03, 0.06]
+        var t: [SIMD2<Float>] = []
+        for i in 0..<CatPose.tailCount {
+            let sway: Float = i == 0 ? 0.45 : wrap
+            t.append(SIMD2(lifts[i], side * sway))
+        }
+        return t
     }
 
     static func sit(_ t: Float) -> CatPose {
@@ -276,9 +283,7 @@ enum Poses {
         p.pawTilt = [-1.4, -1.4, -1.3, -1.3]
         lookAround(&p, t * 0.6, amount: 0.5)
         let n = CatPose.tailCount
-        for i in 0..<n {
-            p.tail[i] = SIMD2(i == 0 ? -0.35 : 0.02, i == 0 ? -0.45 : -0.17)
-        }
+        p.tail = Poses.floorTail(side: -1, wrap: 0.22)
         p.tail[n - 1].x += 0.2 * max(0, sin(t * 0.9))
         p.breathAmp = 1.1
         p.earL.x = 0.1
@@ -300,9 +305,7 @@ enum Poses {
         p.pawTilt = [0, 0, -0.3, -0.3]
         lookAround(&p, t * 0.7, amount: 0.7)
         let n = CatPose.tailCount
-        for i in 0..<n {
-            p.tail[i] = SIMD2(i == 0 ? -0.25 : 0.02, i == 0 ? -0.6 : -0.15)
-        }
+        p.tail = Poses.floorTail(side: -1, wrap: 0.16)
         p.tail[n - 1].x += 0.25 * max(0, sin(t * 1.1))
         p.tail[n - 2].x += 0.1 * max(0, sin(t * 1.1))
         return p
@@ -312,21 +315,20 @@ enum Poses {
     static func sleep(_ t: Float) -> CatPose {
         var p = CatPose()
         p.bodyPos = SIMD3(0.0, 0.15, 0)
-        p.body.x = -0.12
-        p.chest.y = 0.6
-        p.hips.y = -0.55
-        p.neck.y = 0.75
-        p.neck.z = -0.55
-        p.head.y = 0.45
-        p.head.z = -0.1
-        p.head.x = 0.28
+        p.body.x = 0.1
+        p.chest.y = -0.62
+        p.hips.y = 0.6
+        p.neck.y = -0.8
+        p.neck.z = -0.5
+        p.head.y = -0.5
+        p.head.z = -0.05
+        p.head.x = -0.3
         p.feetGround = 0
         p.feet = [SIMD3(0.09, -0.06, 0.0), SIMD3(0.1, -0.055, 0.0), SIMD3(0.1, -0.06, 0), SIMD3(0.11, -0.055, 0)]
         p.pawTilt = [-1.2, -1.2, -1.2, -1.2]
         let n = CatPose.tailCount
-        for i in 0..<n {
-            p.tail[i] = SIMD2(i == 0 ? -0.5 : 0.015, i == 0 ? 0.5 : 0.25)
-        }
+        p.tail = Poses.floorTail(side: -1, wrap: 0.36)
+        p.tail[n - 1].y += -0.12 * sin(t * 0.7)
         p.breathAmp = 1.6
         p.breathRate = 0.22
         p.earL.z = 0.15
@@ -379,12 +381,13 @@ enum Poses {
         let base = stand()
         // Play-bow stretch.
         var bow = stand()
-        bow.bodyPos = SIMD3(0.02, 0.26, 0)
-        bow.body.z = -0.32
-        bow.neck.z = 0.32
+        bow.bodyPos = SIMD3(0.0, 0.25, 0)
+        bow.body.z = -0.5
+        bow.hips.z = 0.12
+        bow.neck.z = 0.5
         bow.head.z = 0.12
-        bow.feet[0] = SIMD3(0.37, g, -0.07)
-        bow.feet[1] = SIMD3(0.37, g, 0.07)
+        bow.feet[0] = SIMD3(0.4, g, -0.07)
+        bow.feet[1] = SIMD3(0.4, g, 0.07)
         bow.feet[2] = SIMD3(-0.12, g, -0.085)
         bow.feet[3] = SIMD3(-0.12, g, 0.085)
         bow.pawTilt = [0.15, 0.15, 0, 0]
