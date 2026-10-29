@@ -1,40 +1,40 @@
-2026-10-29 17:50:56.465 xcodebuild[1497:8093] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
-2026-10-29 17:50:56.473 xcodebuild[1497:8093] [MT] IDELaunchParametersSnapshot: no debugger version
-/Users/runner/work/cat-island/cat-island/UITests/LiveActivityUITests.swift:52: error: -[MurzikUITests.LiveActivityUITests testWalkAcrossTheIslandWhenLeavingTheApp] : Failed to launch <XCUIApplicationImpl: 0x108942480 com.bogadin.murzik at /Users/runner/Library/Developer/Xcode/DerivedData/Murzik-godrylvsbhpbrkajpxqswasefsxa/Build/Products/Debug-iphonesimulator/Murzik.app> via Xcode: Timed out while launching application via Xcode.
-    t =    60.56s Tear Down
-Test Case '-[MurzikUITests.LiveActivityUITests testWalkAcrossTheIslandWhenLeavingTheApp]' failed (72.497 seconds).
-Test Suite 'LiveActivityUITests' failed at 2026-10-29 17:50:47.335.
-	 Executed 3 tests, with 2 failures (0 unexpected) in 375.891 (375.916) seconds
-Test Suite 'MurzikUITests' started at 2026-10-29 17:50:47.368.
-Test Case '-[MurzikUITests.MurzikUITests testAppAndDynamicIsland]' started.
-    t =     0.01s Start Test at 2026-10-29 17:50:47.388
-    t =     0.36s Set Up
-    t =     0.43s                     Open com.bogadin.murzik
-    t =     0.43s                         Launch com.bogadin.murzik
-2026-10-29 17:50:57.285 xcodebuild[1497:8093] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
-2026-10-29 17:50:57.285 xcodebuild[1497:8093] [MT] IDELaunchParametersSnapshot: no debugger version
-/Users/runner/work/cat-island/cat-island/UITests/MurzikUITests.swift:34: error: -[MurzikUITests.MurzikUITests testAppAndDynamicIsland] : Failed to get launch progress for <XCUIApplicationImpl: 0x108942480 com.bogadin.murzik at /Users/runner/Library/Developer/Xcode/DerivedData/Murzik-godrylvsbhpbrkajpxqswasefsxa/Build/Products/Debug-iphonesimulator/Murzik.app>: Timed out while requesting launch progress.
-    t =    80.09s Tear Down
-Test Case '-[MurzikUITests.MurzikUITests testAppAndDynamicIsland]' failed (91.739 seconds).
-Test Suite 'MurzikUITests' failed at 2026-10-29 17:52:19.128.
-	 Executed 1 test, with 1 failure (0 unexpected) in 91.739 (91.759) seconds
-Test Suite 'MurzikUITests.xctest' failed at 2026-10-29 17:52:19.131.
-	 Executed 4 tests, with 3 failures (0 unexpected) in 467.630 (467.711) seconds
-Test Suite 'All tests' failed at 2026-10-29 17:52:19.132.
-	 Executed 4 tests, with 3 failures (0 unexpected) in 467.630 (467.716) seconds
-2026-10-29 17:52:32.034604+0000 MurzikUITests-Runner[6288:34097] [Default] Xcode took 11.59 seconds to acknowledge that testing finished.
-2026-10-29 17:53:19.408 xcodebuild[1497:8093] [MT] IDETestOperationsObserverDebug: 823.416 elapsed -- Testing started completed.
-2026-10-29 17:53:19.408 xcodebuild[1497:8093] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
-2026-10-29 17:53:19.408 xcodebuild[1497:8093] [MT] IDETestOperationsObserverDebug: 823.416 sec, +823.416 sec -- end
+    t =    53.62s     Synthesize event
+    t =    53.96s     Wait for com.bogadin.murzik to idle
+    t =    54.26s Added attachment named '7-app-after-pet'
+    t =    55.28s Pressing Home button
+    t =    58.90s Added attachment named '8-island-loving'
+    t =    58.99s Open com.bogadin.murzik
+    t =    59.00s     Activate com.bogadin.murzik
+    t =    59.47s         Wait for com.bogadin.murzik to idle
+    t =    59.86s Waiting 10.0s for "action.sleep" Button to exist
+    t =    60.93s     Checking `Expect predicate `existsNoRetry == 1` for object "action.sleep" Button`
+    t =    60.93s         Checking existence of `"action.sleep" Button`
+    t =    61.77s Tap "action.sleep" Button
+    t =    61.78s     Wait for com.bogadin.murzik to idle
+    t =    61.80s     Find the "action.sleep" Button
+    t =    61.91s     Check for interrupting elements affecting "action.sleep" Button
+    t =    62.03s     Synthesize event
+    t =    62.36s     Wait for com.bogadin.murzik to idle
+    t =    62.37s Waiting 5.0s for "action.wake" Button to exist
+    t =    63.42s     Checking `Expect predicate `existsNoRetry == 1` for object "action.wake" Button`
+    t =    63.43s         Checking existence of `"action.wake" Button`
+    t =    63.54s Pressing Home button
+    t =    68.02s Added attachment named '9-island-sleeping'
+    t =    68.12s Tear Down
+Test Case '-[MurzikUITests.MurzikUITests testAppAndDynamicIsland]' passed (69.861 seconds).
+Test Suite 'MurzikUITests' passed at 2026-10-29 18:11:11.893.
+	 Executed 1 test, with 0 failures (0 unexpected) in 69.861 (69.863) seconds
+Test Suite 'MurzikUITests.xctest' passed at 2026-10-29 18:11:11.894.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 443.566 (443.618) seconds
+Test Suite 'All tests' passed at 2026-10-29 18:11:11.895.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 443.566 (443.621) seconds
+2026-10-29 18:11:14.912 xcodebuild[1361:7549] [MT] IDETestOperationsObserverDebug: 785.665 elapsed -- Testing started completed.
+2026-10-29 18:11:14.912 xcodebuild[1361:7549] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-29 18:11:14.912 xcodebuild[1361:7549] [MT] IDETestOperationsObserverDebug: 785.665 sec, +785.665 sec -- end
 
 Test session results, code coverage, and logs:
 	/Users/runner/work/cat-island/cat-island/build/Tests.xcresult
 
-Failing tests:
-	LiveActivityUITests.testRealTimePawTrail()
-	LiveActivityUITests.testWalkAcrossTheIslandWhenLeavingTheApp()
-	MurzikUITests.testAppAndDynamicIsland()
-
-** TEST FAILED **
+** TEST SUCCEEDED **
 
 Testing started
