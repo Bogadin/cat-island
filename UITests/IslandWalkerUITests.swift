@@ -12,6 +12,9 @@ final class IslandWalkerUITests: XCTestCase {
         return url
     }
 
+    /// Screen width in points (to convert screenshot pixels to points).
+    private var pointWidth: CGFloat = 440
+
     private func snapshot(_ name: String) {
         let shot = XCUIScreen.main.screenshot()
         let attachment = XCTAttachment(screenshot: shot)
@@ -22,7 +25,7 @@ final class IslandWalkerUITests: XCTestCase {
         try? shot.pngRepresentation.write(to: dir.appendingPathComponent("\(name).png"))
         let image = shot.image
         guard let cg = image.cgImage else { return }
-        let scale = XCUIScreen.main.scale
+        let scale = image.scale > 1 ? image.scale : CGFloat(cg.width) / max(pointWidth, 1)
         let height = min(cg.height, Int(250 * scale))
         if let top = cg.cropping(to: CGRect(x: 0, y: 0, width: cg.width, height: height)),
            let data = UIImage(cgImage: top).pngData() {
@@ -35,6 +38,8 @@ final class IslandWalkerUITests: XCTestCase {
         app.launchArguments = ["-walker-mood", mood, "-walker-seed", String(seed)]
         app.launch()
         XCTAssertTrue(app.buttons["action.feed"].waitForExistence(timeout: 15), "App did not start")
+        let width = app.windows.firstMatch.frame.width
+        if width > 0 { pointWidth = width }
         return app
     }
 
