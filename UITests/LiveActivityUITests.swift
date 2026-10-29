@@ -46,9 +46,9 @@ final class LiveActivityUITests: XCTestCase {
         }
     }
 
-    private func launchFed() -> XCUIApplication {
+    private func launchFed(fastTrail: Bool = false) -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchArguments = ["-uitest-fast-trail"]
+        app.launchArguments = fastTrail ? ["-uitest-fast-trail"] : []
         app.launch()
         let feed = app.buttons["action.feed"]
         XCTAssertTrue(feed.waitForExistence(timeout: 15), "Feed button not found")
@@ -60,62 +60,74 @@ final class LiveActivityUITests: XCTestCase {
 
     private func expandIsland() {
         springboard.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.04)).press(forDuration: 1.2)
-        pause(1.5)
+        pause(1)
     }
 
     /// Leaving the app: Murzik stretches, walks across the island through the camera area and sits.
-    /// Leaving again: he walks back.
+    /// Leaving again: he walks back. (A screenshot takes ~1–2 s, so frames are taken back to back.)
     func testWalkAcrossTheIslandWhenLeavingTheApp() throws {
         continueAfterFailure = true
         let app = launchFed()
 
         XCUIDevice.shared.press(.home)
-        film("walk", count: 12, every: 0.9)
-        pause(2)
+        film("walk", count: 9, every: 0)
+        pause(3)
         capture("walk-settled", fraction: 0.075)
 
         app.activate()
         XCTAssertTrue(app.buttons["action.feed"].waitForExistence(timeout: 10))
         pause(2)
         XCUIDevice.shared.press(.home)
-        film("walkback", count: 12, every: 0.9)
-        pause(2)
+        film("walkback", count: 9, every: 0)
+        pause(3)
         capture("walkback-settled", fraction: 0.075)
     }
 
-    /// Expanded island: the stage, the real-time paw trail (two shots seconds apart), and the
-    /// Pet / Feed buttons making him walk to the button and react.
-    func testExpandedStageTrailAndButtons() throws {
+    /// Expanded island Pet / Feed buttons: he walks to the button and reacts.
+    func testExpandedIslandButtons() throws {
         continueAfterFailure = true
         _ = launchFed()
         XCUIDevice.shared.press(.home)
         // Let the leaving-the-app walk finish.
-        pause(12)
+        pause(14)
         capture("compact-rest", fraction: 0.075)
 
         expandIsland()
-        capture("expanded-trail-a", fraction: 0.32)
-        pause(6)
-        capture("expanded-trail-b", fraction: 0.32)
-
+        capture("expanded", fraction: 0.3)
         let pet = springboard.buttons["ליטוף"].firstMatch
         if pet.waitForExistence(timeout: 3) {
             pet.tap()
-            film("pet", count: 9, every: 0.8, fraction: 0.32)
+            film("pet", count: 7, every: 0, fraction: 0.3)
         } else {
             XCTContext.runActivity(named: "Expanded island Pet button not reachable") { _ in }
         }
-        pause(3)
+        pause(4)
+        capture("pet-settled", fraction: 0.3)
 
         expandIsland()
         let feed = springboard.buttons["אוכל"].firstMatch
         if feed.waitForExistence(timeout: 3) {
             feed.tap()
-            film("feed", count: 9, every: 0.8, fraction: 0.32)
+            film("feed", count: 7, every: 0, fraction: 0.3)
         } else {
             XCTContext.runActivity(named: "Expanded island Feed button not reachable") { _ in }
         }
-        pause(3)
-        capture("after-buttons", fraction: 0.32)
+        pause(4)
+        capture("feed-settled", fraction: 0.3)
+    }
+
+    /// Real-time experiment: the paw-print trail is a `ProgressView(timerInterval:)` mask. With a
+    /// 75 s debug interval, two shots a few seconds apart must differ without any content update.
+    func testRealTimePawTrail() throws {
+        continueAfterFailure = true
+        _ = launchFed(fastTrail: true)
+        XCUIDevice.shared.press(.home)
+        pause(14)
+        expandIsland()
+        capture("trail-a", fraction: 0.3)
+        pause(5)
+        capture("trail-b", fraction: 0.3)
+        pause(5)
+        capture("trail-c", fraction: 0.3)
     }
 }

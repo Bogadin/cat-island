@@ -127,15 +127,17 @@ struct ExpandedCenterView: View {
     var mood: MurzikMood
 
     var body: some View {
-        VStack(spacing: 1) {
+        // One line ("Murzik · purring happily") keeps the expanded island short enough for the stage.
+        HStack(spacing: 6) {
             Text(name)
-                .font(.system(size: 17, weight: .bold, design: .rounded))
+                .font(.system(size: 16, weight: .bold, design: .rounded))
                 .foregroundStyle(.white)
+                .layoutPriority(1)
             Text(Strings.moodMessage(mood))
                 .font(.system(size: 13, weight: .medium, design: .rounded))
                 .foregroundStyle(.white.opacity(0.72))
                 .lineLimit(1)
-                .minimumScaleFactor(0.8)
+                .minimumScaleFactor(0.75)
                 .contentTransition(.opacity)
         }
         .environment(\.layoutDirection, .rightToLeft)
@@ -149,13 +151,12 @@ struct ExpandedBottomView: View {
 
     var body: some View {
         let mood = state.displayMood(isStale: isStale)
-        VStack(spacing: 6) {
-            IslandSceneView(state: state, mood: mood, isStale: isStale, catSize: 46)
-                .frame(height: 56)
+        VStack(spacing: 4) {
+            IslandSceneView(state: state, mood: mood, isStale: isStale, catSize: 40)
+                .frame(height: 44)
             ControlsRow(state: state, isStale: isStale, compactButtons: false)
         }
         .padding(.horizontal, 4)
-        .padding(.bottom, 2)
     }
 }
 
@@ -347,7 +348,7 @@ struct IslandActionButton<I: AppIntent>: View {
                 } else {
                     Label(Strings.actionTitle(action), systemImage: action.symbolName)
                         .padding(.horizontal, 12)
-                        .frame(height: 32)
+                        .frame(height: 30)
                 }
             }
             .font(.system(size: 13, weight: .bold, design: .rounded))
