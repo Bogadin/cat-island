@@ -1,7 +1,0 @@
-/Users/runner/work/cat-island/cat-island/Tests/IslandWalkerTests.swift:206: error: -[MurzikTests.IslandWalkerTests testSimulationRunsAndReactsToPetAndDrag] : XCTAssertTrue failed
-/Users/runner/work/cat-island/cat-island/Tests/IslandWalkerTests.swift:208: error: -[MurzikTests.IslandWalkerTests testSimulationRunsAndReactsToPetAndDrag] : XCTAssertTrue failed
-/Users/runner/work/cat-island/cat-island/Tests/IslandWalkerTests.swift:216: error: -[MurzikTests.IslandWalkerTests testSimulationRunsAndReactsToPetAndDrag] : XCTAssertEqualWithAccuracy failed: ("400.0") is not equal to ("85.66") +/- ("1.0")
-/Users/runner/work/cat-island/cat-island/Tests/IslandWalkerTests.swift:226: error: -[MurzikTests.IslandWalkerTests testSimulationRunsAndReactsToPetAndDrag] : XCTAssertLessThan failed: ("400.0") is not less than ("77.66")
-Test Case '-[MurzikTests.IslandWalkerTests testSimulationRunsAndReactsToPetAndDrag]' failed (1.432 seconds).
-Test Case '-[MurzikTests.IslandWalkerTests testSleepingEndsCurledBesideTheIsland]' started.
-Test Case '-[MurzikTests.IslandWalkerTests testSleepingEndsCurledBesideTheIsland]' passed (0.002 seconds).
