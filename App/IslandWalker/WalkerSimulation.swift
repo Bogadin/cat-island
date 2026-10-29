@@ -26,6 +26,9 @@ final class WalkerSimulation {
     /// Mood override for UI tests and previews.
     var forcedMood: MurzikMood?
     var seed: UInt64
+    /// How long he sits looking pleased after being petted or dropped (UI tests make it longer,
+    /// because XCUITest waits for the app to be idle before taking a screenshot).
+    var reactionHold: Double = 1.3
 
     private(set) var time: Double = 0
     private var lastDate: Date?
@@ -56,13 +59,13 @@ final class WalkerSimulation {
         // Clamp the step so a pause (app inactive, timeline paused) doesn't make him teleport.
         let dt = lastDate.map { min(max(date.timeIntervalSince($0), 0), 1.0 / 15) } ?? 0
         lastDate = date
-        time += dt
         step(mood: newMood, geometry: geo, dt: dt)
         return snapshot()
     }
 
     /// Advances by a fixed `dt` (used by tests).
     func step(mood newMood: MurzikMood, geometry geo: IslandGeometry, dt: Double) {
+        time += dt
         if geometry != geo {
             geometry = geo
             let planner = WalkerPlanner(geometry: geo, seed: seed)
@@ -179,7 +182,7 @@ final class WalkerSimulation {
         addHeart(at: CGPoint(x: frame.feet.x, y: frame.feet.y - (frame.upsideDown ? -20 : 34)))
         interrupt { script in
             script.petHop()
-            script.hold(.sitFront, 1.3, facingLeft: script.towardIsland)
+            script.hold(.sitFront, reactionHold, bubble: WalkerPlanner.heart, facingLeft: script.towardIsland)
         }
     }
 
@@ -207,7 +210,7 @@ final class WalkerSimulation {
         frame.pose = .jump
         interrupt { script in
             script.fallToFloor()
-            script.hold(.sitFront, 0.9, facingLeft: script.towardIsland)
+            script.hold(.sitFront, max(0.9, reactionHold - 0.4), facingLeft: script.towardIsland)
         }
     }
 }

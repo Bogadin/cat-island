@@ -33,9 +33,9 @@ final class IslandWalkerUITests: XCTestCase {
         }
     }
 
-    private func launch(mood: String, seed: Int = 1) -> XCUIApplication {
+    private func launch(mood: String, seed: Int = 1, extra: [String] = []) -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchArguments = ["-walker-mood", mood, "-walker-seed", String(seed)]
+        app.launchArguments = ["-walker-mood", mood, "-walker-seed", String(seed)] + extra
         app.launch()
         XCTAssertTrue(app.buttons["action.feed"].waitForExistence(timeout: 15), "App did not start")
         let width = app.windows.firstMatch.frame.width
@@ -67,7 +67,8 @@ final class IslandWalkerUITests: XCTestCase {
 
     /// Tap him (hop + heart) and drag him down the screen (he falls back with a bounce).
     func testWalkerInteraction() throws {
-        let app = launch(mood: "sleeping", seed: 2)
+        // Long reaction so the screenshot (taken after XCUITest's idle wait) still shows it.
+        let app = launch(mood: "sleeping", seed: 2, extra: ["-walker-reaction-hold", "25"])
         sleep(9)  // walks to the ledge beside the island and curls up
         let cat = app.descendants(matching: .any)["walker.cat"]
         XCTAssertTrue(cat.waitForExistence(timeout: 5), "walker cat not found")

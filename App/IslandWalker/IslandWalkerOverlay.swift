@@ -76,6 +76,10 @@ private struct IslandWalkerStage: View {
         .onAppear {
             safeTop = WalkerScreen.safeTop()
             simulation.forcedMood = Self.forcedMood
+            #if DEBUG
+            let hold = UserDefaults.standard.double(forKey: "walker-reaction-hold")
+            if hold > 0 { simulation.reactionHold = hold }
+            #endif
         }
         .onChange(of: scenePhase) { _, _ in
             safeTop = WalkerScreen.safeTop()
@@ -192,7 +196,9 @@ private struct WalkerScene: View {
         let t = snapshot.time
         ZStack(alignment: .topLeading) {
             if let bubble = frame.bubble {
-                let toRight = frame.feet.x < geometry.screen.width - 70
+                // Beside his head, on the side away from the island when he is on the status-bar line.
+                let onLedge = geometry.hasIsland && frame.feet.y < geometry.pill.maxY + 6
+                let toRight = onLedge ? frame.feet.x > geometry.pill.midX : frame.feet.x < geometry.screen.width - 70
                 WalkerBubble(text: bubble, tailOnLeft: toRight)
                     .position(x: frame.feet.x + (toRight ? 34 : -34), y: frame.feet.y - 24)
                     .transition(.scale)
@@ -248,7 +254,7 @@ private struct WalkerBubble: View {
     var body: some View {
         Text(text)
             .font(.system(size: 11, weight: .heavy, design: .rounded))
-            .foregroundStyle(MurzikPalette.ink)
+            .foregroundStyle(text == WalkerPlanner.heart ? MurzikPalette.heart : MurzikPalette.ink)
             .padding(.horizontal, 8)
             .padding(.vertical, 4)
             .background(
@@ -275,15 +281,15 @@ private struct WalkerButterflyView: View {
         ZStack {
             Circle()
                 .fill(MurzikPalette.amber.opacity(0.25))
-                .frame(width: 16, height: 16)
-                .blur(radius: 3)
+                .frame(width: 22, height: 22)
+                .blur(radius: 4)
             HStack(spacing: 0) {
                 wing.scaleEffect(x: CGFloat(flap), y: 1, anchor: .trailing)
                 wing.scaleEffect(x: -CGFloat(flap), y: 1, anchor: .leading)
             }
             Capsule()
                 .fill(MurzikPalette.ink)
-                .frame(width: 1.6, height: 7)
+                .frame(width: 2, height: 9)
         }
         .rotationEffect(.degrees(sin(time * 2.3) * 12))
         .accessibilityHidden(true)
@@ -298,7 +304,7 @@ private struct WalkerButterflyView: View {
                     endPoint: .bottom
                 )
             )
-            .frame(width: 6, height: 8)
+            .frame(width: 8, height: 11)
     }
 }
 

@@ -208,6 +208,7 @@ struct WalkerScript {
 /// Decides what Murzik does next, based on his mood and where he is.
 struct WalkerPlanner {
     static let meow = "מיאו"
+    static let heart = "♥"
 
     let geo: IslandGeometry
     var rng: WalkerRandom
@@ -319,7 +320,7 @@ struct WalkerPlanner {
     private mutating func planSleeping(_ s: inout WalkerScript) {
         if s.surface != .ledgeLeft {
             s.goLedge(left: true, speed: 24)
-            s.walk(toX: geo.leftLedgeX - 4, speed: 20)
+            s.walk(toX: geo.leftLedgeX - 12, speed: 20)
             s.hold(.loaf, 1.4, facingLeft: false)
         }
         s.hold(.sleep, 12, facingLeft: false)
