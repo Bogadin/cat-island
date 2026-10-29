@@ -232,7 +232,7 @@ struct IslandPawTrail: View {
 
     private var prints: some View {
         HStack(spacing: 0) {
-            ForEach(0..<11, id: \.self) { i in
+            ForEach(0..<9, id: \.self) { i in
                 Image(systemName: "pawprint.fill")
                     .font(.system(size: 7, weight: .bold))
                     .rotationEffect(.degrees(-90))

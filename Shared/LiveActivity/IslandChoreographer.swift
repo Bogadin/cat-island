@@ -48,6 +48,9 @@ enum IslandChoreographer {
                     await IslandChoreographer.play(beats, storage: storage)
                 }
             }
+            #if DEBUG
+            await IslandChoreographer.runDebugIntentAfterWalk()
+            #endif
             if IslandChoreographer.backgroundTask == id { IslandChoreographer.endBackgroundTask() }
         }
     }
@@ -79,7 +82,8 @@ enum IslandChoreographer {
         generation &+= 1
         let current = generation
         let start = Date.now
-        for beat in beats.prefix(IslandChoreography.maxBeats) {
+        let list = Array(beats.prefix(IslandChoreography.maxBeats))
+        for (index, beat) in list.enumerated() {
             let wait = beat.at - Date.now.timeIntervalSince(start)
             if wait > 0 {
                 do {
@@ -93,6 +97,10 @@ enum IslandChoreographer {
                 }
             }
             guard current == generation else { return false }
+            // Running late (slow updates)? Skip to the next beat instead of piling up a backlog.
+            if index + 1 < list.count, Date.now.timeIntervalSince(start) >= list[index + 1].at {
+                continue
+            }
             await send(beat.scene, storage: storage)
         }
         return true
@@ -108,6 +116,21 @@ enum IslandChoreographer {
     }
 
     // MARK: Helpers
+
+    #if DEBUG
+    /// UI tests: `-uitest-intent-after-walk pet|feed` runs that island button's intent after the
+    /// leaving-the-app walk (the simulator cannot tap Live Activity buttons reliably).
+    static func runDebugIntentAfterWalk() async {
+        let args = ProcessInfo.processInfo.arguments
+        guard let i = args.firstIndex(of: "-uitest-intent-after-walk"), i + 1 < args.count else { return }
+        try? await Task.sleep(nanoseconds: 1_500_000_000)
+        switch args[i + 1] {
+        case "pet": _ = try? await PetMurzikIntent().perform()
+        case "feed": _ = try? await FeedMurzikIntent().perform()
+        default: break
+        }
+    }
+    #endif
 
     private static func reactionRemaining(in state: PetState, at now: Date) -> TimeInterval {
         guard let reaction = state.lastReaction, PersonalityEngine.isReactionActive(reaction, at: now) else { return 0 }
