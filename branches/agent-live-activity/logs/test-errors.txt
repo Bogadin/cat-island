@@ -1,0 +1,14 @@
+/Users/runner/work/cat-island/cat-island/UITests/LiveActivityUITests.swift:52: error: -[MurzikUITests.LiveActivityUITests testRealTimePawTrail] : Failed to terminate com.bogadin.murzik:7042: Failed to terminate com.bogadin.murzik:0
+    t =    89.84s Tear Down
+Test Case '-[MurzikUITests.LiveActivityUITests testRealTimePawTrail]' failed (105.354 seconds).
+Test Case '-[MurzikUITests.LiveActivityUITests testWalkAcrossTheIslandWhenLeavingTheApp]' started.
+--
+/Users/runner/work/cat-island/cat-island/UITests/LiveActivityUITests.swift:52: error: -[MurzikUITests.LiveActivityUITests testWalkAcrossTheIslandWhenLeavingTheApp] : Failed to launch <XCUIApplicationImpl: 0x108942480 com.bogadin.murzik at /Users/runner/Library/Developer/Xcode/DerivedData/Murzik-godrylvsbhpbrkajpxqswasefsxa/Build/Products/Debug-iphonesimulator/Murzik.app> via Xcode: Timed out while launching application via Xcode.
+    t =    60.56s Tear Down
+Test Case '-[MurzikUITests.LiveActivityUITests testWalkAcrossTheIslandWhenLeavingTheApp]' failed (72.497 seconds).
+Test Suite 'LiveActivityUITests' failed at 2026-10-29 17:50:47.335.
+--
+/Users/runner/work/cat-island/cat-island/UITests/MurzikUITests.swift:34: error: -[MurzikUITests.MurzikUITests testAppAndDynamicIsland] : Failed to get launch progress for <XCUIApplicationImpl: 0x108942480 com.bogadin.murzik at /Users/runner/Library/Developer/Xcode/DerivedData/Murzik-godrylvsbhpbrkajpxqswasefsxa/Build/Products/Debug-iphonesimulator/Murzik.app>: Timed out while requesting launch progress.
+    t =    80.09s Tear Down
+Test Case '-[MurzikUITests.MurzikUITests testAppAndDynamicIsland]' failed (91.739 seconds).
+Test Suite 'MurzikUITests' failed at 2026-10-29 17:52:19.128.
