@@ -25,6 +25,8 @@ struct MurzikApp: App {
         .onChange(of: scenePhase) { _, phase in
             if phase == .active {
                 model.becameActive()
+            } else if phase == .background {
+                IslandChoreographer.appDidEnterBackground()
             }
         }
     }

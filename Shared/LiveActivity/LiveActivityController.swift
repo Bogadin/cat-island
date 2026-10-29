@@ -30,8 +30,16 @@ enum LiveActivityController {
         ActivityAuthorizationInfo().areActivitiesEnabled
     }
 
-    nonisolated static func content(for state: PetState, now: Date) -> ActivityContent<MurzikAttributes.ContentState> {
-        let contentState = MurzikAttributes.ContentState(state: state, now: now)
+    /// - Parameter scene: Murzik's place and pose on the island; nil keeps him where he last was,
+    ///   sitting in his mood pose.
+    nonisolated static func content(
+        for state: PetState,
+        now: Date,
+        scene: IslandScene? = nil
+    ) -> ActivityContent<MurzikAttributes.ContentState> {
+        var contentState = MurzikAttributes.ContentState(state: state, now: now)
+        let base = scene ?? IslandSceneStore.shared.current.resting()
+        contentState.stage = IslandSceneStore.withTrail(base, hungryAt: contentState.hungryAt)
         // Stale date = the moment Murzik gets hungry; the widget then shows the hungry face.
         let staleDate: Date? = contentState.hungryAt > now ? contentState.hungryAt : nil
         return ActivityContent(state: contentState, staleDate: staleDate, relevanceScore: 100)
@@ -71,8 +79,9 @@ enum LiveActivityController {
         observe(activity)
     }
 
-    nonisolated static func update(state: PetState, now: Date = .now) async {
-        let newContent = content(for: state, now: now)
+    nonisolated static func update(state: PetState, now: Date = .now, scene: IslandScene? = nil) async {
+        let newContent = content(for: state, now: now, scene: scene)
+        if let sent = newContent.state.stage { IslandSceneStore.shared.current = sent }
         for activity in runningActivities {
             await activity.update(newContent)
         }
@@ -129,6 +138,59 @@ enum IslandQueue {
     }
 }
 
+/// The island scene last sent to the Live Activity (app process). Thread-safe; his position is
+/// remembered across launches so he is where you left him.
+final class IslandSceneStore: @unchecked Sendable {
+    static let shared = IslandSceneStore()
+    private static let key = "murzik.island.scene.v1"
+
+    private let lock = NSLock()
+    private var scene: IslandScene
+    private let createdAt = Date.now
+
+    private init() {
+        if let data = UserDefaults.standard.data(forKey: Self.key),
+           let saved = try? JSONDecoder().decode(IslandScene.self, from: data) {
+            scene = saved.resting()
+        } else {
+            scene = .home
+        }
+    }
+
+    var current: IslandScene {
+        get { lock.withLock { scene } }
+        set {
+            var s = newValue
+            s.trailFrom = nil
+            s.trailTo = nil
+            lock.withLock { scene = s }
+            if let data = try? JSONEncoder().encode(s) {
+                UserDefaults.standard.set(data, forKey: Self.key)
+            }
+        }
+    }
+
+    /// Adds the real-time paw-print trail: it fills from "just fed" (fullness 1) to `hungryAt`.
+    /// The range does not depend on when the update was sent, so the trail never jumps back.
+    static func withTrail(_ scene: IslandScene, hungryAt: Date) -> IslandScene {
+        var s = scene
+        #if DEBUG
+        // UI tests: a short trail so the real-time motion is visible within seconds.
+        if ProcessInfo.processInfo.arguments.contains("-uitest-fast-trail") {
+            let start = shared.createdAt
+            s.trailFrom = start
+            s.trailTo = start.addingTimeInterval(75)
+            return s
+        }
+        #endif
+        let awakeRate = -PersonalityEngine.rates(sleeping: false).fullness
+        let fullSpan = (1 - PersonalityEngine.hungryThreshold) / awakeRate * 3600
+        s.trailFrom = hungryAt.addingTimeInterval(-fullSpan)
+        s.trailTo = hungryAt
+        return s
+    }
+}
+
 /// The single entry point for changing Murzik's state, used by the app UI and by Live Activity buttons.
 enum MurzikActions {
     /// Applies an action, persists it and notifies the UI. Synchronous and fast.
@@ -146,23 +208,17 @@ enum MurzikActions {
     /// sends a second update once it is over so the island settles back to the base mood.
     @MainActor
     static func syncLiveActivity(with state: PetState, storage: PetStorage = PetStorage()) async {
+        await syncLiveActivity(with: state, action: nil, storage: storage)
+    }
+
+    /// Same, for a known action (e.g. an island button): Murzik walks to that button and reacts
+    /// (`IslandChoreographer`), then settles back to his base mood once the reaction is over.
+    @MainActor
+    static func syncLiveActivity(with state: PetState, action: PetAction?, storage: PetStorage = PetStorage()) async {
         // Also restarts the island if it expired (e.g. a button on an ended Lock Screen card).
         try? await LiveActivityController.reconcile(storage: storage, allowStart: true)
         guard LiveActivityController.isRunning else { return }
-
-        guard let reaction = state.lastReaction else { return }
-        let settleDate = reaction.date.addingTimeInterval(PersonalityEngine.reactionDuration + 0.2)
-        let delay = settleDate.timeIntervalSinceNow
-        if delay > 0 {
-            do {
-                try await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
-            } catch {
-                return // superseded by a newer action
-            }
-        }
-        let now = Date.now
-        let latest = PersonalityEngine.advance(storage.load(now: now), to: now)
-        await LiveActivityController.update(state: latest, now: now)
+        await IslandChoreographer.react(to: action, state: state, storage: storage)
     }
 }
 

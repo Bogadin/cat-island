@@ -22,7 +22,7 @@ struct MurzikLiveActivity: Widget {
                     ExpandedLeadingView(mood: mood)
                 }
                 DynamicIslandExpandedRegion(.trailing) {
-                    ExpandedTrailingView(mood: mood)
+                    ExpandedTrailingView(state: context.state, isStale: context.isStale)
                 }
                 DynamicIslandExpandedRegion(.center) {
                     ExpandedCenterView(name: context.attributes.name, mood: mood)
@@ -31,11 +31,11 @@ struct MurzikLiveActivity: Widget {
                     ExpandedBottomView(state: context.state, isStale: context.isStale)
                 }
             } compactLeading: {
-                CompactLeadingView(mood: mood)
+                CompactLeadingView(state: context.state, mood: mood)
             } compactTrailing: {
-                CompactTrailingView(mood: mood)
+                CompactTrailingView(state: context.state, mood: mood)
             } minimal: {
-                MinimalView(mood: mood)
+                MinimalView(state: context.state, mood: mood)
             }
             .keylineTint(MurzikPalette.eyeCenter)
             .widgetURL(URL(string: "murzik://open"))

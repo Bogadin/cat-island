@@ -15,7 +15,7 @@ struct PetMurzikIntent: LiveActivityIntent {
     func perform() async throws -> some IntentResult {
         #if !WIDGET_EXTENSION
         let state = MurzikActions.apply(.pet)
-        await MurzikActions.syncLiveActivity(with: state)
+        await MurzikActions.syncLiveActivity(with: state, action: .pet)
         #endif
         return .result()
     }
@@ -31,7 +31,7 @@ struct FeedMurzikIntent: LiveActivityIntent {
     func perform() async throws -> some IntentResult {
         #if !WIDGET_EXTENSION
         let state = MurzikActions.apply(.feed)
-        await MurzikActions.syncLiveActivity(with: state)
+        await MurzikActions.syncLiveActivity(with: state, action: .feed)
         #endif
         return .result()
     }
