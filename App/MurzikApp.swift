@@ -17,6 +17,7 @@ struct MurzikApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .overlay { IslandWalkerOverlay() }
                 .environmentObject(model)
                 .environment(\.layoutDirection, .rightToLeft)
                 .preferredColorScheme(.light)
