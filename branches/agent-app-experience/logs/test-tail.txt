@@ -1,36 +1,36 @@
-    t =    98.88s     Wait for com.bogadin.murzik to idle
-    t =    98.88s     Find the "settings.done" Button
-    t =    98.97s     Check for interrupting elements affecting "settings.done" Button
-    t =    99.02s     Synthesize event
-    t =    99.33s     Wait for com.bogadin.murzik to idle
-    t =    99.71s Waiting 5.0s for "action.feed" Button to exist
-    t =   100.77s     Checking `Expect predicate `existsNoRetry == 1` for object "action.feed" Button`
-    t =   100.77s         Checking existence of `"action.feed" Button`
-    t =   103.09s Added attachment named '14-main'
-    t =   103.09s Terminate com.bogadin.murzik:6036
-    t =   104.13s Open com.bogadin.murzik
-2026-10-29 17:35:59.969 xcodebuild[1421:7721] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
-2026-10-29 17:35:59.969 xcodebuild[1421:7721] [MT] IDELaunchParametersSnapshot: no debugger version
-    t =   104.13s     Launch com.bogadin.murzik
-    t =   106.30s         Setting up automation session
-    t =   108.24s         Wait for com.bogadin.murzik to idle
-    t =   110.12s Waiting 15.0s for "action.feed" Button to exist
-    t =   111.14s     Checking `Expect predicate `existsNoRetry == 1` for object "action.feed" Button`
-    t =   111.14s         Checking existence of `"action.feed" Button`
-    t =   125.43s         Capturing element debug description
-    t =   125.43s     Checking existence of `"action.feed" Button`
-    t =   146.67s Added attachment named '15-main-night'
-    t =   146.70s Tear Down
-Test Case '-[MurzikUITests.MurzikUITests testAppAndDynamicIsland]' passed (147.451 seconds).
-Test Suite 'MurzikUITests' passed at 2026-10-29 17:36:42.932.
-	 Executed 1 test, with 0 failures (0 unexpected) in 147.451 (147.453) seconds
-Test Suite 'MurzikUITests.xctest' passed at 2026-10-29 17:36:42.933.
-	 Executed 1 test, with 0 failures (0 unexpected) in 147.451 (147.454) seconds
-Test Suite 'All tests' passed at 2026-10-29 17:36:42.933.
-	 Executed 1 test, with 0 failures (0 unexpected) in 147.451 (147.455) seconds
-2026-10-29 17:36:45.263 xcodebuild[1421:7721] [MT] IDETestOperationsObserverDebug: 299.880 elapsed -- Testing started completed.
-2026-10-29 17:36:45.263 xcodebuild[1421:7721] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
-2026-10-29 17:36:45.263 xcodebuild[1421:7721] [MT] IDETestOperationsObserverDebug: 299.880 sec, +299.880 sec -- end
+    t =   141.76s     Launch com.bogadin.murzik
+2026-10-29 17:46:47.983 xcodebuild[1366:7572] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-29 17:46:47.983 xcodebuild[1366:7572] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =   154.63s         Setting up automation session
+    t =   156.37s         Wait for com.bogadin.murzik to idle
+    t =   158.65s Waiting 15.0s for "action.feed" Button to exist
+    t =   159.66s     Checking `Expect predicate `existsNoRetry == 1` for object "action.feed" Button`
+    t =   159.66s         Checking existence of `"action.feed" Button`
+    t =   164.81s Added attachment named '15-main-night'
+    t =   164.82s Waiting 12.0s for "moment.surprise" Any to exist
+    t =   165.87s     Checking `Expect predicate `existsNoRetry == 1` for object "moment.surprise" Any`
+    t =   165.88s         Checking existence of `"moment.surprise" Any`
+    t =   170.16s         Capturing element debug description
+    t =   170.84s     Checking `Expect predicate `existsNoRetry == 1` for object "moment.surprise" Any`
+    t =   170.85s         Checking existence of `"moment.surprise" Any`
+    t =   173.00s Added attachment named '16-surprise-gift'
+    t =   173.03s Tap "surprise.thanks" Button
+    t =   173.03s     Wait for com.bogadin.murzik to idle
+    t =   173.05s     Find the "surprise.thanks" Button
+    t =   173.89s     Check for interrupting elements affecting "surprise.thanks" Button
+    t =   174.20s     Synthesize event
+    t =   174.82s     Wait for com.bogadin.murzik to idle
+    t =   174.88s Tear Down
+Test Case '-[MurzikUITests.MurzikUITests testAppAndDynamicIsland]' passed (186.092 seconds).
+Test Suite 'MurzikUITests' passed at 2026-10-29 17:47:32.269.
+	 Executed 1 test, with 0 failures (0 unexpected) in 186.092 (186.096) seconds
+Test Suite 'MurzikUITests.xctest' passed at 2026-10-29 17:47:32.271.
+	 Executed 1 test, with 0 failures (0 unexpected) in 186.092 (186.098) seconds
+Test Suite 'All tests' passed at 2026-10-29 17:47:32.272.
+	 Executed 1 test, with 0 failures (0 unexpected) in 186.092 (186.100) seconds
+2026-10-29 17:47:34.131 xcodebuild[1366:7572] [MT] IDETestOperationsObserverDebug: 381.099 elapsed -- Testing started completed.
+2026-10-29 17:47:34.132 xcodebuild[1366:7572] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-29 17:47:34.132 xcodebuild[1366:7572] [MT] IDETestOperationsObserverDebug: 381.099 sec, +381.099 sec -- end
 
 Test session results, code coverage, and logs:
 	/Users/runner/work/cat-island/cat-island/build/Tests.xcresult
