@@ -47,6 +47,12 @@ final class ExperienceEngineTests: XCTestCase {
         XCTAssertEqual(PersonalityEngine.displayMood(for: petted, at: at(23), calendar: calendar), .loving)
     }
 
+    func testExplicitPhaseOverload() {
+        let s = PetState(fullness: 0.8, energy: 0.6, happiness: 0.5, lastUpdated: at(13))
+        XCTAssertEqual(PersonalityEngine.displayMood(for: s, at: at(13), phase: .night), .sleepy)
+        XCTAssertEqual(PersonalityEngine.displayMood(for: s, at: at(13), phase: .morning), .idle)
+    }
+
     func testBedtime() {
         XCTAssertTrue(PersonalityEngine.isBedtime(for: PetState(), at: at(22), calendar: calendar))
         XCTAssertFalse(PersonalityEngine.isBedtime(for: PetState(isSleeping: true), at: at(22), calendar: calendar))

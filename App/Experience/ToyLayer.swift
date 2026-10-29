@@ -14,7 +14,7 @@ struct ToyLayer: View {
                 Color.clear
                 switch director.toyKind {
                 case .feather:
-                    let anchor = CGPoint(x: size.width * 0.9, y: -10)
+                    let anchor = CGPoint(x: min(size.width * 0.92, point.x + size.width * 0.3), y: 0)
                     Path { path in
                         path.move(to: anchor)
                         path.addQuadCurve(

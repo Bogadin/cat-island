@@ -42,15 +42,17 @@ struct ContentView: View {
                 bondStrip(theme: theme)
                     .padding(.horizontal, 16)
 
-                Group {
-                    if director.toyMode {
-                        toyDock(theme: theme)
-                            .transition(.move(edge: .bottom).combined(with: .opacity))
-                    } else {
-                        actionDock(theme: theme)
-                            .transition(.move(edge: .bottom).combined(with: .opacity))
+                // The action dock always takes its space (so the stage never jumps); the toy dock covers it.
+                actionDock(theme: theme)
+                    .opacity(director.toyMode ? 0 : 1)
+                    .allowsHitTesting(!director.toyMode)
+                    .accessibilityHidden(director.toyMode)
+                    .overlay {
+                        if director.toyMode {
+                            toyDock(theme: theme)
+                                .transition(.move(edge: .bottom).combined(with: .opacity))
+                        }
                     }
-                }
                 .padding(.horizontal, 16)
             }
             .padding(.bottom, 6)
@@ -326,6 +328,7 @@ struct ContentView: View {
             }
         }
         .padding(18)
+        .frame(maxHeight: .infinity)
         .background(dockBackground(theme))
     }
 

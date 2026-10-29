@@ -71,7 +71,7 @@ final class PetModel: ObservableObject {
     /// The mood shown in the app: engine mood + daily rhythm, and a loving welcome while greeting her.
     var mood: MurzikMood {
         if greeting != nil, !state.isSleeping, !hasActiveReaction { return .loving }
-        return PersonalityEngine.displayMood(for: state, at: now, calendar: calendar)
+        return PersonalityEngine.displayMood(for: state, at: now, phase: dayPhase)
     }
 
     private var hasActiveReaction: Bool {
@@ -122,8 +122,16 @@ final class PetModel: ObservableObject {
         if tickCount % 5 == 0 {
             refreshIslandStatus()
         }
-        let currentMood = mood
-        updateBond { PersonalityEngine.recordMood(currentMood, in: $0, at: newNow) }
+        // The diary keeps lasting moods, not every short reaction.
+        if greeting == nil, !hasActiveReaction {
+            let currentMood = mood
+            updateBond { PersonalityEngine.recordMood(currentMood, in: $0, at: newNow) }
+        }
+        #if DEBUG
+        if tickCount == 9, ProcessInfo.processInfo.arguments.contains("-uitest-gift") {
+            showSurprise(.gift(.flower))
+        }
+        #endif
         if tickCount % 40 == 0 {
             considerSurprise()
         }

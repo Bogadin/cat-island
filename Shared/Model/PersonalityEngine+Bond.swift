@@ -25,12 +25,17 @@ extension PersonalityEngine {
     /// The mood the app shows: like `mood(for:at:)`, but Murzik gets sleepy in the evening and at night.
     /// (The Live Activity keeps using `mood(for:at:)`.)
     static func displayMood(for state: PetState, at now: Date, calendar: Calendar = .current) -> MurzikMood {
+        displayMood(for: state, at: now, phase: dayPhase(at: now, calendar: calendar))
+    }
+
+    /// Same as `displayMood(for:at:calendar:)` with an explicit part of the day.
+    static func displayMood(for state: PetState, at now: Date, phase: DayPhase) -> MurzikMood {
         if let reaction = state.lastReaction, isReactionActive(reaction, at: now) {
             return reaction.mood
         }
         let base = baseMood(for: state)
         guard base == .idle || base == .happy else { return base }
-        switch dayPhase(at: now, calendar: calendar) {
+        switch phase {
         case .night where state.energy < 0.75: return .sleepy
         case .evening where state.energy < 0.4: return .sleepy
         default: return base

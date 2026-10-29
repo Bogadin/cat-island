@@ -132,11 +132,18 @@ final class MurzikUITests: XCTestCase {
 
         // The room at night.
         app.terminate()
-        app.launchArguments = ["-uitest-phase", "night"]
+        app.launchArguments = ["-uitest-phase", "night", "-uitest-gift"]
         app.launch()
         XCTAssertTrue(app.buttons["action.feed"].waitForExistence(timeout: 15))
         sleep(3)
         snapshot("15-main-night")
+
+        // A surprise: he brings her a gift (forced ~9 s after launch).
+        let surprise = app.descendants(matching: .any)["moment.surprise"]
+        XCTAssertTrue(surprise.waitForExistence(timeout: 12), "Gift surprise not shown")
+        sleep(1)
+        snapshot("16-surprise-gift")
+        app.buttons["surprise.thanks"].firstMatch.tap()
     }
 
     private func drag(_ app: XCUIApplication, from: CGVector, to: CGVector) {

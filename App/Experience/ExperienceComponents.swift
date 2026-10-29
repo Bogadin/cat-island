@@ -64,7 +64,6 @@ struct SpeechBubble: View {
                 .foregroundStyle(MurzikPalette.ink)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
-                .minimumScaleFactor(0.8)
         }
         .padding(.horizontal, 18)
         .padding(.vertical, 11)

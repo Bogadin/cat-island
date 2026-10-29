@@ -76,10 +76,10 @@ struct RoomBackdrop: View {
                 ? CGRect(x: 0, y: size.height * 0.13, width: size.width, height: size.height * 0.6)
                 : stageFrame.offsetBy(dx: -origin.x, dy: -origin.y)
             let floorY = stage.maxY - stage.height * 0.2
-            let windowWidth = min(size.width * 0.36, 170)
-            let windowHeight = windowWidth * 1.42
+            let windowWidth = min(size.width * 0.38, 178)
+            let windowHeight = windowWidth * 1.58
             let window = CGRect(
-                x: size.width * 0.07, y: max(stage.minY - 6, floorY - windowHeight - 120),
+                x: size.width * 0.07, y: max(stage.minY - 30, floorY - windowHeight - 105),
                 width: windowWidth, height: windowHeight
             )
 
@@ -106,7 +106,13 @@ struct RoomBackdrop: View {
 
                 FramedHeart(theme: theme)
                     .frame(width: 62, height: 74)
-                    .position(x: size.width * 0.8, y: window.minY + 58)
+                    .position(x: size.width * 0.8, y: window.minY + 120)
+
+                StringLights(
+                    from: CGPoint(x: -10, y: window.minY - 26),
+                    to: CGPoint(x: size.width + 10, y: window.minY - 40),
+                    sag: 54, isDark: theme.isDark, animated: animated
+                )
 
                 // Floor.
                 LinearGradient(colors: [theme.floorTop, theme.floorBottom], startPoint: .top, endPoint: .bottom)
@@ -303,6 +309,76 @@ private struct LightBeam: View {
             .fill(color.opacity(isDark ? 0.06 : 0.18))
             .blur(radius: 20)
         )
+    }
+}
+
+/// A sagging string of warm fairy lights across the wall; they glow brighter at night.
+private struct StringLights: View {
+    let from: CGPoint
+    let to: CGPoint
+    let sag: CGFloat
+    let isDark: Bool
+    let animated: Bool
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    private var control: CGPoint {
+        CGPoint(x: (from.x + to.x) / 2, y: max(from.y, to.y) + sag * 2)
+    }
+
+    private func point(at t: CGFloat) -> CGPoint {
+        let u = 1 - t
+        return CGPoint(
+            x: u * u * from.x + 2 * u * t * control.x + t * t * to.x,
+            y: u * u * from.y + 2 * u * t * control.y + t * t * to.y
+        )
+    }
+
+    private static let colors: [Color] = [
+        Color(red: 1.0, green: 0.82, blue: 0.45),
+        Color(red: 1.0, green: 0.62, blue: 0.62),
+        Color(red: 1.0, green: 0.90, blue: 0.62),
+        Color(red: 0.98, green: 0.70, blue: 0.48),
+    ]
+
+    var body: some View {
+        let count = 11
+        ZStack(alignment: .topLeading) {
+            Path { p in
+                p.move(to: from)
+                p.addQuadCurve(to: to, control: control)
+            }
+            .stroke(Color(red: 0.35, green: 0.30, blue: 0.28).opacity(isDark ? 0.6 : 0.35), lineWidth: 1.2)
+
+            if animated && !reduceMotion {
+                TimelineView(.animation(minimumInterval: 1.0 / 12.0)) { timeline in
+                    bulbs(count: count, time: timeline.date.timeIntervalSinceReferenceDate)
+                }
+            } else {
+                bulbs(count: count, time: 0)
+            }
+        }
+    }
+
+    private func bulbs(count: Int, time: TimeInterval) -> some View {
+        ZStack(alignment: .topLeading) {
+            ForEach(0..<count, id: \.self) { i in
+                let t = (CGFloat(i) + 0.5) / CGFloat(count)
+                let p = point(at: t)
+                let color = Self.colors[i % Self.colors.count]
+                let twinkle = 0.75 + 0.25 * sin(time * 1.7 + Double(i) * 1.3)
+                ZStack {
+                    Circle()
+                        .fill(color.opacity((isDark ? 0.55 : 0.3) * twinkle))
+                        .frame(width: isDark ? 26 : 16, height: isDark ? 26 : 16)
+                        .blur(radius: isDark ? 7 : 4)
+                    Capsule()
+                        .fill(color)
+                        .frame(width: 7, height: 11)
+                        .opacity(isDark ? twinkle : 0.95)
+                }
+                .position(x: p.x, y: p.y + 6)
+            }
+        }
     }
 }
 
