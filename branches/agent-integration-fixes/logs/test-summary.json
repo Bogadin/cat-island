@@ -1,3 +1,53 @@
-Error: Failed to create a new result bundle reader, underlying error: Info.plist at /Users/runner/work/cat-island/cat-island/build/Tests.xcresult/Info.plist does not exist, the result bundle might be corrupted or the provided path is not a result bundle
-Usage: xcresulttool <subcommand>
-  See 'xcresulttool --help' for more information.
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "6EEDD2B9-6E06-4333-91B6-8661FDCCBA47",
+        "deviceName" : "iPhone 17 Pro Max",
+        "modelName" : "iPhone 17 Pro Max",
+        "osBuildNumber" : "23F77",
+        "osVersion" : "26.5",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 1,
+      "passedTests" : 108,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "Murzik · Built with macOS 26.6.2",
+  "expectedFailures" : 0,
+  "failedTests" : 1,
+  "finishTime" : 1793369531.275,
+  "passedTests" : 108,
+  "result" : "Failed",
+  "skippedTests" : 0,
+  "startTime" : 1793367957.957,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "Failed to get matching snapshots: Timed out while evaluating UI query.",
+      "targetName" : "MurzikUITests",
+      "testIdentifier" : 101,
+      "testIdentifierString" : "IslandWalkerUITests/testWalkerInteraction()",
+      "testIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikUITests/IslandWalkerUITests/testWalkerInteraction",
+      "testName" : "testWalkerInteraction()"
+    }
+  ],
+  "title" : "Test - Murzik",
+  "topInsights" : [
+    {
+      "category" : "Longest Test Runs",
+      "impact" : "49% of duration",
+      "text" : "3 longest test runs with outlier durations exceeding 5.15s (three standard deviations)"
+    }
+  ],
+  "totalTestCount" : 109
+}

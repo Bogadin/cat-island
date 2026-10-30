@@ -1,0 +1,4 @@
+/Users/runner/work/cat-island/cat-island/UITests/IslandWalkerUITests.swift:74: error: -[MurzikUITests.IslandWalkerUITests testWalkerInteraction] : Failed to get matching snapshots: Timed out while evaluating UI query.
+    t =   150.72s Tear Down
+Test Case '-[MurzikUITests.IslandWalkerUITests testWalkerInteraction]' failed (153.981 seconds).
+Test Case '-[MurzikUITests.IslandWalkerUITests testWalkerMoods]' started.

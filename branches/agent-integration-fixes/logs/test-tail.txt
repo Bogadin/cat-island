@@ -1,40 +1,40 @@
-    t =   226.34s         Find the "walker.cat" Button
-    t =   230.58s         Find the "walker.cat" Button
-    t =   234.41s     Wait for com.bogadin.murzik to idle
-    t =   236.10s Added attachment named 'touch-1-tapped'
-    t =   237.53s Added attachment named 'touch-2-tapped'
-    t =   240.12s Press "walker.cat" Button[0.50, 0.85] for 0.2 seconds, then drag to Target Application 'com.bogadin.murzik'[0.70, 0.32] with velocity of 250.00 pixels per second, and then hold for 0.6 seconds 
-    t =   240.12s     Wait for com.bogadin.murzik to idle
-    t =   240.18s     Find the "walker.cat" Button
-    t =   242.78s     Check for interrupting elements affecting "walker.cat" Button
-    t =   243.90s     Synthesize event
-    t =   243.90s         Find the "walker.cat" Button
-    t =   247.88s         Find the "walker.cat" Button
-    t =   250.06s         Find the Target Application 'com.bogadin.murzik'
-    t =   250.56s         Find the Target Application 'com.bogadin.murzik'
-    t =   250.89s         Find the "walker.cat" Button
-    t =   254.40s     Wait for com.bogadin.murzik to idle
-    t =   255.19s Added attachment named 'touch-3-dropped'
-    t =   256.46s Added attachment named 'touch-4-falling'
-    t =   259.36s Added attachment named 'touch-5-back'
-    t =   259.58s Tap "action.pet" Button
-    t =   259.58s     Wait for com.bogadin.murzik to idle
-    t =   259.69s     Find the "action.pet" Button
-    t =   260.07s     Check for interrupting elements affecting "action.pet" Button
-    t =   260.46s     Synthesize event
-    t =   261.01s     Wait for com.bogadin.murzik to idle
-    t =   261.08s Terminate com.bogadin.murzik:7224
-    t =   262.25s Tear Down
-Test Case '-[MurzikUITests.IslandWalkerUITests testWalkerInteraction]' passed (264.423 seconds).
-Test Case '-[MurzikUITests.IslandWalkerUITests testWalkerMoods]' started.
-    t =     0.00s Start Test at 2026-10-30 13:20:37.930
-    t =     0.19s Set Up
-    t =     0.19s Open com.bogadin.murzik
-    t =     0.20s     Launch com.bogadin.murzik
-2026-10-30 13:20:38.726 xcodebuild[2435:11861] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
-2026-10-30 13:20:38.727 xcodebuild[2435:11861] [MT] IDELaunchParametersSnapshot: no debugger version
-    t =     4.08s         Setting up automation session
-    t =     7.30s         Wait for com.bogadin.murzik to idle
-    t =    10.31s Waiting 15.0s for "action.feed" Button to exist
-    t =    11.37s     Checking `Expect predicate `existsNoRetry == 1` for object "action.feed" Button`
-    t =    11.37s         Checking existence of `"action.feed" Button`
+    t =   126.54s         Launch com.bogadin.murzik
+2026-10-30 14:07:45.768 xcodebuild[1794:9277] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-30 14:07:45.768 xcodebuild[1794:9277] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =   128.69s             Setting up automation session
+    t =   131.12s             Wait for com.bogadin.murzik to idle
+    t =   133.50s     Waiting 15.0s for "action.feed" Button to exist
+    t =   134.54s         Checking `Expect predicate `existsNoRetry == 1` for object "action.feed" Button`
+    t =   134.54s             Checking existence of `"action.feed" Button`
+    t =   141.85s Added attachment named '15-main-night'
+    t =   141.86s     Waiting 12.0s for "moment.surprise" Any to exist
+    t =   142.92s         Checking `Expect predicate `existsNoRetry == 1` for object "moment.surprise" Any`
+    t =   142.92s             Checking existence of `"moment.surprise" Any`
+    t =   146.01s Added attachment named '16-surprise-gift'
+    t =   146.01s     Tap "surprise.thanks" Button
+    t =   146.02s         Wait for com.bogadin.murzik to idle
+    t =   146.04s         Find the "surprise.thanks" Button
+    t =   148.22s         Check for interrupting elements affecting "surprise.thanks" Button
+    t =   148.83s         Synthesize event
+    t =   149.29s         Wait for com.bogadin.murzik to idle
+    t =   149.32s Tear Down
+Test Case '-[MurzikUITests.MurzikUITests testAppAndDynamicIsland]' passed (151.854 seconds).
+Test Suite 'MurzikUITests' passed at 2026-10-30 14:08:11.012.
+	 Executed 1 test, with 0 failures (0 unexpected) in 151.854 (151.856) seconds
+Test Suite 'MurzikUITests.xctest' failed at 2026-10-30 14:08:11.013.
+	 Executed 9 tests, with 1 failure (0 unexpected) in 1004.545 (1004.594) seconds
+Test Suite 'All tests' failed at 2026-10-30 14:08:11.013.
+	 Executed 9 tests, with 1 failure (0 unexpected) in 1004.545 (1004.596) seconds
+2026-10-30 14:12:10.273 xcodebuild[1794:9277] [MT] IDETestOperationsObserverDebug: 1505.539 elapsed -- Testing started completed.
+2026-10-30 14:12:10.273 xcodebuild[1794:9277] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-30 14:12:10.273 xcodebuild[1794:9277] [MT] IDETestOperationsObserverDebug: 1505.540 sec, +1505.540 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/runner/work/cat-island/cat-island/build/Tests.xcresult
+
+Failing tests:
+	IslandWalkerUITests.testWalkerInteraction()
+
+** TEST FAILED **
+
+Testing started
