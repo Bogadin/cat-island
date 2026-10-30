@@ -1,0 +1,4 @@
+/Users/runner/work/cat-island/cat-island/UITests/MurzikUITests.swift:76: error: -[MurzikUITests.MurzikUITests testAppAndDynamicIsland] : Failed to activate application 'com.bogadin.murzik at /Users/runner/Library/Developer/Xcode/DerivedData/Murzik-godrylvsbhpbrkajpxqswasefsxa/Build/Products/Debug-iphonesimulator/Murzik.app' (current state: Running Background)
+    t =   131.40s Tear Down
+Test Case '-[MurzikUITests.MurzikUITests testAppAndDynamicIsland]' failed (143.372 seconds).
+Test Suite 'MurzikUITests' failed at 2026-10-30 08:03:40.402.

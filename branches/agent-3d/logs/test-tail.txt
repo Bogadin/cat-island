@@ -1,40 +1,40 @@
-    t =    80.45s     Synthesize event
-    t =    80.99s     Wait for com.bogadin.murzik to idle
-    t =    81.31s Added attachment named '7-app-after-pet'
-    t =    82.34s Pressing Home button
-    t =    86.74s Added attachment named '8-island-loving'
-    t =    86.76s Open com.bogadin.murzik
-    t =    86.77s     Activate com.bogadin.murzik
-    t =    87.16s         Wait for com.bogadin.murzik to idle
-    t =    88.02s Waiting 10.0s for "action.sleep" Button to exist
-    t =    89.10s     Checking `Expect predicate `existsNoRetry == 1` for object "action.sleep" Button`
-    t =    89.11s         Checking existence of `"action.sleep" Button`
-    t =    93.70s Tap "action.sleep" Button
-    t =    93.70s     Wait for com.bogadin.murzik to idle
-    t =   101.85s     Find the "action.sleep" Button
-    t =   110.56s     Check for interrupting elements affecting "action.sleep" Button
-    t =   111.19s     Synthesize event
-    t =   111.78s     Wait for com.bogadin.murzik to idle
-    t =   112.43s Waiting 5.0s for "action.wake" Button to exist
-    t =   113.46s     Checking `Expect predicate `existsNoRetry == 1` for object "action.wake" Button`
-    t =   113.47s         Checking existence of `"action.wake" Button`
-    t =   113.53s Pressing Home button
-    t =   117.63s Added attachment named '9-island-sleeping'
-    t =   117.64s Tear Down
-Test Case '-[MurzikUITests.MurzikUITests testAppAndDynamicIsland]' passed (118.680 seconds).
-Test Suite 'MurzikUITests' passed at 2026-10-30 07:53:35.829.
-	 Executed 1 test, with 0 failures (0 unexpected) in 118.680 (118.682) seconds
-Test Suite 'MurzikUITests.xctest' passed at 2026-10-30 07:53:35.830.
-	 Executed 1 test, with 0 failures (0 unexpected) in 118.680 (118.684) seconds
-Test Suite 'All tests' passed at 2026-10-30 07:53:35.831.
-	 Executed 1 test, with 0 failures (0 unexpected) in 118.680 (118.685) seconds
-2026-10-30 07:53:37.379 xcodebuild[7968:26969] [MT] IDETestOperationsObserverDebug: 280.897 elapsed -- Testing started completed.
-2026-10-30 07:53:37.379 xcodebuild[7968:26969] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
-2026-10-30 07:53:37.379 xcodebuild[7968:26969] [MT] IDETestOperationsObserverDebug: 280.897 sec, +280.897 sec -- end
+    t =    42.08s         Find the Application 'com.apple.springboard'
+    t =    42.16s         Find the Application 'com.apple.springboard'
+    t =    43.69s     Wait for com.apple.springboard to idle
+    t =    46.29s Added attachment named '5-island-expanded'
+    t =    46.30s Waiting 3.0s for "ליטוף" Button to exist
+    t =    47.34s     Checking `Expect predicate `existsNoRetry == 1` for object "ליטוף" Button`
+    t =    47.34s         Checking existence of `"ליטוף" Button`
+    t =    47.61s Tap "ליטוף" Button
+    t =    47.61s     Wait for com.apple.springboard to idle
+    t =    47.61s     Find the "ליטוף" Button
+    t =    47.78s     Check for interrupting elements affecting "ליטוף" Button
+    t =    47.86s     Synthesize event
+    t =    48.17s     Wait for com.apple.springboard to idle
+    t =    50.76s Added attachment named '6-island-expanded-after-pet'
+    t =    50.77s Pressing Home button
+    t =    52.51s Open com.bogadin.murzik
+    t =    52.51s     Activate com.bogadin.murzik
+/Users/runner/work/cat-island/cat-island/UITests/MurzikUITests.swift:76: error: -[MurzikUITests.MurzikUITests testAppAndDynamicIsland] : Failed to activate application 'com.bogadin.murzik at /Users/runner/Library/Developer/Xcode/DerivedData/Murzik-godrylvsbhpbrkajpxqswasefsxa/Build/Products/Debug-iphonesimulator/Murzik.app' (current state: Running Background)
+    t =   131.40s Tear Down
+Test Case '-[MurzikUITests.MurzikUITests testAppAndDynamicIsland]' failed (143.372 seconds).
+Test Suite 'MurzikUITests' failed at 2026-10-30 08:03:40.402.
+	 Executed 1 test, with 1 failure (0 unexpected) in 143.372 (143.468) seconds
+Test Suite 'MurzikUITests.xctest' failed at 2026-10-30 08:03:40.406.
+	 Executed 1 test, with 1 failure (0 unexpected) in 143.372 (143.472) seconds
+Test Suite 'All tests' failed at 2026-10-30 08:03:40.406.
+	 Executed 1 test, with 1 failure (0 unexpected) in 143.372 (143.479) seconds
+2026-10-30 08:04:14.285508+0000 MurzikUITests-Runner[6279:25834] [Default] Xcode took 32.81 seconds to acknowledge that testing finished.
+2026-10-30 08:05:14.066 xcodebuild[2558:12420] [MT] IDETestOperationsObserverDebug: 474.234 elapsed -- Testing started completed.
+2026-10-30 08:05:14.066 xcodebuild[2558:12420] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-30 08:05:14.066 xcodebuild[2558:12420] [MT] IDETestOperationsObserverDebug: 474.234 sec, +474.234 sec -- end
 
 Test session results, code coverage, and logs:
 	/Users/runner/work/cat-island/cat-island/build/Tests.xcresult
 
-** TEST SUCCEEDED **
+Failing tests:
+	MurzikUITests.testAppAndDynamicIsland()
+
+** TEST FAILED **
 
 Testing started
