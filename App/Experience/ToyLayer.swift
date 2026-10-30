@@ -54,10 +54,11 @@ struct ToyLayer: View {
 
 private struct SwayingFeather: View {
     let animated: Bool
+    @Environment(\.murzikAnimationsPaused) private var paused
 
     var body: some View {
         if animated {
-            TimelineView(.animation(minimumInterval: 1.0 / 30.0)) { timeline in
+            TimelineView(.animation(minimumInterval: 1.0 / 30.0, paused: paused)) { timeline in
                 let t = timeline.date.timeIntervalSinceReferenceDate
                 FeatherToy()
                     .rotationEffect(.degrees(sin(t * 2.6) * 14), anchor: .top)

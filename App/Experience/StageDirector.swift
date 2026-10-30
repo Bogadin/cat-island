@@ -47,6 +47,8 @@ final class StageDirector: ObservableObject {
     private let sound = PurrSound()
 
     private var touchStart: Date?
+    /// The current touch started off the cat (no cuddle until the finger lifts).
+    private var touchRejected = false
     private var purrStart: Date?
     private var purrDelay: Task<Void, Never>?
     private var purrLoop: Task<Void, Never>?
@@ -89,19 +91,32 @@ final class StageDirector: ObservableObject {
         }
     }
 
+    /// A tap on the cat (3D view or the island walker). Ignored in toy mode, and while purring:
+    /// a purr already counted as one pet, strokes during it don't add more.
     func pet() {
-        guard !toyMode else { return }
+        guard !toyMode, !isPurring else { return }
         perform(.pet)
+    }
+
+    /// Pauses the 3D view (settings sheet up, app not active).
+    func setRenderingPaused(_ paused: Bool) {
+        cat.setRenderingPaused(paused)
+        if paused { touchEnded() }
     }
 
     // MARK: Touch → purr
 
-    /// Finger down / moving on the cat. `point` is normalized in the stage.
-    func touchChanged(at point: CGPoint, translation: CGSize) {
+    /// Finger down / moving on the stage. `point` and `start` are normalized in the stage.
+    /// Only a touch that starts on Murzik himself (3D hit test) starts a cuddle; elsewhere the
+    /// 3D view orbits the camera instead.
+    func touchChanged(at point: CGPoint, start: CGPoint, translation: CGSize) {
         guard !toyMode else { return }
         if touchStart == nil {
-            // Only touches on (or near) Murzik start a cuddle.
-            guard abs(point.x - Self.catCenter.x) < 0.42, point.y > 0.12 else { return }
+            guard !touchRejected else { return }
+            guard touchStartsOnCat(start) else {
+                touchRejected = true
+                return
+            }
             touchStart = .now
             purrDelay?.cancel()
             purrDelay = Task { [weak self] in
@@ -119,8 +134,18 @@ final class StageDirector: ObservableObject {
         }
     }
 
+    private func touchStartsOnCat(_ start: CGPoint) -> Bool {
+        if let view = cat.sceneView, view.bounds.width > 0, view.bounds.height > 0 {
+            let p = CGPoint(x: start.x * view.bounds.width, y: start.y * view.bounds.height)
+            return cat.hitsCat(p, in: view)
+        }
+        // No view yet: a rough box around where he sits.
+        return abs(start.x - Self.catCenter.x) < 0.2 && abs(start.y - Self.catCenter.y) < 0.25
+    }
+
     func touchEnded() {
         touchStart = nil
+        touchRejected = false
         purrDelay?.cancel()
         purrDelay = nil
         stopPurr()

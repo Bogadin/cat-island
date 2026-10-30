@@ -49,13 +49,26 @@ enum IslandChoreographer {
                         restNotBefore: IslandChoreographer.reactionRemaining(in: state, at: now)
                     )
                     await IslandChoreographer.play(beats, storage: storage)
+                } else if !Task.isCancelled {
+                    // Asleep: no walk, but one update so the island shows his latest state
+                    // (in-app actions are not sent while the app is open).
+                    await IslandChoreographer.send(IslandSceneStore.shared.current.resting(), storage: storage)
                 }
             }
             #if DEBUG
-            await IslandChoreographer.runDebugIntentAfterWalk()
+            if !Task.isCancelled { await IslandChoreographer.runDebugIntentAfterWalk() }
             #endif
             if IslandChoreographer.backgroundTask == id { IslandChoreographer.endBackgroundTask() }
         }
+    }
+
+    /// The app came back to the front: stop a walk that is still running (without a closing
+    /// update; the caller reconciles right after with the latest state).
+    static func cancelWalk() {
+        generation &+= 1
+        walkTask?.cancel()
+        walkTask = nil
+        endBackgroundTask()
     }
 
     /// After an action (island button or in-app): walk to the tapped button, react, settle.
@@ -104,7 +117,9 @@ enum IslandChoreographer {
                     try await Task.sleep(nanoseconds: UInt64(wait * 1_000_000_000))
                 } catch {
                     // Cancelled (e.g. background time ran out): don't leave him mid-step.
-                    if current == generation {
+                    // A superseded settle (he is already resting) sends nothing.
+                    let shown = IslandSceneStore.shared.current
+                    if current == generation, shown.pose != .rest || shown.effect != .none {
                         await send(IslandSceneStore.shared.current.resting(), storage: storage)
                     }
                     return false
@@ -127,7 +142,7 @@ enum IslandChoreographer {
             let state = PersonalityEngine.advance(storage.load(now: now), to: now)
             await LiveActivityController.update(state: state, now: now, scene: scene)
             #if DEBUG
-            IslandChoreographer.debugLog("sent step=\(scene.step) pose=\(scene.pose.rawValue) frame=\(scene.frame) pos=\(String(format: "%.2f", scene.position)) effect=\(scene.effect.rawValue) mood=\(PersonalityEngine.mood(for: state, at: now).rawValue)")
+            IslandChoreographer.debugLog("sent step=\(scene.step) pose=\(scene.pose.rawValue) frame=\(scene.frame) pos=\(String(format: "%.2f", scene.position)) effect=\(scene.effect.rawValue) mood=\(MurzikAttributes.ContentState(state: state, now: now).mood.rawValue)")
             #endif
         }
     }

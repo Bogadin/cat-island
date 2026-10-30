@@ -34,6 +34,8 @@ final class PetModel: ObservableObject {
     private let storage: PetStorage
     private var observers: [NSObjectProtocol] = []
     private var settleTask: Task<Void, Never>?
+    /// One coalesced island update while the app is open (see `scheduleIslandUpdate`).
+    private var islandUpdateTask: Task<Void, Never>?
     private var backgroundTask: UIBackgroundTaskIdentifier = .invalid
     private var tickCount = 0
 
@@ -103,6 +105,10 @@ final class PetModel: ObservableObject {
         // Unit tests use the app as a host; don't start a Live Activity there.
         if ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil { return }
         #endif
+        // Stop a leaving-the-app walk that is still running before bringing the island in line.
+        IslandChoreographer.cancelWalk()
+        islandUpdateTask?.cancel()
+        islandUpdateTask = nil
         Task { await syncIsland(allowStart: true) }
     }
 
@@ -112,11 +118,12 @@ final class PetModel: ObservableObject {
         now = newNow
         tickCount += 1
         if newNow.timeIntervalSince(state.lastUpdated) > 60 {
-            let oldBase = PersonalityEngine.baseMood(for: state)
+            let oldMood = islandMood(state, at: state.lastUpdated)
             state = PersonalityEngine.advance(state, to: newNow)
-            // Time alone changed his mood (sleepy, bored, woke up…): keep the island in step.
-            if PersonalityEngine.baseMood(for: state) != oldBase {
-                Task { await syncIsland(allowStart: false) }
+            // Time alone changed his mood (sleepy, bored, woke up…): keep the island in step
+            // (one coalesced update; the island is hidden while the app is open).
+            if islandMood(state, at: newNow) != oldMood {
+                scheduleIslandUpdate()
             }
         }
         if tickCount % 5 == 0 {
@@ -137,7 +144,17 @@ final class PetModel: ObservableObject {
         }
     }
 
+    /// The base mood the island shows (no short reactions), with the evening/night rhythm.
+    private func islandMood(_ state: PetState, at date: Date) -> MurzikMood {
+        var calm = state
+        calm.lastReaction = nil
+        return PersonalityEngine.displayMood(for: calm, at: date, phase: PersonalityEngine.dayPhase(at: date, calendar: calendar))
+    }
+
     private func wentToBackground() {
+        // The leaving-the-app walk (IslandChoreographer) sends the latest state.
+        islandUpdateTask?.cancel()
+        islandUpdateTask = nil
         let current = Date.now
         updateBond { PersonalityEngine.recordVisit($0, at: current) }
     }
@@ -225,6 +242,12 @@ final class PetModel: ObservableObject {
             let current = now
             updateBond { PersonalityEngine.recordLove($0, at: current, calendar: calendar) }
         }
+        // The island is hidden while the app is open: don't spend iOS's update budget on every
+        // tap. Coalesce into at most one update once things calm down (or the leaving walk).
+        if UIApplication.shared.applicationState == .active {
+            scheduleIslandUpdate()
+            return
+        }
         settleTask?.cancel()
         // Keep running briefly if the user leaves the app, so the island can settle after the reaction.
         endBackgroundTask()
@@ -234,6 +257,27 @@ final class PetModel: ObservableObject {
         settleTask = Task { [storage] in
             await MurzikActions.syncLiveActivity(with: newState, storage: storage)
             if !Task.isCancelled { self.endBackgroundTask() }
+        }
+    }
+
+    /// Sends one island update a few seconds after the last in-app change (after any short
+    /// reaction is over, so he settles in his base mood). A newer change restarts the wait;
+    /// a cancelled wait sends nothing.
+    private func scheduleIslandUpdate() {
+        #if DEBUG
+        if ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil { return }
+        #endif
+        guard storage.islandEnabled else { return }
+        islandUpdateTask?.cancel()
+        var delay: TimeInterval = 3
+        if let reaction = state.lastReaction, PersonalityEngine.isReactionActive(reaction, at: now) {
+            delay = max(delay, PersonalityEngine.reactionDuration - now.timeIntervalSince(reaction.date) + 0.3)
+        }
+        islandUpdateTask = Task { [weak self] in
+            try? await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
+            guard let self, !Task.isCancelled else { return }
+            self.islandUpdateTask = nil
+            await self.syncIsland(allowStart: false)
         }
     }
 

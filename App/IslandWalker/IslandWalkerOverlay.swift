@@ -9,8 +9,8 @@ enum IslandWalkerSettings {
 
 /// Murzik walking around the real Dynamic Island while the app is open.
 ///
-/// Add once on the root view: `ContentView().overlay { IslandWalkerOverlay() }`. Needs `PetModel`
-/// in the environment. Only the cat itself receives touches; everything else passes through.
+/// Added once by `ContentView` as an overlay. Needs `PetModel` in the environment; taps go through
+/// `\.murzikPet` (the stage director) when it is set. Only the cat itself receives touches; everything else passes through.
 struct IslandWalkerOverlay: View {
     @AppStorage(IslandWalkerSettings.enabledKey) private var enabled = true
 
@@ -40,6 +40,8 @@ private struct IslandWalkerStage: View {
     @EnvironmentObject private var model: PetModel
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.murzikPet) private var petAction
+    @Environment(\.murzikAnimationsPaused) private var animationsPaused
 
     @State private var simulation = WalkerSimulation(seed: IslandWalkerStage.launchSeed)
     @State private var safeTop: CGFloat = 0
@@ -51,9 +53,9 @@ private struct IslandWalkerStage: View {
                 if safeTop <= 0 {
                     Color.clear.allowsHitTesting(false)
                 } else if reduceMotion {
-                    StaticWalker(geometry: geo, mood: model.mood) { model.perform(.pet) }
+                    StaticWalker(geometry: geo, mood: model.mood) { pet() }
                 } else {
-                    TimelineView(.animation(minimumInterval: 1.0 / 30.0, paused: scenePhase != .active)) { context in
+                    TimelineView(.animation(minimumInterval: 1.0 / 30.0, paused: scenePhase != .active || animationsPaused)) { context in
                         let snapshot = simulation.advance(to: context.date, mood: model.mood, geometry: geo)
                         WalkerScene(
                             snapshot: snapshot,
@@ -61,7 +63,7 @@ private struct IslandWalkerStage: View {
                             touchable: simulation.isTouchable,
                             onTap: {
                                 simulation.pet()
-                                model.perform(.pet)
+                                pet()
                             },
                             onDrag: { simulation.drag(to: $0) },
                             onDrop: { simulation.release() }
@@ -88,6 +90,15 @@ private struct IslandWalkerStage: View {
             // The key window may not be ready on the very first frame.
             try? await Task.sleep(nanoseconds: 300_000_000)
             safeTop = WalkerScreen.safeTop()
+        }
+    }
+
+    /// Pets him like a tap on the stage (3D reaction, ignored in toy mode).
+    private func pet() {
+        if let petAction {
+            petAction()
+        } else {
+            model.perform(.pet)
         }
     }
 

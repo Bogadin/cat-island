@@ -26,6 +26,8 @@ final class Murzik3DController: ObservableObject {
     let engine: MurzikEngine
     /// The view currently showing the scene (set by `Murzik3DView`).
     weak var sceneView: SCNView?
+    /// True while rendering is paused (see `setRenderingPaused`).
+    private(set) var isRenderingPaused = false
 
     /// Camera orbit (radians), limited.
     private(set) var orbitYaw: Float = 0
@@ -67,6 +69,13 @@ final class Murzik3DController: ObservableObject {
     }
 
     // MARK: Additional API
+
+    /// Stops (or resumes) rendering and the simulation, e.g. while the screen is covered by a sheet
+    /// or the app is in the background.
+    func setRenderingPaused(_ paused: Bool) {
+        isRenderingPaused = paused
+        (sceneView as? MurzikSCNView)?.renderingPaused = paused
+    }
 
     /// Shows or hides the round rug under Murzik.
     func setRugVisible(_ visible: Bool) {
@@ -112,11 +121,21 @@ struct Murzik3DView: View {
     }
 }
 
-/// SCNView that pauses rendering when it is not in a window.
+/// SCNView that pauses rendering when it is not in a window or when paused by the app.
 final class MurzikSCNView: SCNView {
+    var renderingPaused = false {
+        didSet { updatePlaying() }
+    }
+
     override func didMoveToWindow() {
         super.didMoveToWindow()
-        isPlaying = window != nil
+        updatePlaying()
+    }
+
+    private func updatePlaying() {
+        let play = window != nil && !renderingPaused
+        isPlaying = play
+        rendersContinuously = play
     }
 }
 
@@ -138,6 +157,7 @@ struct MurzikSceneView: UIViewRepresentable {
         v.allowsCameraControl = false
         v.autoenablesDefaultLighting = false
         v.isPlaying = true
+        v.renderingPaused = controller.isRenderingPaused
         let tap = UITapGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.tap(_:)))
         let pan = UIPanGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.pan(_:)))
         pan.maximumNumberOfTouches = 1
@@ -150,6 +170,9 @@ struct MurzikSceneView: UIViewRepresentable {
     func updateUIView(_ uiView: MurzikSCNView, context: Context) {
         context.coordinator.controller = controller
         if controller.sceneView !== uiView { controller.sceneView = uiView }
+        if uiView.renderingPaused != controller.isRenderingPaused {
+            uiView.renderingPaused = controller.isRenderingPaused
+        }
     }
 
     static func dismantleUIView(_ uiView: MurzikSCNView, coordinator: Coordinator) {

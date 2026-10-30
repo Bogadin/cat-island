@@ -23,7 +23,7 @@ extension PersonalityEngine {
     }
 
     /// The mood the app shows: like `mood(for:at:)`, but Murzik gets sleepy in the evening and at night.
-    /// (The Live Activity keeps using `mood(for:at:)`.)
+    /// The Live Activity content uses it too, so the island and the app agree.
     static func displayMood(for state: PetState, at now: Date, calendar: Calendar = .current) -> MurzikMood {
         displayMood(for: state, at: now, phase: dayPhase(at: now, calendar: calendar))
     }

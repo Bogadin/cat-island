@@ -7,6 +7,7 @@ struct ContentView: View {
     @AppStorage(ExperienceSettings.showNameKey) private var showName = true
     @AppStorage(ExperienceSettings.hapticsKey) private var hapticsEnabled = true
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.scenePhase) private var scenePhase
 
     @State private var showSettings = false
     @State private var stageFrame: CGRect = .zero
@@ -74,8 +75,13 @@ struct ContentView: View {
                 .environmentObject(model)
                 .environment(\.layoutDirection, .rightToLeft)
         }
-        .onReceive(clock) { _ in model.tick() }
-        .onAppear { director.attach(model) }
+        // Only while she is looking: the background walk must not be interrupted by a reconcile.
+        .onReceive(clock) { _ in if scenePhase == .active { model.tick() } }
+        .onAppear {
+            director.attach(model)
+            director.setRenderingPaused(animationsPaused)
+        }
+        .onChange(of: animationsPaused) { _, paused in director.setRenderingPaused(paused) }
         .onChange(of: mood) { _, newMood in director.syncMood(newMood) }
         .onChange(of: director.pulse) { _, _ in bounceStage() }
         .onChange(of: model.surprise) { _, moment in
@@ -84,6 +90,14 @@ struct ContentView: View {
         .sensoryFeedback(trigger: model.lastAction?.date) { _, _ in
             hapticsEnabled ? .impact(weight: .light) : nil
         }
+        .overlay { IslandWalkerOverlay() }
+        .environment(\.murzikAnimationsPaused, animationsPaused)
+        .environment(\.murzikPet, { [director] in director.pet() })
+    }
+
+    /// The room is covered by the settings sheet or the app is not in front.
+    private var animationsPaused: Bool {
+        showSettings || scenePhase != .active
     }
 
     // MARK: Top bar
@@ -201,7 +215,8 @@ struct ContentView: View {
             .updating($touching) { _, state, _ in state = true }
             .onChanged { value in
                 let point = CGPoint(x: value.location.x / max(size.width, 1), y: value.location.y / max(size.height, 1))
-                director.touchChanged(at: point, translation: value.translation)
+                let start = CGPoint(x: value.startLocation.x / max(size.width, 1), y: value.startLocation.y / max(size.height, 1))
+                director.touchChanged(at: point, start: start, translation: value.translation)
             }
             .onEnded { _ in director.touchEnded() }
     }

@@ -16,8 +16,8 @@ struct MurzikApp: App {
 
     var body: some Scene {
         WindowGroup {
+            // ContentView also hosts the island walker overlay (it shares the stage's pet action).
             ContentView()
-                .overlay { IslandWalkerOverlay() }
                 .environmentObject(model)
                 .environment(\.layoutDirection, .rightToLeft)
                 .preferredColorScheme(.light)

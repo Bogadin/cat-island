@@ -99,15 +99,29 @@ enum LiveActivityController {
         storage.islandStartedAt = nil
     }
 
+    /// Watches the running activities for a user swipe (see `observe`) without updating them.
+    static func observeRunningActivities() {
+        for activity in runningActivities { observe(activity) }
+    }
+
     /// If the user swipes Murzik away, respect it: turn the island setting off
     /// instead of bringing him back on the next app launch.
+    /// Only a dismissal straight from a live (active/stale) activity before the 8 h limit counts;
+    /// the system ending it at the limit (`.ended` first) does not turn the setting off.
     private static func observe(_ activity: Activity<MurzikAttributes>) {
         guard !observed.contains(activity.id) else { return }
         observed.insert(activity.id)
         let id = activity.id
         Task { @MainActor in
-            for await state in activity.activityStateUpdates where state == .dismissed {
-                if !LiveActivityController.endingOnPurpose.contains(id) {
+            var previous = activity.activityState
+            for await state in activity.activityStateUpdates {
+                guard state == .dismissed else {
+                    previous = state
+                    continue
+                }
+                let wasLive = previous == .active || previous == .stale
+                if wasLive, !LiveActivityController.endingOnPurpose.contains(id),
+                   LiveActivityController.isBeforeMaximumDuration(storage: PetStorage()) {
                     PetStorage().islandEnabled = false
                     PetStorage().islandStartedAt = nil
                     NotificationCenter.default.post(name: .murzikStateDidChange, object: nil)
@@ -115,6 +129,12 @@ enum LiveActivityController {
                 break
             }
         }
+    }
+
+    /// True while the island is clearly within its 8 h lifetime (with a minute of margin).
+    private static func isBeforeMaximumDuration(storage: PetStorage, now: Date = .now) -> Bool {
+        guard let started = storage.islandStartedAt else { return false }
+        return now < started.addingTimeInterval(maximumDuration - 60)
     }
 }
 
@@ -215,8 +235,14 @@ enum MurzikActions {
     /// (`IslandChoreographer`), then settles back to his base mood once the reaction is over.
     @MainActor
     static func syncLiveActivity(with state: PetState, action: PetAction?, storage: PetStorage = PetStorage()) async {
-        // Also restarts the island if it expired (e.g. a button on an ended Lock Screen card).
-        try? await LiveActivityController.reconcile(storage: storage, allowStart: true)
+        if action != nil, storage.islandEnabled, LiveActivityController.isRunning {
+            // An island button: the choreography's first beat carries the new state, so skip
+            // reconcile's resting update (it would conflict with the walk).
+            LiveActivityController.observeRunningActivities()
+        } else {
+            // Also restarts the island if it expired (e.g. a button on an ended Lock Screen card).
+            try? await LiveActivityController.reconcile(storage: storage, allowStart: true)
+        }
         guard LiveActivityController.isRunning else { return }
         await IslandChoreographer.react(to: action, state: state, storage: storage)
     }

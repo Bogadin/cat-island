@@ -115,6 +115,31 @@ final class PurrSound {
     private var source: AVAudioSourceNode?
     private let synth = PurrSynth()
     private var stopWork: DispatchWorkItem?
+    private var sessionActive = false
+    /// Set after an engine configuration change (route / sample rate): rebuild the graph on next start.
+    private var needsRebuild = false
+    private var observers: [NSObjectProtocol] = []
+
+    init() {
+        let center = NotificationCenter.default
+        observers.append(center.addObserver(
+            forName: .AVAudioEngineConfigurationChange, object: engine, queue: .main
+        ) { [weak self] _ in
+            self?.handleConfigurationChange()
+        })
+        observers.append(center.addObserver(
+            forName: AVAudioSession.interruptionNotification, object: nil, queue: .main
+        ) { [weak self] note in
+            self?.handleInterruption(note)
+        })
+    }
+
+    deinit {
+        for observer in observers { NotificationCenter.default.removeObserver(observer) }
+    }
+
+    /// True while a purr is wanted (between `start` and `stop`).
+    private var isPurring: Bool { synth.targetGain > 0 }
 
     func start() {
         stopWork?.cancel()
@@ -125,6 +150,12 @@ final class PurrSound {
             let session = AVAudioSession.sharedInstance()
             try session.setCategory(.ambient, mode: .default, options: [.mixWithOthers])
             try session.setActive(true)
+            sessionActive = true
+            if needsRebuild, let node = source {
+                engine.detach(node)
+                source = nil
+            }
+            needsRebuild = false
             if source == nil {
                 let hardwareRate = engine.outputNode.outputFormat(forBus: 0).sampleRate
                 let rate = hardwareRate > 0 ? hardwareRate : 44_100
@@ -139,18 +170,57 @@ final class PurrSound {
             try engine.start()
         } catch {
             engine.stop()
+            deactivateSession()
         }
     }
 
-    /// Fades out, then stops the engine.
+    /// Fades out, then stops the engine and releases the audio session.
     func stop() {
         synth.targetGain = 0
-        guard engine.isRunning else { return }
+        stopWork?.cancel()
+        guard engine.isRunning else {
+            stopWork = nil
+            deactivateSession()
+            return
+        }
         let work = DispatchWorkItem { [weak self] in
-            self?.engine.stop()
+            guard let self else { return }
+            self.engine.stop()
+            self.deactivateSession()
+            self.stopWork = nil
         }
         stopWork = work
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.8, execute: work)
+    }
+
+    private func deactivateSession() {
+        guard sessionActive else { return }
+        sessionActive = false
+        try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+    }
+
+    /// The engine stopped itself (route or format changed): rebuild, and resume if still purring.
+    private func handleConfigurationChange() {
+        needsRebuild = true
+        engine.stop()
+        if isPurring {
+            start()
+        }
+    }
+
+    private func handleInterruption(_ note: Notification) {
+        guard let raw = note.userInfo?[AVAudioSessionInterruptionTypeKey] as? UInt,
+              let type = AVAudioSession.InterruptionType(rawValue: raw) else { return }
+        switch type {
+        case .began:
+            // The system stopped the engine; start() brings it back next time.
+            engine.stop()
+            sessionActive = false
+        case .ended:
+            if isPurring { start() }
+        @unknown default:
+            break
+        }
     }
 
     private static func makeSourceNode(_ synth: PurrSynth) -> AVAudioSourceNode {

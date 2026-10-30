@@ -318,6 +318,7 @@ private struct StringLights: View {
     let isDark: Bool
     let animated: Bool
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.murzikAnimationsPaused) private var paused
 
     private var control: CGPoint {
         CGPoint(x: (from.x + to.x) / 2, y: max(from.y, to.y) + sag * 2)
@@ -348,7 +349,7 @@ private struct StringLights: View {
             .stroke(Color(red: 0.35, green: 0.30, blue: 0.28).opacity(isDark ? 0.6 : 0.35), lineWidth: 1.2)
 
             if animated && !reduceMotion {
-                TimelineView(.animation(minimumInterval: 1.0 / 12.0)) { timeline in
+                TimelineView(.animation(minimumInterval: 1.0 / 12.0, paused: paused)) { timeline in
                     bulbs(count: count, time: timeline.date.timeIntervalSinceReferenceDate)
                 }
             } else {
@@ -454,10 +455,11 @@ private struct DustMotes: View {
     let area: CGRect
     let color: Color
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.murzikAnimationsPaused) private var paused
 
     var body: some View {
         if !reduceMotion, area.width > 0, area.height > 0 {
-            TimelineView(.animation(minimumInterval: 1.0 / 20.0)) { timeline in
+            TimelineView(.animation(minimumInterval: 1.0 / 20.0, paused: paused)) { timeline in
                 let t = timeline.date.timeIntervalSinceReferenceDate
                 Canvas { context, _ in
                     for i in 0..<12 {

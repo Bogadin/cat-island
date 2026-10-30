@@ -23,10 +23,13 @@ struct MurzikAttributes: ActivityAttributes {
 }
 
 extension MurzikAttributes.ContentState {
-    /// Builds the content from an already-advanced state.
-    init(state: PetState, now: Date) {
+    /// Builds the content from an already-advanced state. The mood is the same one the app shows
+    /// (`displayMood`: sleepy in the evening and at night); `phase` defaults to the time of day of `now`.
+    init(state: PetState, now: Date, phase: DayPhase? = nil) {
         self.init(
-            mood: PersonalityEngine.mood(for: state, at: now),
+            mood: PersonalityEngine.displayMood(
+                for: state, at: now, phase: phase ?? PersonalityEngine.dayPhase(at: now)
+            ),
             fullness: state.fullness,
             energy: state.energy,
             happiness: state.happiness,
