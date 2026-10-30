@@ -142,8 +142,8 @@ struct ContentView: View {
     private func stage(mood: MurzikMood) -> some View {
         GeometryReader { geo in
             let size = geo.size
-            let catWidth = min(size.width * 0.8, 330)
-            let catHeight = size.height * 0.8
+            let catWidth = size.width
+            let catHeight = size.height
             ZStack {
                 if director.isPurring {
                     PurrRings()

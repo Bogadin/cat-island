@@ -145,9 +145,7 @@ struct RoomBackdrop: View {
                     .position(x: stage.midX, y: stage.midY)
                 }
 
-                Rug(theme: theme)
-                    .frame(width: min(size.width * 0.82, 360), height: 70)
-                    .position(x: stage.midX, y: stage.maxY - 36)
+                // The rug is drawn in 3D by Murzik3DView (with real shadows).
 
                 Plant(theme: theme)
                     .frame(width: 92, height: 150)

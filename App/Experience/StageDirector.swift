@@ -1,4 +1,5 @@
 import SwiftUI
+import SceneKit
 
 enum ToyKind: String, CaseIterable, Identifiable {
     case feather
@@ -53,8 +54,12 @@ final class StageDirector: ObservableObject {
     private var lastToyPlay: Date = .distantPast
 
     init() {
-        // The room already draws its own rug; keep only the 3D contact shadow.
-        cat.setRugVisible(false)
+        // Use the 3D rug (real shadows, Murzik wanders on it) and frame it by width so the
+        // whole rug fits the tall stage.
+        if let camera = cat.engine.cameraNode.camera {
+            camera.projectionDirection = .horizontal
+            camera.fieldOfView = 46
+        }
         cat.onPetted = { [weak self] in
             self?.pet()
         }
