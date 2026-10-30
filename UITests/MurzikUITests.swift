@@ -143,7 +143,9 @@ final class MurzikUITests: XCTestCase {
         XCTAssertTrue(surprise.waitForExistence(timeout: 12), "Gift surprise not shown")
         sleep(1)
         snapshot("16-surprise-gift")
-        app.buttons["surprise.thanks"].firstMatch.tap()
+        // The card may already have dismissed itself; tap "thanks" only if it is still there.
+        let thanks = app.buttons["surprise.thanks"].firstMatch
+        if thanks.waitForExistence(timeout: 2), thanks.isHittable { thanks.tap() }
     }
 
     private func drag(_ app: XCUIApplication, from: CGVector, to: CGVector) {
