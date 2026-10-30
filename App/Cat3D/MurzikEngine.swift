@@ -30,6 +30,8 @@ final class MurzikEngine: NSObject, SCNSceneRendererDelegate, @unchecked Sendabl
     private var gait: Float = 0
     private var orbitYaw: Float = 0
     private var orbitPitch: Float = 0.3
+    /// Main screen: when idle he turns to face the viewer more often. Set before rendering starts.
+    var prefersFacingViewer = false
     private var startTime: Double?
     private var lastTime: Double = 0
     private var rng = SplitMix(seed: 0x6D75_727A)
@@ -178,7 +180,7 @@ final class MurzikEngine: NSObject, SCNSceneRendererDelegate, @unchecked Sendabl
         case .orbit(let yaw, let pitch):
             orbitYaw = yaw
             orbitPitch = pitch
-            stage.setOrbit(yaw: yaw, pitch: pitch, distance: 3.6)
+            stage.applyOrbit(yaw: yaw, pitch: pitch)
         }
     }
 
@@ -351,11 +353,14 @@ final class MurzikEngine: NSObject, SCNSceneRendererDelegate, @unchecked Sendabl
         case .surprised:
             return [.act(.idle, 2, look: true)]
         case .idle, .happy, .blinking:
+            let face = prefersFacingViewer
             return pick([
-                (0.3, { [.walk(.point(self.randomRugPoint())), .act(.sit, self.dur(3, 6))] }),
+                (0.3, { face
+                    ? [.walk(.point(self.randomRugPoint())), .turn(.camera), .act(.sit, self.dur(3, 6), look: true)]
+                    : [.walk(.point(self.randomRugPoint())), .act(.sit, self.dur(3, 6))] }),
                 (0.18, { [.walk(.point(self.randomRugPoint())), .act(.idle, self.dur(2, 4))] }),
                 (0.14, { [.act(.sit, 1.0), .act(.groom, 4.2 * Double(1 + Int(self.rng.float() * 2))), .act(.sit, 1.5)] }),
-                (0.16, { [.turn(.camera), .act(.sit, self.dur(3, 6), look: true)] }),
+                (face ? 0.3 : 0.16, { [.turn(.camera), .act(.sit, self.dur(3, 6), look: true)] }),
                 (0.06, { [.act(.stretch), .act(.idle, 1.5)] }),
                 (0.1, { [.act(.loaf, self.dur(5, 9))] }),
                 (0.06, { [.act(.lie, self.dur(5, 8), look: true)] }),

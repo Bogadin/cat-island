@@ -25,6 +25,12 @@ final class MurzikStage {
 
     static let rugRadius: Float = 1.05
 
+    /// Framing used by `applyOrbit` (user orbit): distance, look-at target and a pitch offset.
+    /// The defaults match the initial `setOrbit` call.
+    var orbitDistance: Float = 3.6
+    var orbitTarget = SIMD3<Float>(0, 0.3, 0)
+    var orbitPitchOffset: Float = 0
+
     init(scene: SCNScene, config: Config) {
         self.config = config
         scene.background.contents = UIColor.clear
@@ -62,6 +68,11 @@ final class MurzikStage {
     }
 
     // MARK: Camera
+
+    /// Orbit with the stage's framing (`orbitDistance`, `orbitTarget`, `orbitPitchOffset`).
+    func applyOrbit(yaw: Float, pitch: Float) {
+        setOrbit(yaw: yaw, pitch: pitch + orbitPitchOffset, distance: orbitDistance, target: orbitTarget)
+    }
 
     func setOrbit(yaw: Float, pitch: Float, distance: Float, target: SIMD3<Float> = SIMD3(0, 0.3, 0)) {
         cameraRig.simdPosition = target

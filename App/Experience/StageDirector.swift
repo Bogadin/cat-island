@@ -31,6 +31,12 @@ final class StageDirector: ObservableObject {
 
     let cat = Murzik3DController()
 
+    // Stage camera framing (horizontal FOV in degrees, distance and target height in metres, pitch in radians).
+    static let cameraFieldOfView: CGFloat = 40
+    static let cameraDistance: Float = 3.48
+    static let cameraTargetHeight: Float = 1.18
+    static let cameraPitch: Float = 0.07
+
     @Published private(set) var isPurring = false
     @Published private(set) var toyMode = false
     @Published var toyKind: ToyKind = .feather
@@ -56,12 +62,19 @@ final class StageDirector: ObservableObject {
     private var lastToyPlay: Date = .distantPast
 
     init() {
-        // Use the 3D rug (real shadows, Murzik wanders on it) and frame it by width so the
-        // whole rug fits the tall stage.
+        // Use the 3D rug (real shadows, Murzik wanders on it), framed by width so the whole rug
+        // fits the tall stage. The camera looks almost level at a point above him, so the rug sits
+        // low in the stage (on the room's floor) and the space above stays free for the bubble.
         if let camera = cat.engine.cameraNode.camera {
             camera.projectionDirection = .horizontal
-            camera.fieldOfView = 46
+            camera.fieldOfView = Self.cameraFieldOfView
         }
+        let stage = cat.engine.stage
+        stage.orbitDistance = Self.cameraDistance
+        stage.orbitTarget = SIMD3(0, Self.cameraTargetHeight, 0)
+        stage.orbitPitchOffset = Self.cameraPitch - 0.3   // the controller's default orbit pitch is 0.3
+        stage.applyOrbit(yaw: 0, pitch: 0.3)
+        cat.engine.prefersFacingViewer = true
         cat.onPetted = { [weak self] in
             self?.pet()
         }
