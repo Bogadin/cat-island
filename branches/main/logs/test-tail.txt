@@ -1,40 +1,40 @@
-    t =   286.80s     Wait for com.bogadin.murzik to idle
-    t =   286.87s     Find the "surprise.thanks" Button
-    t =   290.36s     Check for interrupting elements affecting "surprise.thanks" Button
-    t =   291.36s     Synthesize event
-    t =   291.89s         Failed: Failed to compute hit point for Button, {{230.3, 195.9}, {103.7, 31.0}}, identifier: 'surprise.thanks', label: 'תודה, מתוק': Activation point invalid and no suggested hit points based on element frame
-    t =   291.89s         Requesting snapshot of accessibility hierarchy for app with pid 21639
-    t =   327.58s     Retrying `Tap "surprise.thanks" Button` (attempt #2)
-    t =   327.58s         Wait for com.bogadin.murzik to idle
-    t =   327.62s         Find the "surprise.thanks" Button
-    t =   332.28s             Find the "surprise.thanks" Button (retry 1)
-    t =   334.29s             Find the "surprise.thanks" Button (retry 2)
-    t =   336.75s     Retrying `Tap "surprise.thanks" Button` (attempt #3)
-    t =   336.76s         Wait for com.bogadin.murzik to idle
-    t =   339.17s         Find the "surprise.thanks" Button
-    t =   349.02s             Find the "surprise.thanks" Button (retry 1)
-    t =   350.77s             Find the "surprise.thanks" Button (retry 2)
-    t =   352.85s Requesting snapshot of accessibility hierarchy for app with pid 21639
-/Users/runner/work/cat-island/cat-island/UITests/MurzikUITests.swift:146: error: -[MurzikUITests.MurzikUITests testAppAndDynamicIsland] : Failed to no matches found for first query match sequence: `Descendants matching type Button` -> `Elements matching predicate '"surprise.thanks" IN identifiers'`, given input App element pid: 21639
-    t =   407.78s Tear Down
-Test Case '-[MurzikUITests.MurzikUITests testAppAndDynamicIsland]' failed (409.857 seconds).
-Test Suite 'MurzikUITests' failed at 2026-10-30 15:41:12.704.
-	 Executed 1 test, with 1 failure (0 unexpected) in 409.857 (409.863) seconds
-Test Suite 'MurzikUITests.xctest' failed at 2026-10-30 15:41:12.705.
-	 Executed 9 tests, with 1 failure (0 unexpected) in 1239.003 (1239.079) seconds
-Test Suite 'All tests' failed at 2026-10-30 15:41:12.706.
-	 Executed 9 tests, with 1 failure (0 unexpected) in 1239.003 (1239.082) seconds
-2026-10-30 15:41:52.264883+0000 MurzikUITests-Runner[5829:65522] [Default] Xcode took 39.46 seconds to acknowledge that testing finished.
-2026-10-30 15:44:24.794 xcodebuild[1749:8869] [MT] IDETestOperationsObserverDebug: 1702.684 elapsed -- Testing started completed.
-2026-10-30 15:44:24.794 xcodebuild[1749:8869] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
-2026-10-30 15:44:24.794 xcodebuild[1749:8869] [MT] IDETestOperationsObserverDebug: 1702.684 sec, +1702.684 sec -- end
+    t =   130.65s     Checking `Expect predicate `existsNoRetry == 1` for object "moment.surprise" Any`
+    t =   130.65s         Checking existence of `"moment.surprise" Any`
+    t =   131.09s         Capturing element debug description
+    t =   131.63s     Checking `Expect predicate `existsNoRetry == 1` for object "moment.surprise" Any`
+    t =   131.63s         Checking existence of `"moment.surprise" Any`
+    t =   131.79s         Capturing element debug description
+    t =   132.63s     Checking `Expect predicate `existsNoRetry == 1` for object "moment.surprise" Any`
+    t =   132.63s         Checking existence of `"moment.surprise" Any`
+    t =   132.83s         Capturing element debug description
+    t =   133.66s     Checking `Expect predicate `existsNoRetry == 1` for object "moment.surprise" Any`
+    t =   133.66s         Checking existence of `"moment.surprise" Any`
+    t =   135.23s Added attachment named '16-surprise-gift'
+    t =   135.24s Waiting 2.0s for "surprise.thanks" Button to exist
+    t =   136.28s     Checking `Expect predicate `existsNoRetry == 1` for object "surprise.thanks" Button`
+    t =   136.28s         Checking existence of `"surprise.thanks" Button`
+    t =   136.65s Find the "surprise.thanks" Button
+    t =   137.01s Tap "surprise.thanks" Button
+    t =   137.01s     Wait for com.bogadin.murzik to idle
+    t =   137.02s     Find the "surprise.thanks" Button
+    t =   137.38s     Check for interrupting elements affecting "surprise.thanks" Button
+    t =   137.62s     Synthesize event
+    t =   137.99s     Wait for com.bogadin.murzik to idle
+    t =   138.00s Tear Down
+Test Case '-[MurzikUITests.MurzikUITests testAppAndDynamicIsland]' passed (139.069 seconds).
+Test Suite 'MurzikUITests' passed at 2026-10-30 16:07:57.304.
+	 Executed 1 test, with 0 failures (0 unexpected) in 139.069 (139.072) seconds
+Test Suite 'MurzikUITests.xctest' passed at 2026-10-30 16:07:57.306.
+	 Executed 9 tests, with 0 failures (0 unexpected) in 813.594 (813.632) seconds
+Test Suite 'All tests' passed at 2026-10-30 16:07:57.307.
+	 Executed 9 tests, with 0 failures (0 unexpected) in 813.594 (813.635) seconds
+2026-10-30 16:08:00.688 xcodebuild[1375:7525] [MT] IDETestOperationsObserverDebug: 1014.652 elapsed -- Testing started completed.
+2026-10-30 16:08:00.688 xcodebuild[1375:7525] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-30 16:08:00.688 xcodebuild[1375:7525] [MT] IDETestOperationsObserverDebug: 1014.652 sec, +1014.652 sec -- end
 
 Test session results, code coverage, and logs:
 	/Users/runner/work/cat-island/cat-island/build/Tests.xcresult
 
-Failing tests:
-	MurzikUITests.testAppAndDynamicIsland()
-
-** TEST FAILED **
+** TEST SUCCEEDED **
 
 Testing started

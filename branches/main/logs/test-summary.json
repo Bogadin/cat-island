@@ -3,7 +3,7 @@
     {
       "device" : {
         "architecture" : "arm64",
-        "deviceId" : "36E2B8D9-F7DC-43ED-8383-C3824D1485A8",
+        "deviceId" : "6EEDD2B9-6E06-4333-91B6-8661FDCCBA47",
         "deviceName" : "iPhone 17 Pro Max",
         "modelName" : "iPhone 17 Pro Max",
         "osBuildNumber" : "23F77",
@@ -11,8 +11,8 @@
         "platform" : "iOS Simulator"
       },
       "expectedFailures" : 0,
-      "failedTests" : 1,
-      "passedTests" : 108,
+      "failedTests" : 0,
+      "passedTests" : 109,
       "skippedTests" : 0,
       "testPlanConfiguration" : {
         "configurationId" : "1",
@@ -22,31 +22,24 @@
   ],
   "environmentDescription" : "Murzik · Built with macOS 26.6.2",
   "expectedFailures" : 0,
-  "failedTests" : 1,
-  "finishTime" : 1793375066.316,
-  "passedTests" : 108,
-  "result" : "Failed",
+  "failedTests" : 0,
+  "finishTime" : 1793376481.265,
+  "passedTests" : 109,
+  "result" : "Passed",
   "skippedTests" : 0,
-  "startTime" : 1793373304.599,
+  "startTime" : 1793375430.494,
   "statistics" : [
 
   ],
   "testFailures" : [
-    {
-      "failureText" : "Failed to no matches found for first query match sequence: `Descendants matching type Button` -> `Elements matching predicate '\"surprise.thanks\" IN identifiers'`, given input App element pid: 21639",
-      "targetName" : "MurzikUITests",
-      "testIdentifier" : 109,
-      "testIdentifierString" : "MurzikUITests/testAppAndDynamicIsland()",
-      "testIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikUITests/MurzikUITests/testAppAndDynamicIsland",
-      "testName" : "testAppAndDynamicIsland()"
-    }
+
   ],
   "title" : "Test - Murzik",
   "topInsights" : [
     {
       "category" : "Longest Test Runs",
-      "impact" : "50% of duration",
-      "text" : "3 longest test runs with outlier durations exceeding 5.78s (three standard deviations)"
+      "impact" : "62% of duration",
+      "text" : "4 longest test runs with outlier durations exceeding 4.05s (three standard deviations)"
     }
   ],
   "totalTestCount" : 109
