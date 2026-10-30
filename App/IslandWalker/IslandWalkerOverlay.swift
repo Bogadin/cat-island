@@ -128,8 +128,16 @@ private struct WalkerScene: View {
             }
 
             WalkerCatView(frame: frame, mood: snapshot.mood, time: snapshot.time, size: box)
-                .padding(8)
+                .allowsHitTesting(false)
+                .accessibilityHidden(true)
+                .position(center)
+
+            // Touch target. The status bar strip swallows touches (scroll-to-top), so while he is up
+            // on the status-bar line the target also reaches below it.
+            let target = hitRect(for: frame)
+            Color.clear
                 .contentShape(Rectangle())
+                .frame(width: target.width, height: target.height)
                 .onTapGesture(perform: onTap)
                 .gesture(
                     DragGesture(minimumDistance: 6, coordinateSpace: .named(Self.space))
@@ -140,13 +148,13 @@ private struct WalkerScene: View {
                         .onEnded { _ in onDrop() }
                 )
                 .allowsHitTesting(touchable)
-                .accessibilityElement(children: .ignore)
+                .accessibilityElement()
                 .accessibilityLabel(Text(Strings.name))
                 .accessibilityHint(Text(Strings.tapToPet))
                 .accessibilityAddTraits(.isButton)
                 .accessibilityIdentifier("walker.cat")
                 .accessibilityAction { onTap() }
-                .position(center)
+                .position(x: target.midX, y: target.midY)
 
             if geometry.hasIsland {
                 // Drawn exactly under the hardware island, so on a device it is invisible; it hides
@@ -174,6 +182,12 @@ private struct WalkerScene: View {
     }
 
     static let space = "murzik.walker"
+
+    private func hitRect(for frame: WalkerFrame) -> CGRect {
+        let top = (frame.upsideDown ? frame.feet.y : frame.feet.y - box) - 8
+        let bottom = max(top + box + 16, geometry.safeTop + 34)
+        return CGRect(x: frame.feet.x - box / 2 - 8, y: top, width: box + 16, height: bottom - top)
+    }
 
     @ViewBuilder
     private func shadow(for frame: WalkerFrame) -> some View {

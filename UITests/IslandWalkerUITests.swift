@@ -73,12 +73,14 @@ final class IslandWalkerUITests: XCTestCase {
         let cat = app.descendants(matching: .any)["walker.cat"]
         XCTAssertTrue(cat.waitForExistence(timeout: 5), "walker cat not found")
         snapshot("touch-0-sleeping")
-        cat.tap()
+        // Tap the lower part of the touch target (below the status bar, which swallows touches).
+        let below = cat.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.85))
+        below.tap()
         snapshot("touch-1-tapped")
         usleep(300_000)
         snapshot("touch-2-tapped")
         sleep(2)
-        let start = cat.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+        let start = cat.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.85))
         let target = app.coordinate(withNormalizedOffset: CGVector(dx: 0.7, dy: 0.32))
         start.press(forDuration: 0.2, thenDragTo: target, withVelocity: .slow, thenHoldForDuration: 0.6)
         snapshot("touch-3-dropped")
