@@ -15,13 +15,22 @@ A small black cat who lives in the iPhone's Dynamic Island.
 
 ## מה זה
 
-מורזיק הוא חתול שחור קטן שגר ב-Dynamic Island של האייפון.
+מורזיק הוא חתול שחור תלת-ממדי שגר באייפון, בתוך ה-Dynamic Island וסביבו.
 
-- **באפליקציה:** אפשר ללטף אותו (גם בנגיעה בחתול עצמו), להאכיל, לשחק ולהשכיב לישון. הוא ממצמץ, מקשקש בזנב ונושם.
-- **מה הוא מרגיש:** יש לו שלושה צרכים: שובע, אנרגיה ושמחה. הם משתנים עם הזמן, גם כשהאפליקציה סגורה.
-- **מצבי רוח:** עשרה מצבים: רגוע, שמח, ישנוני, ישן, שובב, רעב, אוהב, מופתע, ממצמץ ונלהב.
-- **ב-Dynamic Island:** הפרצוף שלו מופיע משמאל, וסמל מצב הרוח מימין. בלחיצה ארוכה נפתחת תצוגה מורחבת עם כפתורי **ליטוף** ו**אוכל** שעובדים בלי לפתוח את האפליקציה. באותה תצוגה יש גם שעון שסופר לאחור עד שהוא יהיה רעב.
-- **במסך הנעילה:** אותו כרטיס עם אותם כפתורים.
+- **מורזיק התלת-ממדי:** חתול שלם, עם רגליים וזנב מפרקי, שחי על שטיח בחדר חמים שמשתנה עם שעות היום.
+  - **אנימציות:** הוא מטייל, יושב, מלקק את הכפה, מתמתח ומפהק, נרדם מכורבל, קופץ על כדור צמר, אוכל מקערה, ומגרגר עם לבבות.
+  - **מבט:** הראש והעיניים שלו עוקבים אחרי האצבע.
+- **ליטוף וגרגור:** נגיעה בו היא ליטוף. השארת האצבע עליו, או ליטוף לאורך, גורמת לו לגרגר, עם רטט עדין וצליל גרגור.
+- **משחק:** במצב משחק יש נוצה או נקודת לייזר שגוררים, והוא רודף אחריהן.
+- **מטייל סביב ה-Dynamic Island:** כשהאפליקציה פתוחה, מורזיק הולך מתחת לאי, קופץ לצד שלו, נכנס לתוכו ומציץ מהצד השני. אפשר לגעת בו או לגרור אותו.
+- **בתוך ה-Dynamic Island:** חתול שלם. כשיוצאים מהאפליקציה הוא חוצה את האי מצד לצד.
+  - **בלחיצה ארוכה:** נפתחת במה קטנה עם קערה, כרית, ושביל טביעות כפות שמתמלא בזמן אמת עד שהוא רעב.
+  - **כפתורי ליטוף ואוכל:** הוא הולך לכרית או לקערה ומגיב.
+- **אישיות:**
+  - הוא שמח לראות אותה ("התגעגעתי אלייך").
+  - בערב הוא ישנוני.
+  - לפעמים הוא מביא מתנה.
+  - יש מונה של אהבה וימים ברצף, והגדרות לכל דבר.
 
 ## התקנה על האייפון (Windows, בלי Mac)
 
@@ -53,7 +62,10 @@ A small black cat who lives in the iPhone's Dynamic Island.
 | Pet / Feed buttons in the expanded island and on the Lock Screen | ✅ `LiveActivityIntent` (iOS 17), runs in the app process |
 | Reactions in the island (hearts, excitement), then settling back | ✅ two content updates, ~6 s apart |
 | Turning hungry on time with the app closed | ✅ `staleDate` = hunger time + self-updating countdown |
-| Blinking, tail, breathing | ✅ in the app only |
+| Full-body 3D cat with many animations (SceneKit) | ✅ in the app |
+| Cat walking around the real Dynamic Island cutout | ✅ while the app is open (in-app overlay) |
+| Cat walking across the Dynamic Island itself | ✅ in steps (~3 s apart) when leaving the app or tapping island buttons |
+| Real-time paw-print trail in the expanded island | ✅ `ProgressView(timerInterval:)` mask, no updates needed |
 | Continuous animation inside the Dynamic Island | ❌ not possible. Live Activities only animate between content updates (≤2 s) |
 | Staying in the island forever | ❌ iOS ends a Live Activity after at most 8 h. Opening the app restarts it |
 | Mood changes driven by time while the app is fully closed (other than hunger) | ⚠️ needs a push server. Picked up the next time the app or a button runs |
