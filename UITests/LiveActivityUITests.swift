@@ -63,6 +63,9 @@ final class LiveActivityUITests: XCTestCase {
     }
 
     private func launchFed(_ arguments: [String] = []) -> XCUIApplication {
+        // ActivityKit throttles bursts of updates to one activity (it survives relaunches), so give
+        // its budget time to refill between tests; the first test runs on a fresh budget.
+        if name.contains("test1") == false { pause(25) }
         let app = XCUIApplication()
         app.launchArguments = arguments
         if let dir = islandDir {
@@ -86,7 +89,7 @@ final class LiveActivityUITests: XCTestCase {
 
     /// Leaving the app: Murzik stretches, walks across the island through the camera area and sits.
     /// Leaving again: he walks back. (A screenshot takes ~1–3 s in CI, so frames are back to back.)
-    func test1WalkAcrossTheIslandWhenLeavingTheApp() throws {
+    func test2WalkAcrossTheIslandWhenLeavingTheApp() throws {
         continueAfterFailure = true
         let app = launchFed()
 
@@ -106,7 +109,7 @@ final class LiveActivityUITests: XCTestCase {
 
     /// Real-time experiment: the paw-print trail is a `ProgressView(timerInterval:)` mask. With a
     /// 75 s debug interval, shots a few seconds apart must differ without any content update.
-    func test2RealTimePawTrail() throws {
+    func test3RealTimePawTrail() throws {
         continueAfterFailure = true
         _ = launchFed(["-uitest-fast-trail"])
         XCUIDevice.shared.press(.home)
@@ -121,7 +124,7 @@ final class LiveActivityUITests: XCTestCase {
 
     /// The island buttons' intents (run by the app after the leaving walk, exactly as a tap would):
     /// Feed → he walks to the bowl, eats and hops; Pet → he walks to the cushion with hearts.
-    func test3FeedIntentWalksToTheBowl() throws {
+    func test4FeedIntentWalksToTheBowl() throws {
         continueAfterFailure = true
         _ = launchFed(["-uitest-intent-after-walk", "feed"])
         XCUIDevice.shared.press(.home)
@@ -133,7 +136,7 @@ final class LiveActivityUITests: XCTestCase {
         capture("intent-feed-settled", fraction: 0.3)
     }
 
-    func test4PetIntentWalksToTheCushion() throws {
+    func test1PetIntentWalksToTheCushion() throws {
         continueAfterFailure = true
         _ = launchFed(["-uitest-intent-after-walk", "pet"])
         XCUIDevice.shared.press(.home)
