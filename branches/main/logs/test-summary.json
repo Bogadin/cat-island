@@ -3,7 +3,7 @@
     {
       "device" : {
         "architecture" : "arm64",
-        "deviceId" : "36E2B8D9-F7DC-43ED-8383-C3824D1485A8",
+        "deviceId" : "6EEDD2B9-6E06-4333-91B6-8661FDCCBA47",
         "deviceName" : "iPhone 17 Pro Max",
         "modelName" : "iPhone 17 Pro Max",
         "osBuildNumber" : "23F77",
@@ -12,7 +12,7 @@
       },
       "expectedFailures" : 0,
       "failedTests" : 0,
-      "passedTests" : 34,
+      "passedTests" : 109,
       "skippedTests" : 0,
       "testPlanConfiguration" : {
         "configurationId" : "1",
@@ -23,11 +23,11 @@
   "environmentDescription" : "Murzik · Built with macOS 26.6.2",
   "expectedFailures" : 0,
   "failedTests" : 0,
-  "finishTime" : 1793294478.682,
-  "passedTests" : 34,
+  "finishTime" : 1793372741.57,
+  "passedTests" : 109,
   "result" : "Passed",
   "skippedTests" : 0,
-  "startTime" : 1793293988.327,
+  "startTime" : 1793371629.823,
   "statistics" : [
 
   ],
@@ -38,9 +38,9 @@
   "topInsights" : [
     {
       "category" : "Longest Test Runs",
-      "impact" : "42% of duration",
-      "text" : "1 longest test run with outlier durations exceeding 0.89s (three standard deviations)"
+      "impact" : "61% of duration",
+      "text" : "4 longest test runs with outlier durations exceeding 3.81s (three standard deviations)"
     }
   ],
-  "totalTestCount" : 34
+  "totalTestCount" : 109
 }
