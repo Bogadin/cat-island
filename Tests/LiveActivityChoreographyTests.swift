@@ -33,7 +33,8 @@ final class LiveActivityChoreographyTests: XCTestCase {
     func testCrossingWalksFromLeadingToTrailingThroughTheCamera() {
         let beats = IslandChoreography.crossing(from: IslandScene(position: IslandChoreography.leftSpot))
         assertWellFormed(beats)
-        XCTAssertEqual(beats.first?.scene.pose, .stretch)
+        XCTAssertEqual(beats.first?.scene.pose, .walk)
+        XCTAssertLessThanOrEqual(beats.count, 5, "few updates: iOS throttles bursts")
         let walking = beats.filter { $0.scene.pose == .walk }
         XCTAssertGreaterThanOrEqual(walking.count, 3)
         XCTAssertTrue(walking.allSatisfy { !$0.scene.facingLeft })
@@ -77,7 +78,6 @@ final class LiveActivityChoreographyTests: XCTestCase {
         XCTAssertNotNil(eat)
         XCTAssertEqual(eat?.scene.effect, .food)
         XCTAssertEqual(eat?.scene.facingLeft, true)
-        XCTAssertTrue(beats.contains { $0.scene.effect == .sparkles })
         XCTAssertEqual(beats.last!.scene.position, IslandChoreography.feedSpot, accuracy: 0.001)
     }
 

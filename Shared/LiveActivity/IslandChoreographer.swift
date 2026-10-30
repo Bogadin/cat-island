@@ -70,6 +70,14 @@ enum IslandChoreographer {
         #if DEBUG
         debugLog("react action=\(action?.rawValue ?? "nil") mood=\(mood?.rawValue ?? "nil")")
         #endif
+        // In-app reactions happen while the island is hidden (app in front): don't spend the
+        // update budget on a show nobody sees, just settle when the reaction is over.
+        if action == nil {
+            var settle = IslandSceneStore.shared.current.resting()
+            settle.facingLeft = IslandSceneStore.shared.current.facingLeft
+            await play([IslandBeat(at: reactionRemaining(in: state, at: now), scene: settle)], storage: storage)
+            return
+        }
         let beats = IslandChoreography.reaction(
             to: action,
             reactionMood: mood,

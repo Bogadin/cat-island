@@ -113,13 +113,15 @@ struct IslandBeat: Equatable, Sendable {
 /// `animationDuration`, and every sequence ends with Murzik resting.
 enum IslandChoreography {
     /// SwiftUI animation between two beats (iOS caps Live Activity animations at 2 s).
-    static let animationDuration: TimeInterval = 1.5
-    /// A calm walking step.
-    static let stepInterval: TimeInterval = 1.7
-    static let stepLength = 0.17
+    static let animationDuration: TimeInterval = 2
+    /// A calm walking step. iOS throttles bursts of Live Activity updates (in the simulator only
+    /// about one update every few seconds got through), so steps are few, long and ~3 s apart:
+    /// he glides for 2 s, pauses, glides again. If one is dropped, the next still lands right.
+    static let stepInterval: TimeInterval = 3
+    static let stepLength = 0.25
     /// A quicker trot toward a button that was just tapped.
-    static let trotInterval: TimeInterval = 1.6
-    static let trotLength = 0.3
+    static let trotInterval: TimeInterval = 2.6
+    static let trotLength = 0.4
     /// Where he likes to sit on each side.
     static let leftSpot = 0.16
     static let rightSpot = 0.84
@@ -165,17 +167,8 @@ enum IslandChoreography {
     /// - Parameter restNotBefore: an active reaction's remaining time; he sits down only after it.
     static func crossing(from start: IslandScene, restNotBefore: TimeInterval = 0) -> [IslandBeat] {
         let target = start.position < 0.5 ? rightSpot : leftSpot
-        var scene = start
-        scene.pose = .stretch
-        scene.frame = 0
-        scene.effect = .none
-        scene.facingLeft = target < start.position
-        scene.step &+= 1
-        var beats = [IslandBeat(at: 0.3, scene: scene)]
-        let walk = walk(from: scene, to: target, stepLength: stepLength, interval: stepInterval, startAt: 0.3 + stepInterval)
-        beats += walk.beats
-        beats.append(IslandBeat(at: max(walk.endAt, restNotBefore), scene: walk.end.resting()))
-        return beats
+        let walk = walk(from: start, to: target, stepLength: stepLength, interval: stepInterval, startAt: 0.3)
+        return walk.beats + [IslandBeat(at: max(walk.endAt, restNotBefore), scene: walk.end.resting())]
     }
 
     /// Played after Pet/Feed (or any reaction): he trots to the button that was tapped, reacts
@@ -219,32 +212,12 @@ enum IslandChoreography {
         }
 
         let joy: IslandScene.Effect = reactionMood == .excited ? .sparkles : .hearts
-        if action == .feed {
-            // Eat from the bowl (on the left), then a happy hop.
-            scene.pose = .eat
-            scene.facingLeft = true
-            scene.effect = .food
-            scene.step &+= 1
-            beats.append(IslandBeat(at: t, scene: scene))
-            t += stepInterval
-            scene.pose = .hop
-            scene.facingLeft = false
-            scene.effect = joy
-            scene.step &+= 1
-            beats.append(IslandBeat(at: t, scene: scene))
-            t += stepInterval
-        } else {
-            scene.pose = .hop
-            scene.effect = joy
-            scene.step &+= 1
-            beats.append(IslandBeat(at: t, scene: scene))
-            t += stepInterval
-            // Sit and enjoy it a moment longer.
-            scene.pose = .rest
-            scene.step &+= 1
-            beats.append(IslandBeat(at: t, scene: scene))
-            t += stepInterval
-        }
+        scene.pose = action == .feed ? .eat : .hop
+        scene.facingLeft = action == .feed ? true : scene.facingLeft
+        scene.effect = action == .feed ? .food : joy
+        scene.step &+= 1
+        beats.append(IslandBeat(at: t, scene: scene))
+        t += stepInterval
         beats.append(IslandBeat(at: max(t, restNotBefore), scene: scene.resting()))
         return beats
     }
