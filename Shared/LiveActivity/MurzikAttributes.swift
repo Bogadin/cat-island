@@ -14,6 +14,9 @@ struct MurzikAttributes: ActivityAttributes {
         var hungryAt: Date
         /// When a sleeping Murzik wakes up on his own (nil when awake).
         var wakesAt: Date?
+        /// Where Murzik is on the island stage and what he is doing (walk choreography).
+        /// Optional so content from older builds still decodes.
+        var stage: IslandScene? = nil
     }
 
     var name: String
@@ -32,6 +35,9 @@ extension MurzikAttributes.ContentState {
             wakesAt: PersonalityEngine.wakeDate(for: state)
         )
     }
+
+    /// The scene to draw (his home spot when no choreography has run yet).
+    var scene: IslandScene { stage ?? .home }
 
     /// The mood to draw. Once the content is stale (past `hungryAt`) Murzik is hungry,
     /// unless he is asleep.
