@@ -18,6 +18,18 @@ final class PetModel: ObservableObject {
     @Published private(set) var now: Date
     @Published private(set) var islandStatus: IslandStatus = .off
     @Published private(set) var lastAction: (action: PetAction, date: Date)?
+    /// Visits, love streak, gifts and mood diary.
+    @Published private(set) var bond: BondState
+    /// Welcome card to show (set when she opens the app after a while).
+    @Published private(set) var greeting: Greeting?
+    /// A spontaneous cute moment to show (gift or sweet message).
+    @Published private(set) var surprise: Surprise?
+
+    /// Calendar used for the day rhythm and streaks.
+    var calendar: Calendar = .current
+    /// Debug/UI-test override of the time of day (launch argument `-uitest-phase evening`).
+    private(set) var phaseOverride: DayPhase?
+    private var activeSince: Date = .now
 
     private let storage: PetStorage
     private var observers: [NSObjectProtocol] = []
@@ -30,6 +42,19 @@ final class PetModel: ObservableObject {
         let now = Date.now
         self.now = now
         self.state = PersonalityEngine.advance(storage.load(now: now), to: now)
+        var initialBond = storage.loadBond()
+        #if DEBUG
+        Self.applyUITestFixtures(storage: storage, bond: &initialBond, now: now)
+        #endif
+        self.bond = initialBond
+        #if DEBUG
+        phaseOverride = UserDefaults.standard.string(forKey: "uitest-phase").flatMap(DayPhase.init(rawValue:))
+        #endif
+        observers.append(NotificationCenter.default.addObserver(
+            forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor in self?.wentToBackground() }
+        })
         observers.append(NotificationCenter.default.addObserver(
             forName: .murzikStateDidChange, object: nil, queue: .main
         ) { [weak self] _ in
@@ -43,7 +68,24 @@ final class PetModel: ObservableObject {
         }
     }
 
-    var mood: MurzikMood { PersonalityEngine.mood(for: state, at: now) }
+    /// The mood shown in the app: engine mood + daily rhythm, and a loving welcome while greeting her.
+    var mood: MurzikMood {
+        if greeting != nil, !state.isSleeping, !hasActiveReaction { return .loving }
+        return PersonalityEngine.displayMood(for: state, at: now, phase: dayPhase)
+    }
+
+    private var hasActiveReaction: Bool {
+        state.lastReaction.map { PersonalityEngine.isReactionActive($0, at: now) } ?? false
+    }
+
+    var dayPhase: DayPhase { phaseOverride ?? PersonalityEngine.dayPhase(at: now, calendar: calendar) }
+    var loveToday: Int { PersonalityEngine.loveToday(bond, at: now, calendar: calendar) }
+    var streak: Int { PersonalityEngine.currentStreak(bond, at: now, calendar: calendar) }
+    var moodsToday: [MoodSample] { PersonalityEngine.moodsToday(bond, at: now, calendar: calendar) }
+    var isBedtime: Bool {
+        if let phaseOverride { return phaseOverride == .night && !state.isSleeping }
+        return PersonalityEngine.isBedtime(for: state, at: now, calendar: calendar)
+    }
     var islandEnabled: Bool { storage.islandEnabled }
 
     // MARK: Lifecycle
@@ -51,6 +93,12 @@ final class PetModel: ObservableObject {
     /// Call when the app becomes active: catches up on elapsed time and restores the island.
     func becameActive() {
         reload()
+        let current = Date.now
+        if greeting == nil, let welcome = PersonalityEngine.greeting(bond: bond, at: current, calendar: calendar) {
+            greeting = welcome
+        }
+        activeSince = current
+        updateBond { PersonalityEngine.recordVisit($0, at: current) }
         #if DEBUG
         // Unit tests use the app as a host; don't start a Live Activity there.
         if ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil { return }
@@ -74,7 +122,90 @@ final class PetModel: ObservableObject {
         if tickCount % 5 == 0 {
             refreshIslandStatus()
         }
+        // The diary keeps lasting moods, not every short reaction.
+        if greeting == nil, !hasActiveReaction {
+            let currentMood = mood
+            updateBond { PersonalityEngine.recordMood(currentMood, in: $0, at: newNow) }
+        }
+        #if DEBUG
+        if tickCount == 9, ProcessInfo.processInfo.arguments.contains("-uitest-gift") {
+            showSurprise(.gift(.flower))
+        }
+        #endif
+        if tickCount % 40 == 0 {
+            considerSurprise()
+        }
     }
+
+    private func wentToBackground() {
+        let current = Date.now
+        updateBond { PersonalityEngine.recordVisit($0, at: current) }
+    }
+
+    private func updateBond(_ change: (BondState) -> BondState) {
+        let newBond = change(bond)
+        guard newBond != bond else { return }
+        bond = newBond
+        storage.saveBond(newBond)
+    }
+
+    // MARK: Moments
+
+    func dismissGreeting() {
+        greeting = nil
+    }
+
+    func dismissSurprise() {
+        surprise = nil
+    }
+
+    /// Rolls the dice for a spontaneous cute moment (only while she is looking and nothing else is showing).
+    private func considerSurprise() {
+        guard greeting == nil, surprise == nil, now.timeIntervalSince(activeSince) > 20 else { return }
+        if let lastAction, now.timeIntervalSince(lastAction.date) < PersonalityEngine.reactionDuration { return }
+        guard let moment = PersonalityEngine.surprise(
+            for: state, bond: bond, at: now,
+            roll: Double.random(in: 0..<1), pick: Int.random(in: 0..<10_000)
+        ) else { return }
+        showSurprise(moment)
+    }
+
+    func showSurprise(_ moment: Surprise) {
+        let current = Date.now
+        surprise = moment
+        updateBond { PersonalityEngine.applySurprise(moment, to: $0, at: current) }
+    }
+
+    /// A purring session (long press / stroke) ended.
+    func recordPurr(seconds: TimeInterval) {
+        guard seconds > 0 else { return }
+        updateBond { PersonalityEngine.recordPurr($0, seconds: seconds) }
+    }
+
+    #if DEBUG
+    /// Launch arguments used by UI tests to show specific moments.
+    private static func applyUITestFixtures(storage: PetStorage, bond: inout BondState, now: Date) {
+        let args = ProcessInfo.processInfo.arguments
+        if args.contains("-uitest-missed") {
+            let calendar = Calendar.current
+            var b = BondState(
+                lastVisit: now.addingTimeInterval(-9 * 3600),
+                lastLoveDate: calendar.date(byAdding: .day, value: -1, to: now),
+                streakDays: 4, loveOnLastDay: 9, totalLove: 57, giftsReceived: 3,
+                lastSurprise: now.addingTimeInterval(-3600), purrSeconds: 640
+            )
+            let moods: [MurzikMood] = [.sleeping, .hungry, .happy, .playful, .loving, .idle]
+            for (i, mood) in moods.enumerated() {
+                let date = now.addingTimeInterval(Double(i - moods.count) * 600)
+                if calendar.isDate(date, inSameDayAs: now) {
+                    b.moodHistory.append(MoodSample(mood: mood, date: date))
+                }
+            }
+            bond = b
+            storage.saveBond(b)
+        }
+    }
+    #endif
 
     func reload() {
         let newNow = Date.now
@@ -90,6 +221,10 @@ final class PetModel: ObservableObject {
         state = newState
         now = .now
         lastAction = (action, now)
+        if action == .pet || action == .feed || action == .play {
+            let current = now
+            updateBond { PersonalityEngine.recordLove($0, at: current, calendar: calendar) }
+        }
         settleTask?.cancel()
         // Keep running briefly if the user leaves the app, so the island can settle after the reaction.
         endBackgroundTask()

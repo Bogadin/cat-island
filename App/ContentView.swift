@@ -1,383 +1,404 @@
 import SwiftUI
 
+/// The main screen: Murzik's room with the big 3D stage, his speech bubble, the love strip and the action dock.
 struct ContentView: View {
     @EnvironmentObject private var model: PetModel
+    @StateObject private var director = StageDirector()
+    @AppStorage(ExperienceSettings.showNameKey) private var showName = true
+    @AppStorage(ExperienceSettings.hapticsKey) private var hapticsEnabled = true
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    @State private var blink = false
+    @State private var showSettings = false
+    @State private var stageFrame: CGRect = .zero
     @State private var bounce: CGFloat = 1
-    @State private var particles: [Particle] = []
+    @GestureState private var touching = false
 
     private let clock = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     var body: some View {
         let mood = model.mood
-        ZStack {
-            LinearGradient(colors: [MurzikPalette.cream, MurzikPalette.sand], startPoint: .top, endPoint: .bottom)
-                .ignoresSafeArea()
+        let phase = model.dayPhase
+        let theme = RoomTheme.for(phase)
 
-            ScrollView {
-                VStack(spacing: 18) {
-                    header(mood: mood)
-                    stage(mood: mood)
-                    NeedsCard(state: model.state)
-                    actions
-                    IslandCard()
-                }
-                .padding(.horizontal, 20)
-                .padding(.top, 8)
-                .padding(.bottom, 28)
+        ZStack {
+            RoomBackdrop(phase: phase, stageFrame: stageFrame, animated: !reduceMotion)
+                .ignoresSafeArea()
+                .transition(.opacity)
+                .id(phase)
+
+            VStack(spacing: 12) {
+                topBar(mood: mood, phase: phase, theme: theme)
+                    .padding(.horizontal, 20)
+                    .padding(.top, 4)
+
+                stage(mood: mood)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(
+                        GeometryReader { geo in
+                            Color.clear.preference(key: StageFrameKey.self, value: geo.frame(in: .global))
+                        }
+                    )
+
+                bondStrip(theme: theme)
+                    .padding(.horizontal, 16)
+
+                // The action dock always takes its space (so the stage never jumps); the toy dock covers it.
+                actionDock(theme: theme)
+                    .opacity(director.toyMode ? 0 : 1)
+                    .allowsHitTesting(!director.toyMode)
+                    .accessibilityHidden(director.toyMode)
+                    .overlay {
+                        if director.toyMode {
+                            toyDock(theme: theme)
+                                .transition(.move(edge: .bottom).combined(with: .opacity))
+                        }
+                    }
+                .padding(.horizontal, 16)
             }
-            .scrollIndicators(.hidden)
+            .padding(.bottom, 6)
+            .animation(.spring(response: 0.45, dampingFraction: 0.85), value: director.toyMode)
+        }
+        .overlay(alignment: .top) {
+            momentOverlay
+                .padding(.horizontal, 18)
+                .padding(.top, 74)
+                .animation(.spring(response: 0.5, dampingFraction: 0.78), value: model.greeting)
+                .animation(.spring(response: 0.5, dampingFraction: 0.78), value: model.surprise)
+        }
+        .animation(.easeInOut(duration: 1.2), value: phase)
+        .onPreferenceChange(StageFrameKey.self) { frame in
+            stageFrame = frame
+        }
+        .sheet(isPresented: $showSettings) {
+            SettingsSheet()
+                .environmentObject(model)
+                .environment(\.layoutDirection, .rightToLeft)
         }
         .onReceive(clock) { _ in model.tick() }
-        .task { await blinkLoop() }
-        .sensoryFeedback(.impact(weight: .light), trigger: model.lastAction?.date)
+        .onAppear { director.attach(model) }
+        .onChange(of: mood) { _, newMood in director.syncMood(newMood) }
+        .onChange(of: director.pulse) { _, _ in bounceStage() }
+        .onChange(of: model.surprise) { _, moment in
+            if case .gift = moment { director.burst(symbol: "gift.fill", color: MurzikPalette.mint, count: 4, spread: 90) }
+        }
+        .sensoryFeedback(trigger: model.lastAction?.date) { _, _ in
+            hapticsEnabled ? .impact(weight: .light) : nil
+        }
     }
 
-    // MARK: Header
+    // MARK: Top bar
 
-    private func header(mood: MurzikMood) -> some View {
-        HStack(alignment: .firstTextBaseline) {
-            Text(Strings.name)
-                .font(.system(size: 34, weight: .heavy, design: .rounded))
-                .foregroundStyle(MurzikPalette.ink)
-            Spacer()
+    private func topBar(mood: MurzikMood, phase: DayPhase, theme: RoomTheme) -> some View {
+        HStack(alignment: .center, spacing: 10) {
+            VStack(alignment: .leading, spacing: 0) {
+                if showName {
+                    Text(Strings.name)
+                        .font(.system(size: 34, weight: .heavy, design: .rounded))
+                        .foregroundStyle(theme.ink)
+                        .accessibilityAddTraits(.isHeader)
+                }
+                Label(Strings.phaseTitle(phase), systemImage: phaseSymbol(phase))
+                    .font(.system(size: 13, weight: .semibold, design: .rounded))
+                    .foregroundStyle(theme.inkSoft)
+            }
+            Spacer(minLength: 8)
             MoodChip(mood: mood)
+            RoundIconButton(symbol: "gearshape.fill", label: Strings.settingsOpen, identifier: "settings.open") {
+                showSettings = true
+            }
+            .overlay(alignment: .topTrailing) {
+                if islandNeedsAttention {
+                    Circle()
+                        .fill(MurzikPalette.heart)
+                        .frame(width: 11, height: 11)
+                        .overlay(Circle().strokeBorder(.white, lineWidth: 2))
+                        .offset(x: 1, y: -1)
+                        .accessibilityHidden(true)
+                }
+            }
         }
-        .padding(.top, 8)
+        .animation(.spring(response: 0.35, dampingFraction: 0.75), value: mood)
+    }
+
+    private var islandNeedsAttention: Bool {
+        guard model.islandEnabled else { return false }
+        switch model.islandStatus {
+        case .disabledBySystem, .failed: return true
+        default: return false
+        }
+    }
+
+    private func phaseSymbol(_ phase: DayPhase) -> String {
+        switch phase {
+        case .morning: return "sunrise.fill"
+        case .day: return "sun.max.fill"
+        case .evening: return "sunset.fill"
+        case .night: return "moon.stars.fill"
+        }
     }
 
     // MARK: Stage
 
     private func stage(mood: MurzikMood) -> some View {
-        ZStack {
-            Circle()
-                .fill(RadialGradient(colors: [Color.white, Color.white.opacity(0)], center: .center, startRadius: 10, endRadius: 170))
-                .frame(width: 320, height: 320)
+        GeometryReader { geo in
+            let size = geo.size
+            let catWidth = min(size.width * 0.8, 330)
+            let catHeight = size.height * 0.8
+            ZStack {
+                if director.isPurring {
+                    PurrRings()
+                        .frame(width: min(size.width * 0.95, 400), height: min(size.width * 0.95, 400))
+                        .position(x: size.width / 2, y: size.height * 0.6)
+                        .transition(.opacity)
+                }
 
-            Ellipse()
-                .fill(MurzikPalette.ink.opacity(0.13))
-                .frame(width: 150, height: 18)
-                .blur(radius: 4)
-                .offset(y: 122)
+                Murzik3DView(controller: director.cat)
+                    .frame(width: catWidth, height: catHeight)
+                    .scaleEffect(bounce, anchor: .bottom)
+                    .position(x: size.width / 2, y: size.height - catHeight / 2)
+                    .accessibilityElement(children: .ignore)
+                    .accessibilityLabel(Text("\(Strings.catLabel), \(Strings.moodTitle(mood))"))
+                    .accessibilityValue(Text(Strings.moodMessage(mood)))
+                    .accessibilityHint(Text(Strings.tapToPet))
+                    .accessibilityAddTraits(.isButton)
+                    .accessibilityAction { director.pet() }
+                    .accessibilityIdentifier("stage.cat")
 
-            animatedCat(mood: mood)
-                .frame(width: 190, height: 250)
-                .scaleEffect(bounce, anchor: .bottom)
-                .contentShape(Rectangle())
-                .onTapGesture { perform(.pet) }
-                .accessibilityAddTraits(.isButton)
-                .accessibilityHint(Text(Strings.tapToPet))
+                ForEach(director.bursts) { particle in
+                    FloatingSymbol(particle: particle)
+                        .position(x: size.width / 2, y: size.height * 0.42)
+                }
 
-            ForEach(particles) { particle in
-                FloatingSymbol(particle: particle)
+                if let bubble = bubble(mood: mood) {
+                    SpeechBubble(text: bubble.text, symbol: bubble.symbol, tint: bubble.tint)
+                        .frame(maxWidth: size.width - 48)
+                        .id(bubble.text)
+                        .transition(.scale(scale: 0.85, anchor: .bottom).combined(with: .opacity))
+                        .position(x: size.width / 2, y: max(34, size.height - catHeight - 4))
+                        .allowsHitTesting(false)
+                        .accessibilityAddTraits(.updatesFrequently)
+                }
+
+                if director.toyMode {
+                    ToyLayer(director: director)
+                        .transition(.opacity)
+                }
             }
-
-            SpeechBubble(text: Strings.moodMessage(mood))
-                .id(mood)
-                .transition(.scale(scale: 0.8).combined(with: .opacity))
-                .offset(y: -150)
+            .frame(width: size.width, height: size.height)
+            .contentShape(Rectangle())
+            .simultaneousGesture(touchGesture(size: size), including: director.toyMode ? .subviews : .all)
+            .animation(.spring(response: 0.4, dampingFraction: 0.75), value: bubble(mood: mood)?.text)
+            .animation(.easeInOut(duration: 0.35), value: director.isPurring)
         }
-        .frame(height: 340)
-        .animation(.spring(response: 0.35, dampingFraction: 0.7), value: mood)
-    }
-
-    @ViewBuilder
-    private func animatedCat(mood: MurzikMood) -> some View {
-        if reduceMotion {
-            CatFigure(mood: mood, eyesClosed: blink)
-        } else {
-            TimelineView(.animation(minimumInterval: 1.0 / 30.0)) { timeline in
-                let t = timeline.date.timeIntervalSinceReferenceDate
-                let sleeping = mood == .sleeping
-                let excited = mood == .excited || mood == .playful
-                CatFigure(
-                    mood: mood,
-                    eyesClosed: blink,
-                    tailAngle: sin(t * (sleeping ? 0.7 : (excited ? 4.0 : 2.0))) * (sleeping ? 3 : (excited ? 14 : 8)),
-                    breath: 1 + CGFloat(sin(t * (sleeping ? 1.4 : 2.4))) * (sleeping ? 0.018 : 0.010)
-                )
-            }
-        }
-    }
-
-    // MARK: Actions
-
-    private var actions: some View {
-        HStack(spacing: 12) {
-            ActionButton(action: .pet, tint: MurzikPalette.heart) { perform(.pet) }
-            ActionButton(action: .feed, tint: MurzikPalette.amber) { perform(.feed) }
-            ActionButton(action: .play, tint: MurzikPalette.mint) { perform(.play) }
-            if model.state.isSleeping {
-                ActionButton(action: .wake, tint: Color(red: 0.98, green: 0.72, blue: 0.20)) { perform(.wake) }
-            } else {
-                ActionButton(action: .sleep, tint: MurzikPalette.sky) { perform(.sleep) }
-            }
+        .environment(\.layoutDirection, .leftToRight)
+        .onChange(of: touching) { _, isTouching in
+            if !isTouching { director.touchEnded() }
         }
     }
 
-    private func perform(_ action: PetAction) {
-        model.perform(action)
-        spawnParticles(for: action)
+    private func touchGesture(size: CGSize) -> some Gesture {
+        DragGesture(minimumDistance: 0)
+            .updating($touching) { _, state, _ in state = true }
+            .onChanged { value in
+                let point = CGPoint(x: value.location.x / max(size.width, 1), y: value.location.y / max(size.height, 1))
+                director.touchChanged(at: point, translation: value.translation)
+            }
+            .onEnded { _ in director.touchEnded() }
+    }
+
+    private struct Bubble {
+        var text: String
+        var symbol: String?
+        var tint: Color
+    }
+
+    private func bubble(mood: MurzikMood) -> Bubble? {
+        if model.greeting != nil || model.surprise != nil { return nil }
+        if director.toyMode {
+            if let caught = director.caughtAt, model.now.timeIntervalSince(caught) < 1.6 {
+                return Bubble(text: Strings.toyCaught, symbol: "sparkles", tint: MurzikPalette.amber)
+            }
+            return nil
+        }
+        if director.isPurring {
+            return Bubble(text: Strings.purring, symbol: "heart.fill", tint: MurzikPalette.heart)
+        }
+        if model.isBedtime, mood == .sleepy || mood == .idle || mood == .happy {
+            return Bubble(text: Strings.bedtimeMessage, symbol: "moon.stars.fill", tint: MurzikPalette.sky)
+        }
+        return Bubble(text: Strings.moodMessage(mood), symbol: mood.symbolName, tint: MurzikPalette.accent(for: mood))
+    }
+
+    private func bounceStage() {
         guard !reduceMotion else { return }
-        withAnimation(.spring(response: 0.18, dampingFraction: 0.45)) { bounce = 1.07 }
+        withAnimation(.spring(response: 0.18, dampingFraction: 0.45)) { bounce = 1.04 }
         Task {
-            try? await Task.sleep(nanoseconds: 160_000_000)
+            try? await Task.sleep(nanoseconds: 170_000_000)
             withAnimation(.spring(response: 0.35, dampingFraction: 0.55)) { bounce = 1 }
         }
     }
 
-    private func spawnParticles(for action: PetAction) {
-        let (symbol, color): (String, Color) = {
-            switch action {
-            case .pet: return ("heart.fill", MurzikPalette.heart)
-            case .feed: return ("fish.fill", MurzikPalette.amber)
-            case .play: return ("sparkle", MurzikPalette.mint)
-            case .sleep: return ("moon.zzz.fill", MurzikPalette.sky)
-            case .wake: return ("sun.max.fill", MurzikPalette.amber)
+    // MARK: Love strip
+
+    private func bondStrip(theme: RoomTheme) -> some View {
+        HStack(spacing: 8) {
+            BondPill(symbol: "heart.fill", value: "\(model.loveToday)", label: Strings.loveToday,
+                     tint: MurzikPalette.heart, theme: theme)
+            BondPill(symbol: "flame.fill", value: "\(model.streak)", label: Strings.streak,
+                     tint: MurzikPalette.amber, theme: theme)
+            BondPill(symbol: "gift.fill", value: "\(model.bond.giftsReceived)", label: Strings.gifts,
+                     tint: MurzikPalette.mint, theme: theme)
+        }
+        .animation(.spring(response: 0.4, dampingFraction: 0.7), value: model.loveToday)
+    }
+
+    // MARK: Docks
+
+    private func dockBackground(_ theme: RoomTheme) -> some View {
+        RoundedRectangle(cornerRadius: 30, style: .continuous)
+            .fill(theme.card)
+            .shadow(color: MurzikPalette.ink.opacity(theme.isDark ? 0.3 : 0.1), radius: 18, y: 8)
+    }
+
+    private func actionDock(theme: RoomTheme) -> some View {
+        let state = model.state
+        return VStack(spacing: 16) {
+            HStack(spacing: 16) {
+                NeedGauge(symbol: "fish.fill", title: Strings.fullness, value: state.fullness, tint: MurzikPalette.amber)
+                NeedGauge(symbol: "bolt.fill", title: Strings.energy, value: state.energy, tint: MurzikPalette.sky)
+                NeedGauge(symbol: "heart.fill", title: Strings.happiness, value: state.happiness, tint: MurzikPalette.heart)
             }
-        }()
-        let burst = (0..<6).map { index in
-            Particle(
-                symbol: symbol,
-                color: color,
-                x: CGFloat.random(in: -90...90),
-                delay: Double(index) * 0.07,
-                size: CGFloat.random(in: 16...26)
-            )
-        }
-        particles.append(contentsOf: burst)
-        let ids = Set(burst.map(\.id))
-        Task {
-            try? await Task.sleep(nanoseconds: 2_200_000_000)
-            particles.removeAll { ids.contains($0.id) }
-        }
-    }
-
-    private func blinkLoop() async {
-        while !Task.isCancelled {
-            try? await Task.sleep(nanoseconds: UInt64(Double.random(in: 2.5...5.5) * 1_000_000_000))
-            blink = true
-            try? await Task.sleep(nanoseconds: 140_000_000)
-            blink = false
-        }
-    }
-}
-
-// MARK: - Components
-
-struct Particle: Identifiable {
-    let id = UUID()
-    let symbol: String
-    let color: Color
-    let x: CGFloat
-    let delay: Double
-    let size: CGFloat
-}
-
-struct FloatingSymbol: View {
-    let particle: Particle
-    @State private var flying = false
-
-    var body: some View {
-        Image(systemName: particle.symbol)
-            .font(.system(size: particle.size, weight: .bold))
-            .foregroundStyle(particle.color)
-            .scaleEffect(flying ? 1.15 : 0.5)
-            .opacity(flying ? 0 : 1)
-            .offset(x: particle.x, y: flying ? -170 : -30)
-            .allowsHitTesting(false)
-            .onAppear {
-                withAnimation(.easeOut(duration: 1.5).delay(particle.delay)) { flying = true }
-            }
-    }
-}
-
-struct SpeechBubble: View {
-    let text: String
-
-    var body: some View {
-        Text(text)
-            .font(.system(size: 16, weight: .semibold, design: .rounded))
-            .foregroundStyle(MurzikPalette.ink)
-            .padding(.horizontal, 16)
-            .padding(.vertical, 10)
-            .background(
-                Capsule()
-                    .fill(Color.white)
-                    .shadow(color: MurzikPalette.ink.opacity(0.10), radius: 10, y: 4)
-            )
-    }
-}
-
-struct MoodChip: View {
-    let mood: MurzikMood
-
-    var body: some View {
-        HStack(spacing: 6) {
-            Image(systemName: mood.symbolName)
-                .foregroundStyle(MurzikPalette.accent(for: mood))
-            Text(Strings.moodTitle(mood))
-                .foregroundStyle(MurzikPalette.ink)
-        }
-        .font(.system(size: 15, weight: .bold, design: .rounded))
-        .padding(.horizontal, 14)
-        .padding(.vertical, 8)
-        .background(Capsule().fill(Color.white.opacity(0.85)))
-        .contentTransition(.opacity)
-    }
-}
-
-struct ActionButton: View {
-    let action: PetAction
-    let tint: Color
-    let perform: () -> Void
-
-    var body: some View {
-        Button(action: perform) {
-            VStack(spacing: 8) {
-                Image(systemName: action.symbolName)
-                    .font(.system(size: 22, weight: .bold))
-                    .foregroundStyle(.white)
-                    .frame(width: 54, height: 54)
-                    .background(Circle().fill(tint.gradient))
-                    .shadow(color: tint.opacity(0.35), radius: 8, y: 4)
-                Text(Strings.actionTitle(action))
-                    .font(.system(size: 14, weight: .semibold, design: .rounded))
-                    .foregroundStyle(MurzikPalette.ink)
-            }
-            .frame(maxWidth: .infinity)
-        }
-        .buttonStyle(PressableStyle())
-        .accessibilityIdentifier("action.\(action.rawValue)")
-    }
-}
-
-struct PressableStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .scaleEffect(configuration.isPressed ? 0.92 : 1)
-            .animation(.spring(response: 0.25, dampingFraction: 0.6), value: configuration.isPressed)
-    }
-}
-
-struct NeedsCard: View {
-    let state: PetState
-
-    var body: some View {
-        VStack(spacing: 12) {
-            NeedBar(symbol: "fish.fill", title: Strings.fullness, value: state.fullness, tint: MurzikPalette.amber)
-            NeedBar(symbol: "bolt.fill", title: Strings.energy, value: state.energy, tint: MurzikPalette.sky)
-            NeedBar(symbol: "heart.fill", title: Strings.happiness, value: state.happiness, tint: MurzikPalette.heart)
-        }
-        .padding(18)
-        .background(RoundedRectangle(cornerRadius: 24, style: .continuous).fill(Color.white.opacity(0.8)))
-    }
-}
-
-struct NeedBar: View {
-    let symbol: String
-    let title: String
-    let value: Double
-    let tint: Color
-
-    var body: some View {
-        HStack(spacing: 10) {
-            Image(systemName: symbol)
-                .font(.system(size: 14, weight: .bold))
-                .foregroundStyle(tint)
-                .frame(width: 22)
-            Text(title)
-                .font(.system(size: 15, weight: .semibold, design: .rounded))
-                .foregroundStyle(MurzikPalette.ink)
-                .frame(width: 64, alignment: .leading)
-            GeometryReader { geo in
-                ZStack(alignment: .leading) {
-                    Capsule().fill(tint.opacity(0.15))
-                    Capsule().fill(tint.gradient)
-                        .frame(width: max(geo.size.height, geo.size.width * PersonalityEngine.clamp(value)))
+            HStack(spacing: 4) {
+                ActionButton(action: .pet, tint: MurzikPalette.heart) { director.perform(.pet) }
+                ActionButton(action: .feed, tint: MurzikPalette.amber,
+                             highlighted: state.fullness < PersonalityEngine.hungryThreshold) { director.perform(.feed) }
+                ActionButton(action: .play, tint: MurzikPalette.mint) { director.perform(.play) }
+                if state.isSleeping {
+                    ActionButton(action: .wake, tint: Color(red: 0.98, green: 0.72, blue: 0.20)) { director.perform(.wake) }
+                        .transition(.scale.combined(with: .opacity))
+                } else {
+                    ActionButton(action: .sleep, tint: MurzikPalette.sky, highlighted: model.isBedtime) { director.perform(.sleep) }
+                        .transition(.scale.combined(with: .opacity))
                 }
             }
-            .frame(height: 10)
-            .animation(.spring(response: 0.5, dampingFraction: 0.8), value: value)
+            .animation(.spring(response: 0.35, dampingFraction: 0.7), value: state.isSleeping)
         }
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(Text(title))
-        .accessibilityValue(Text("\(Int((PersonalityEngine.clamp(value) * 100).rounded()))%"))
+        .padding(.horizontal, 18)
+        .padding(.top, 18)
+        .padding(.bottom, 14)
+        .background(dockBackground(theme))
     }
-}
 
-struct IslandCard: View {
-    @EnvironmentObject private var model: PetModel
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            HStack(spacing: 12) {
-                IslandPreview(mood: model.mood)
-                VStack(alignment: .leading, spacing: 3) {
-                    Text(Strings.islandTitle)
-                        .font(.system(size: 16, weight: .bold, design: .rounded))
-                        .foregroundStyle(MurzikPalette.ink)
-                    statusText
-                        .font(.system(size: 13, weight: .medium, design: .rounded))
-                        .foregroundStyle(MurzikPalette.inkSoft)
+    private func toyDock(theme: RoomTheme) -> some View {
+        VStack(spacing: 14) {
+            Label(Strings.toyHint, systemImage: "hand.draw.fill")
+                .font(.system(size: 15, weight: .semibold, design: .rounded))
+                .foregroundStyle(MurzikPalette.inkSoft)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            HStack(spacing: 10) {
+                ForEach(ToyKind.allCases) { kind in
+                    let selected = director.toyKind == kind
+                    Button {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) { director.toyKind = kind }
+                    } label: {
+                        Label(kind.title, systemImage: kind.symbolName)
+                            .font(.system(size: 15, weight: .bold, design: .rounded))
+                            .foregroundStyle(selected ? .white : MurzikPalette.ink)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 11)
+                            .background(Capsule().fill(selected ? AnyShapeStyle(MurzikPalette.mint.gradient) : AnyShapeStyle(MurzikPalette.cream)))
+                    }
+                    .buttonStyle(PressableStyle())
+                    .accessibilityIdentifier("toy.\(kind.rawValue)")
+                    .accessibilityAddTraits(selected ? .isSelected : [])
                 }
                 Spacer(minLength: 0)
-                Toggle("", isOn: Binding(
-                    get: { model.islandEnabled },
-                    set: { model.setIslandEnabled($0) }
-                ))
-                .labelsHidden()
-                .tint(MurzikPalette.amber)
+                Button {
+                    director.exitToyMode()
+                } label: {
+                    Text(Strings.toyDone)
+                        .font(.system(size: 15, weight: .bold, design: .rounded))
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 18)
+                        .padding(.vertical, 11)
+                        .background(Capsule().fill(MurzikPalette.ink))
+                }
+                .buttonStyle(PressableStyle())
+                .accessibilityIdentifier("toy.done")
             }
-            Text(Strings.islandRestartNote)
-                .font(.system(size: 12, weight: .regular, design: .rounded))
-                .foregroundStyle(MurzikPalette.inkSoft)
         }
         .padding(18)
-        .background(RoundedRectangle(cornerRadius: 24, style: .continuous).fill(Color.white.opacity(0.8)))
+        .frame(maxHeight: .infinity)
+        .background(dockBackground(theme))
+    }
+
+    // MARK: Moments
+
+    @ViewBuilder
+    private var momentOverlay: some View {
+        if let greeting = model.greeting {
+            MomentCard(
+                symbol: Strings.greetingSymbol(greeting),
+                tint: MurzikPalette.heart,
+                title: Strings.greetingTitle(greeting),
+                subtitle: Strings.greetingSubtitle(greeting)
+            ) { EmptyView() }
+            .accessibilityIdentifier("moment.greeting")
+            .onTapGesture { model.dismissGreeting() }
+            .transition(.move(edge: .top).combined(with: .opacity))
+            .task(id: greeting) {
+                try? await Task.sleep(nanoseconds: 6_500_000_000)
+                guard !Task.isCancelled else { return }
+                model.dismissGreeting()
+            }
+        } else if let surprise = model.surprise {
+            surpriseCard(surprise)
+                .accessibilityIdentifier("moment.surprise")
+                .transition(.move(edge: .top).combined(with: .opacity))
+                .task(id: surprise) {
+                    try? await Task.sleep(nanoseconds: 10_000_000_000)
+                    guard !Task.isCancelled else { return }
+                    model.dismissSurprise()
+                }
+        }
     }
 
     @ViewBuilder
-    private var statusText: some View {
-        switch model.islandStatus {
-        case let .running(endsAt):
-            if let endsAt, endsAt > model.now {
-                HStack(spacing: 4) {
-                    Text(Strings.islandEndsIn)
-                    Text(timerInterval: model.now...endsAt, countsDown: true)
-                        .monospacedDigit()
-                }
-            } else {
-                Text(Strings.islandOn)
+    private func surpriseCard(_ surprise: Surprise) -> some View {
+        switch surprise {
+        case let .gift(gift):
+            MomentCard(symbol: gift.symbolName, tint: MurzikPalette.mint, title: Strings.giftTitle, subtitle: Strings.giftName(gift)) {
+                thanksButton
             }
-        case .off:
-            Text(Strings.islandOff)
-        case .disabledBySystem:
-            Text(Strings.islandDisabledBySystem)
-        case .failed:
-            Text(Strings.islandStartFailed)
+        case let .message(index):
+            MomentCard(symbol: "heart.text.square.fill", tint: MurzikPalette.heart, title: Strings.surpriseTitle,
+                       subtitle: Strings.surpriseMessage(index)) {
+                thanksButton
+            }
         }
+    }
+
+    private var thanksButton: some View {
+        Button {
+            model.dismissSurprise()
+            director.burst(symbol: "heart.fill", color: MurzikPalette.heart, count: 5, spread: 90)
+        } label: {
+            Text(Strings.thanks)
+                .font(.system(size: 14, weight: .bold, design: .rounded))
+                .foregroundStyle(.white)
+                .padding(.horizontal, 14)
+                .padding(.vertical, 7)
+                .background(Capsule().fill(MurzikPalette.heart.gradient))
+        }
+        .buttonStyle(PressableStyle())
+        .padding(.top, 6)
+        .accessibilityIdentifier("surprise.thanks")
     }
 }
 
-/// A tiny replica of the compact Dynamic Island.
-struct IslandPreview: View {
-    let mood: MurzikMood
-
-    var body: some View {
-        HStack(spacing: 0) {
-            CatFace(mood: mood, detail: .compact)
-                .frame(width: 20, height: 20)
-            Spacer(minLength: 0)
-            Image(systemName: mood.symbolName)
-                .font(.system(size: 10, weight: .bold))
-                .foregroundStyle(MurzikPalette.accent(for: mood))
-        }
-        .padding(.horizontal, 7)
-        .frame(width: 76, height: 26)
-        .background(Capsule().fill(Color.black))
-        .environment(\.layoutDirection, .leftToRight)
+private struct StageFrameKey: PreferenceKey {
+    static let defaultValue: CGRect = .zero
+    static func reduce(value: inout CGRect, nextValue: () -> CGRect) {
+        value = nextValue()
     }
 }
