@@ -1,5 +1,5 @@
-commit=323b62fb76f771ab0aa69bdfc69eae6196553d12
+commit=bf094710d25957730260651dccbd94255b900be2
 branch=agent/integration-fixes
-test=failure
+test=success
 ipa=success
-run=41065183636
+run=41070602508

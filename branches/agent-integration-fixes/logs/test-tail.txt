@@ -1,40 +1,40 @@
-    t =   126.54s         Launch com.bogadin.murzik
-2026-10-30 14:07:45.768 xcodebuild[1794:9277] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
-2026-10-30 14:07:45.768 xcodebuild[1794:9277] [MT] IDELaunchParametersSnapshot: no debugger version
-    t =   128.69s             Setting up automation session
-    t =   131.12s             Wait for com.bogadin.murzik to idle
-    t =   133.50s     Waiting 15.0s for "action.feed" Button to exist
-    t =   134.54s         Checking `Expect predicate `existsNoRetry == 1` for object "action.feed" Button`
-    t =   134.54s             Checking existence of `"action.feed" Button`
-    t =   141.85s Added attachment named '15-main-night'
-    t =   141.86s     Waiting 12.0s for "moment.surprise" Any to exist
-    t =   142.92s         Checking `Expect predicate `existsNoRetry == 1` for object "moment.surprise" Any`
-    t =   142.92s             Checking existence of `"moment.surprise" Any`
-    t =   146.01s Added attachment named '16-surprise-gift'
-    t =   146.01s     Tap "surprise.thanks" Button
-    t =   146.02s         Wait for com.bogadin.murzik to idle
-    t =   146.04s         Find the "surprise.thanks" Button
-    t =   148.22s         Check for interrupting elements affecting "surprise.thanks" Button
-    t =   148.83s         Synthesize event
-    t =   149.29s         Wait for com.bogadin.murzik to idle
-    t =   149.32s Tear Down
-Test Case '-[MurzikUITests.MurzikUITests testAppAndDynamicIsland]' passed (151.854 seconds).
-Test Suite 'MurzikUITests' passed at 2026-10-30 14:08:11.012.
-	 Executed 1 test, with 0 failures (0 unexpected) in 151.854 (151.856) seconds
-Test Suite 'MurzikUITests.xctest' failed at 2026-10-30 14:08:11.013.
-	 Executed 9 tests, with 1 failure (0 unexpected) in 1004.545 (1004.594) seconds
-Test Suite 'All tests' failed at 2026-10-30 14:08:11.013.
-	 Executed 9 tests, with 1 failure (0 unexpected) in 1004.545 (1004.596) seconds
-2026-10-30 14:12:10.273 xcodebuild[1794:9277] [MT] IDETestOperationsObserverDebug: 1505.539 elapsed -- Testing started completed.
-2026-10-30 14:12:10.273 xcodebuild[1794:9277] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
-2026-10-30 14:12:10.273 xcodebuild[1794:9277] [MT] IDETestOperationsObserverDebug: 1505.540 sec, +1505.540 sec -- end
+    t =   157.11s     Checking `Expect predicate `existsNoRetry == 1` for object "action.feed" Button`
+    t =   157.11s         Checking existence of `"action.feed" Button`
+    t =   161.20s Added attachment named '15-main-night'
+    t =   161.21s Waiting 12.0s for "moment.surprise" Any to exist
+    t =   162.24s     Checking `Expect predicate `existsNoRetry == 1` for object "moment.surprise" Any`
+    t =   162.24s         Checking existence of `"moment.surprise" Any`
+    t =   162.51s         Capturing element debug description
+    t =   163.23s     Checking `Expect predicate `existsNoRetry == 1` for object "moment.surprise" Any`
+    t =   163.23s         Checking existence of `"moment.surprise" Any`
+    t =   163.61s         Capturing element debug description
+    t =   164.24s     Checking `Expect predicate `existsNoRetry == 1` for object "moment.surprise" Any`
+    t =   164.24s         Checking existence of `"moment.surprise" Any`
+    t =   164.52s         Capturing element debug description
+    t =   165.26s     Checking `Expect predicate `existsNoRetry == 1` for object "moment.surprise" Any`
+    t =   165.26s         Checking existence of `"moment.surprise" Any`
+    t =   167.28s Added attachment named '16-surprise-gift'
+    t =   167.31s Tap "surprise.thanks" Button
+    t =   167.31s     Wait for com.bogadin.murzik to idle
+    t =   167.47s     Find the "surprise.thanks" Button
+    t =   167.75s     Check for interrupting elements affecting "surprise.thanks" Button
+    t =   168.21s     Synthesize event
+    t =   168.62s     Wait for com.bogadin.murzik to idle
+    t =   168.67s Tear Down
+Test Case '-[MurzikUITests.MurzikUITests testAppAndDynamicIsland]' passed (170.526 seconds).
+Test Suite 'MurzikUITests' passed at 2026-10-30 14:39:36.775.
+	 Executed 1 test, with 0 failures (0 unexpected) in 170.526 (170.529) seconds
+Test Suite 'MurzikUITests.xctest' passed at 2026-10-30 14:39:36.779.
+	 Executed 9 tests, with 0 failures (0 unexpected) in 995.478 (995.555) seconds
+Test Suite 'All tests' passed at 2026-10-30 14:39:36.780.
+	 Executed 9 tests, with 0 failures (0 unexpected) in 995.478 (995.559) seconds
+2026-10-30 14:39:42.493 xcodebuild[1452:7878] [MT] IDETestOperationsObserverDebug: 1232.460 elapsed -- Testing started completed.
+2026-10-30 14:39:42.493 xcodebuild[1452:7878] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-30 14:39:42.493 xcodebuild[1452:7878] [MT] IDETestOperationsObserverDebug: 1232.460 sec, +1232.460 sec -- end
 
 Test session results, code coverage, and logs:
 	/Users/runner/work/cat-island/cat-island/build/Tests.xcresult
 
-Failing tests:
-	IslandWalkerUITests.testWalkerInteraction()
-
-** TEST FAILED **
+** TEST SUCCEEDED **
 
 Testing started

@@ -1,107 +1,107 @@
 Test Case '-[MurzikTests.Cat3DPoseDebugTests testWritePoseDebug]' started.
-Test Case '-[MurzikTests.Cat3DPoseDebugTests testWritePoseDebug]' passed (0.178 seconds).
-	 Executed 1 test, with 0 failures (0 unex2026-10-30 13:50:11.870684+0000 Murzik[4260:20575] [SceneKit] Error: Pass FloorPass is not linked to the rendering graph and will be ignored check it's input/output
+Test Case '-[MurzikTests.Cat3DPoseDebugTests testWritePoseDebug]' passed (2.743 seconds).
+	 Executed 1 test, with 0 failures (0 unexpected) in 2.743 (2.747) seconds
 Test Case '-[MurzikTests.Cat3DRenderTests testAutonomousLifeSimulation]' started.
-2026-10-30 13:50:15.Test Case '-[MurzikTests.Cat3DRenderTests testAutonomousLifeSimulation]' passed (2.749 seconds).
+Test Case '-[MurzikTests.Cat3DRenderTests testAutonomousLifeSimulation]' passed (2.644 seconds).
 Test Case '-[MurzikTests.Cat3DRenderTests testControllerAPI]' started.
-Test Case '-[MurzikTests.Cat3DRenderTests testControllerAPI]' passed (0.010 seconds).
+Test Case '-[MurzikTests.Cat3DRenderTests testControllerAPI]' passed (0.011 seconds).
 Test Case '-[MurzikTests.Cat3DRenderTests testHeroRenders]' started.
-Test Case '-[MurzikTests.Cat3DRenderTests testHeroRenders]' passed (10.352 seconds).
+Test Case '-[MurzikTests.Cat3DRenderTests testHeroRenders]' passed (10.362 seconds).
 Test Case '-[MurzikTests.Cat3DRenderTests testTrotAndStretchStrips]' started.
-Test Case '-[MurzikTests.Cat3DRenderTests testTrotAndStretchStrips]' passed (6.970 seconds).
+Test Case '-[MurzikTests.Cat3DRenderTests testTrotAndStretchStrips]' passed (4.143 seconds).
 Test Case '-[MurzikTests.Cat3DRenderTests testWalkCycleStrip]' started.
-Test Case '-[MurzikTests.Cat3DRenderTests testWalkCycleStrip]' passed (2.282 seconds).
-	 Executed 5 tests, with 0 failures (0 unexpected) in 22.363 (22.819) seconds
+Test Case '-[MurzikTests.Cat3DRenderTests testWalkCycleStrip]' passed (2.228 seconds).
+	 Executed 5 tests, with 0 failures (0 unexpected) in 19.388 (19.901) seconds
 Test Case '-[MurzikTests.ExperienceEngineTests testBedtime]' started.
-Test Case '-[MurzikTests.ExperienceEngineTests testBedtime]' passed (0.003 seconds).
+Test Case '-[MurzikTests.ExperienceEngineTests testBedtime]' passed (0.002 seconds).
 Test Case '-[MurzikTests.ExperienceEngineTests testBondDecodesPartialAndUnknownJSON]' started.
-Test Case '-[MurzikTests.ExperienceEngineTests testBondDecodesPartialAndUnknownJSON]' passed (0.005 seconds).
+Test Case '-[MurzikTests.ExperienceEngineTests testBondDecodesPartialAndUnknownJSON]' passed (0.007 seconds).
 Test Case '-[MurzikTests.ExperienceEngineTests testBondRoundTripAndDefaults]' started.
-Test Case '-[MurzikTests.ExperienceEngineTests testBondRoundTripAndDefaults]' passed (0.011 seconds).
+Test Case '-[MurzikTests.ExperienceEngineTests testBondRoundTripAndDefaults]' passed (0.005 seconds).
 Test Case '-[MurzikTests.ExperienceEngineTests testCorruptBondFallsBackToDefaults]' started.
 Test Case '-[MurzikTests.ExperienceEngineTests testCorruptBondFallsBackToDefaults]' passed (0.013 seconds).
 Test Case '-[MurzikTests.ExperienceEngineTests testDayPhases]' started.
-Test Case '-[MurzikTests.ExperienceEn2026-10-30 13:50:35.968922+0000 Murzik[4260:20583] [SceneKit] Error: Pass FloorPass is not linked to the rendering graph and will be ignored check it's input/output
+Test Case '-[MurzikTests.ExperienceEngineTests testDayPhases]' passed (0.001 seconds).
 Test Case '-[MurzikTests.ExperienceEngineTests testExperienceTextAndSymbols]' started.
-Test Case '-[MurzikTests.ExperienceEngineTests testExperienceTextAndSymbols]' passed (0.355 seconds).
+2026-10-30 14:22:22.7837Test Case '-[MurzikTests.ExperienceEngineTests testExperienceTextAndSymbols]' passed (0.317 seconds).
 Test Case '-[MurzikTests.ExperienceEngineTests testExplicitPhaseOverload]' started.
-Test Case '-[MurzikTests.ExperienceEngineTests testExplicitPhaseOverload]' passed (0.003 seconds).
+Test Case '-[MurzikTests.ExperienceEngineTests testExplicitPhaseOverload]' passed (0.001 seconds).
 Test Case '-[MurzikTests.ExperienceEngineTests testFirstMeeting]' started.
 Test Case '-[MurzikTests.ExperienceEngineTests testFirstMeeting]' passed (0.001 seconds).
-Test Case '-[MurzikTests.ExperienceEngineTests testGoodMorningOnANewDay]' passed (2.276 seconds).
+Test Case '-[MurzikTests.ExperienceEngineTests testGoodMorningOnANewDay]' started.
+Test Case '-[MurzikTests.ExperienceEngineTests testGoodMorningOnANewDay2026-10-30 14:22:22.936460+0000 Murzik[3867:18443] [SceneKit] Error: Pass FloorPass is not linked to the rendering graph and will be ignored check it's input/output
 Test Case '-[MurzikTests.ExperienceEngineTests testGreetingIgnoresClockGoingBackwards]' started.
-Test Case '-[MurzikTests.ExperienceEngineTests testGreetingIgnoresClockGoingBackwards]' passed (0.002 seconds).
+Test Case '-[MurzikTests.ExperienceEngineTests testGreetingIgnoresClockGoingBackwards]' passed (0.001 seconds).
 Test Case '-[MurzikTests.ExperienceEngineTests testHappyCatBringsGifts]' started.
-Test Case '-[MurzikTests.ExperienceEngineTests testHappyCatBringsGifts]' passed (0.009 seconds).
+Test Case '-[MurzikTests.ExperienceEngineTests testHappyCatBringsGifts]' passed (0.001 seconds).
 Test Case '-[MurzikTests.ExperienceEngineTests testLateNightGreeting]' started.
-Test Case '-[MurzikTests.ExperienceEngineTests testLateNightGreeting]' passed (0.001 seconds).
+Test Case '-[MurzikTests.ExperienceEngineTests testLateNightGreeting]' passed (0.001 2026-10-30 14:22:23.085679+0000 Murzik[3867:18499] [SceneKit] Error: Pass FloorPass is not linked to the rendering graph and will be ignored check it's input/output
 Test Case '-[MurzikTests.ExperienceEngineTests testLegacyStateJSONStillDecodes]' started.
-Test Case '-[MurzikTests.ExperienceEngineTests testLegacyStateJSONStillDecodes]' passed (0.073 seconds).
+Test Case '-[MurzikTests.ExperienceEngineTests testLegacyStateJSONStillDecodes]' passed (0.006 seconds).
 Test Case '-[MurzikTests.ExperienceEngineTests testLoveCountsTodayAndStartsStreak]' started.
-Test Case '-[MurzikTests.ExperienceEngineTests testLoveCountsTodayAndStartsStreak]' passed (0.003 seconds).
+Test Case '-[MurzikTests.ExperienceEngineTests testLoveCountsTodayAndStartsStreak]' passed (0.001 seconds).
 Test Case '-[MurzikTests.ExperienceEngineTests testMessageWhenRollIsHigherOrLessHappy]' started.
-Test Case '-[MurzikTests.ExperienceEngineTests testMessageWhenRollIsHigherOrLessHappy]' passed (0.002 seconds).
+Test Case '-[MurzikTests.ExperienceEngineTests testMessageWhenRollIsHigherOrLessHappy]' passed (0.194 seconds).
 Test Case '-[MurzikTests.ExperienceEngineTests testMissedYouAfterAWhile]' started.
 Test Case '-[MurzikTests.ExperienceEngineTests testMissedYouAfterAWhile]' passed (0.002 seconds).
 Test Case '-[MurzikTests.ExperienceEngineTests testMoodDiaryDeduplicatesAndCaps]' started.
-Test Case '-[MurzikTests.ExperienceEngineTests testMoodDiaryDeduplicatesAndCaps]' passed (0.001 seconds).
+Test Case '-[MurzikTests.ExperienceEngineTests testMoodDiaryDeduplicatesAndCaps]' passed (0.092 seconds).
 Test Case '-[MurzikTests.ExperienceEngineTests testMoodsTodayAndDominantMood]' started.
 Test Case '-[MurzikTests.ExperienceEngineTests testMoodsTodayAndDominantMood]' passed (0.002 seconds).
 Test Case '-[MurzikTests.ExperienceEngineTests testNegativePickIsSafe]' started.
-Test Case '-[MurzikTests.ExperienceEngineTests testNegativePickIsSafe]' passed (0.009 seconds).
+Test Case '-[MurzikTests.ExperienceEngineTests testNegativePickIsSafe]' passed (0.008 seconds).
 Test Case '-[MurzikTests.ExperienceEngineTests testNoGreetingAfterShortAbsence]' started.
 Test Case '-[MurzikTests.ExperienceEngineTests testNoGreetingAfterShortAbsence]' passed (0.001 seconds).
 Test Case '-[MurzikTests.ExperienceEngineTests testNoSurpriseWhenSleepingOrHungry]' started.
-Test Case '-[MurzikTests.Exper2026-10-30 13:50:40.728231+0000 Murzik[4260:20575] [SceneKit] Error: Pass FloorPass is not linked to the rendering graph and will be ignored check it's input/output
-Test Case '-[MurzikTests.ExperienceEngineTests testPurrPatternIsValid]' started.
-Test Case '-[MurzikTests.ExperienceEngineTests testPurrPatternIsValid]' passed (0.003 seconds).
+Test Case '-[MurzikTests.ExperienceEngineTests testNoSurpriseWhenSleepingOrHungry]' passed (0.001 seconds).
+2026-10-30 14:22:23.704499+0000 Murzik[3867:18443] [SceneKit] Error: Pass FloorPass is not linked to the rendering graph and will be ignored check it's input/outpuTest Case '-[MurzikTests.ExperienceEngineTests testPurrPatternIsValid]' started.
+Test Case '-[MurzikTests.ExperienceEngineTests testPurrPatternIsValid]' passed (0.164 seconds).
 Test Case '-[MurzikTests.ExperienceEngineTests testPurrTimeAccumulates]' started.
 Test Case '-[MurzikTests.ExperienceEngineTests testPurrTimeAccumulates]' passed (0.001 seconds).
 Test Case '-[MurzikTests.ExperienceEngineTests testRecordVisitSuppressesNextGreeting]' started.
-Test Case '-[MurzikTests.ExperienceEngineTests testRecordVisitSuppressesNextGreeting]' passed (0.090 seconds).
-Test Case '-[MurzikTests.ExperienceEngineTests testRhythmNeverOverridesNeedsOrReactions]' started.
-Test Case '-[MurzikTests.ExperienceEngineTests testRhythmNeverOverridesNeedsOrReactions]' passed (0.001 seconds).
+Test Case '-[MurzikTests.ExperienceEngineTests testRecordVisitSuppressesNextGreeting]' passed (0.001 seconds).
+Test Case '-[Mu2026-10-30 14:22:23.913098+0000 Murzik[3867:18499] [SceneKit] Error: Pass FloorPass is not linked to the rendering graph and will be ignored check it's input/output
+Test Case '-[MurzikTests.ExperienceEngineTests testRhythmNeverOverridesNeedsOrReactions]' passed (0.100 seconds).
 Test Case '-[MurzikTests.ExperienceEngineTests testSleepierAtNight]' started.
-Test Case '-[MurzikTests.ExperienceEngineTests testSleepierAtNight]' passed (0.002 seconds).
+Test Case '-[MurzikTests.ExperienceEngineTests testSleepierAtNight]' passed (0.001 seconds).
 Test Case '-[MurzikTests.ExperienceEngineTests testStreakGrowsOnConsecutiveDays]' started.
-Test Case '-[MurzikTests.ExperienceEngineTests testStreakGrowsOnConsecutiveDays]' passed (0.002 seconds).
+Test Case '-[MurzikTests.ExperienceEngineTests testStreakGrowsOnConsecutiveDays]' passed (0.001 seconds).
 Test Case '-[MurzikTests.ExperienceEngineTests testStreakRestartsAfterAGap]' started.
-Test Case '-[MurzikTests.ExperienceEngineTests testStreakRestartsAfterAGap]' passed (0.002 seconds).
+Test Case '-[MurzikTests.ExperienceEngineTests testStreakRestartsAfterAGap]' passed (0.070 seconds).
 Test Case '-[MurzikTests.ExperienceEngineTests testSurpriseCooldown]' started.
-2026-10-30 13:50:41.911815+0000 Murzik[4260:20569] [SceneKit] Error: Pass FloorPass is not linked to the rendering graph and Test Case '-[MurzikTests.ExperienceEngineTests testSurpriseCooldown]' passed (0.002 seconds).
-	 Executed 29 tests, with 0 failures (0 unexpected) in 2.876 (6.467) seconds
-Test Case '-[MurzikTests.ExperienceRenderTests testRenderMomentCards]' started.
-Test Case '-[MurzikTests.ExperienceRenderTests testRenderMomentCards]' passed (1.449 seconds).
+Test Case '-[MurzikTests.ExperienceEngineTests testSurpriseCooldown]' passed (0.002 seconds).
+	 Executed 29 tests, with 0 failures (0 unexpected) in 0.997 (1.479) seconds
+Test Case '-[Mur2026-10-30 14:22:24.051781+0000 Murzik[3867:18483] [SceneKit] Error: Pass FloorPass is not linked to the rendering graph and will be ignored check it's input/output
+Test Case '-[MurzikTests.ExperienceRenderTests testRenderMomentCards]' passed (1.159 seconds).
 Test Case '-[MurzikTests.ExperienceRenderTests testRenderRoomPhases]' started.
-Test Case '-[MurzikTests.ExperienceRenderTests testRenderRoomPhases]' passed (3.803 seconds).
-	 Executed 2 tests, with 0 failures (0 unexpected) in 5.252 (5.376) seconds
+Test Case '-[MurzikTests.ExperienceRenderTests testRenderRoomPhases]' passed (3.244 seconds).
+	 Executed 2 tests, with 0 failures (0 unexpected) in 4.403 (4.405) seconds
 Test Case '-[MurzikTests.IslandWalkerTests testFloorsAndSurfaces]' started.
 Test Case '-[MurzikTests.IslandWalkerTests testFloorsAndSurfaces]' passed (0.001 seconds).
 Test Case '-[MurzikTests.IslandWalkerTests testHopLandsWithSquash]' started.
 Test Case '-[MurzikTests.IslandWalkerTests testHopLandsWithSquash]' passed (0.002 seconds).
 Test Case '-[MurzikTests.IslandWalkerTests testHungryPlanMeows]' started.
-Test Case '-[MurzikTests.IslandWalkerTests testHungryPlanMeows]' passed (0.035 seconds).
+Test Case '-[MurzikTests.IslandWalkerTests testHungryPlanMeows]' passed (0.002 seconds).
 Test Case '-[MurzikTests.IslandWalkerTests testIslandDetection]' started.
 Test Case '-[MurzikTests.IslandWalkerTests testIslandDetection]' passed (0.002 seconds).
 Test Case '-[MurzikTests.IslandWalkerTests testPausesDoNotTeleport]' started.
 Test Case '-[MurzikTests.IslandWalkerTests testPausesDoNotTeleport]' passed (0.002 seconds).
 Test Case '-[MurzikTests.IslandWalkerTests testPillRect]' started.
-Test Case '-[MurzikTests.IslandWalkerTests testPillRect]' passed (0.002 seconds).
+Test Case '-[MurzikTests.IslandWalkerTests testPillRect]' passed (0.001 seconds).
 Test Case '-[MurzikTests.IslandWalkerTests testPlansAreContinuous]' started.
-Test Case '-[MurzikTests.IslandWalkerTests testPlansAreContinuous]' passed (0.108 seconds).
+Test Case '-[MurzikTests.IslandWalkerTests testPlansAreContinuous]' passed (0.105 seconds).
 Test Case '-[MurzikTests.IslandWalkerTests testRenderWalkerPoses]' started.
-Test Case '-[MurzikTests.IslandWalkerTests testRenderWalkerPoses]' passed (0.404 seconds).
-Test Case '-[MurzikTests.IslandWalkerTests testS2026-10-30 13:50:48.362241+0000 Murzik[4260:20571] [SceneKit] Error: Pass FloorPass is not linked to the rendering graph and will be ignored check it's input/output
-Test Case '-[MurzikTests.IslandWalkerTests testShowcaseGoesInAndOutOfTheIsland]' passed (0.197 seconds).
+Test Case '-[MurzikTests.IslandWalkerTests testRenderWalkerPoses]' passed (0.257 seconds).
+Test Case '-[MurzikTests.IslandWalkerTests testShowcaseGoesInAndOutOfTheIsland]' started.
+Test Case '-[MurzikTests.IslandWalkerTests testShowcaseGoesInAndOutOfTheIsland]' passed (0.001 seconds).
 Test Case '-[MurzikTests.IslandWalkerTests testSimulationRunsAndReactsToPetAndDrag]' started.
-Test Case '-[MurzikTests.IslandWalkerTests testSimulationRunsAndReactsToPetAndDrag]' passed (0.006 seconds).
+Test Case '-[MurzikTests.IslandWalkerTests testSimulationRunsAndReactsToPetAndDrag]' passed (0.005 seconds).
 Test Case '-[MurzikTests.IslandWalkerTests testSleepingEndsCurledBesideTheIsland]' started.
-Test Case '-[MurzikTests.IslandWalkerTests testSleepingEndsCurledBesideTheIsland]' passed (0.002 seconds).
+Test Case '-[MurzikTests.IslandWalkerTests testSleepingEndsCurledBesideTheIsland]' passed (0.001 seconds).
 Test Case '-[MurzikTests.IslandWalkerTests testTrapezoidEasing]' started.
-Test Case '-[MurzikTests.IslandWalkerTests testTrapezoidEasing]' passed (0.072 seconds).
-Test Case '-[MurzikTests.IslandWalkerTests testWalkCycleFramesFollowDistance]' started.
-Test Case '-[MurzikTests.IslandWalkerTests testWalkCycleFramesFollowDistance]' passed (0.001 seconds).
-	 Executed 13 tests, with 0 failures (0 unexpected) in 0.833 (0.846) seconds
+Test Case '-[MurzikTests.IslandWalkerTests testTrapezoidEasing]' passed (0.001 seconds).
+Test Case '-[MurzikTests.IslandWalkerTests testWalkCycleFramesFollowDistance]' passed (0.079 seconds).
+	 Executed 13 tests, with 0 failures (0 unexpected) in 0.456 (0.476) seconds
 Test Case '-[MurzikTests.LiveActivityChoreographyTests testAlreadyAtTheButtonReactsInPlace]' started.
 Test Case '-[MurzikTests.LiveActivityChoreographyTests testAlreadyAtTheButtonReactsInPlace]' passed (0.002 seconds).
 Test Case '-[MurzikTests.LiveActivityChoreographyTests testAnimationFitsBetweenBeats]' started.
@@ -109,127 +109,126 @@ Test Case '-[MurzikTests.LiveActivityChoreographyTests testAnimationFitsBetweenB
 Test Case '-[MurzikTests.LiveActivityChoreographyTests testCompactMapping]' started.
 Test Case '-[MurzikTests.LiveActivityChoreographyTests testCompactMapping]' passed (0.001 seconds).
 Test Case '-[MurzikTests.LiveActivityChoreographyTests testContentFromOlderBuildsWithoutSceneDecodes]' started.
-Test Case '-[MurzikTests.LiveActivityChoreographyTests testContentFromOlderBuildsWithoutSceneDecodes]' passed (0.005 seconds).
+Test Case '-[MurzikTests.LiveActivityChoreographyTests testContentFromOlderBuildsWithoutSceneDecodes]' passed (0.004 seconds).
 Test Case '-[MurzikTests.LiveActivityChoreographyTests testContentWithSceneFitsPayloadAndRoundTrips]' started.
-Test Case '-[MurzikTests.LiveActivityChoreographyTests testContentWithSceneFitsPayloadAndRoundTrips]' passed (0.003 seconds).
+Test Case '-[MurzikTests.LiveActivityChoreographyTests testContentWithSceneFitsPayloadAndRoundTrips]' passed (0.107 seconds).
 Test Case '-[MurzikTests.LiveActivityChoreographyTests testCrossingFromTheRightWalksBackLeft]' started.
 Test Case '-[MurzikTests.LiveActivityChoreographyTests testCrossingFromTheRightWalksBackLeft]' passed (0.001 seconds).
 Test Case '-[MurzikTests.LiveActivityChoreographyTests testCrossingWaitsForTheReactionBeforeSitting]' started.
-Test Case '-[MurzikTests.LiveActivityChoreographyTests testCrossingWaitsForTheReactionBeforeSitting]' passed (0.001 seconds).
+Test Case '-[MurzikTests.LiveActivityChoreographyTests testCrossingWaitsForTheReactionBeforeSitting]' passed (0.028 seconds).
 Test Case '-[MurzikTests.LiveActivityChoreographyTests testCrossingWalksFromLeadingToTrailingThroughTheCamera]' started.
 Test Case '-[MurzikTests.LiveActivityChoreographyTests testCrossingWalksFromLeadingToTrailingThroughTheCamera]' passed (0.002 seconds).
 Test Case '-[MurzikTests.LiveActivityChoreographyTests testFeedWalksToTheBowlAndEats]' started.
-Test Case '-[MurzikTests.LiveActivityChoreographyTests testFeedWalksToTheBowlAndEats]' passed (0.029 seconds).
+Test Case '-[MurzikTests.LiveActivityChoreographyTests testFeedWal2026-10-30 14:22:29.156108+0000 Murzik[3867:18483] [SceneKit] Error: Pass FloorPass is not linked to the rendering graph and will be ignored check it's input/output
 Test Case '-[MurzikTests.LiveActivityChoreographyTests testPetWalksToThePetButtonAndShowsHearts]' started.
-Test Case '-[MurzikTests.LiveActivityChoreographyTests testPetWalksToThePetButtonAndShowsHearts]' passed (0.002 seconds).
+Test Case '-[MurzikTests.LiveActivityChoreographyTests testPetWalksToThePetButtonAndShowsHearts]' passed (0.001 seconds).
 Test Case '-[MurzikTests.LiveActivityChoreographyTests testSleepingCatDoesNotWalk]' started.
 Test Case '-[MurzikTests.LiveActivityChoreographyTests testSleepingCatDoesNotWalk]' passed (0.002 seconds).
 Test Case '-[MurzikTests.LiveActivityChoreographyTests testSpritesForPoses]' started.
-Test Case '-[MurzikTests.LiveActivityChoreographyTests testSpritesForPoses]' passed (0.001 seconds).
-Test Case '-[MurzikTests.LiveActivityChoreographyTests testTrailEndsAtHungerAndDoesNotDependOnUpdateTime]' st2026-10-30 13:50:48.687994+0000 Murzik[4260:20571] [SceneKit] Error: Pass FloorPass is not linked to the rendering graph and will be ignored check it's input/output
-Test Case '-[MurzikTests.LiveActivityChoreographyTests testTrailEndsAtHungerAndDoesNotDependOnUpdateTime]' passed (0.200 seconds).
-	 Executed 13 tests, with 0 failures (0 unexpected) in 0.251 (0.299) seconds
+Test Case '-[Murzik2026-10-30 14:22:29.336318+0000 Murzik[3867:18481] [SceneKit] Error: Pass FloorPass is not linked to the rendering graph and will be ignored check it's input/output
+Test Case '-[MurzikTests.LiveActivityChoreographyTests testTrailEndsAtHungerAndDoesNotDependOnUpdateTime]' started.
+Test Case '-[MurzikTests.LiveActivityChoreographyTests testTrailEndsAtHungerAndDoesNotDependOnUpdateTime]' passed (0.004 seconds).
+	 Executed 13 tests, with 0 failures (0 unexpected) in 0.174 (0.446) seconds
 Test Case '-[MurzikTests.PersonalityEngineTests testActionsNeverExceedBounds]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testActionsNeverExceedBounds]' passed (0.001 seconds).
-Test Case '-[MurzikTests2026-10-30 13:50:48.882021+0000 Murzik[4260:20567] [SceneKit] Error: Pass FloorPass is not linked to the rendering graph and will be ignored check it's input/output
-Test Case '-[MurzikTests.PersonalityEngineTests testAwakeDecayPerHour]' passed (0.170 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testActionsNeverExceedBounds]' passed (0.067 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testAwakeDecayPerHour]' started.
+Test Case '-[MurzikTests.PersonalityEngineTests testAwakeDecayPerHour]' passed (0.002 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testBaseMoodPriority]' started.
 Test Case '-[MurzikTests.PersonalityEngineTests testBaseMoodPriority]' passed (0.001 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testClockGoingBackwardsDoesNotChangeNeeds]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testClockGoingBackwardsDoesNotChangeNeeds]' passed (0.001 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testClockGoingBackwardsDoesNotChangeNeeds]' passed (0.114 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testContentStateRoundTripsAndFitsPayloadLimit]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testContentStateRoundTripsAndFitsPayloadLimit]' passed (0.020 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testContentStateRoundTripsAndFitsPayloadLimit]' passed (0.001 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testContentStateUsesStaleToShowHunger]' started.
 Test Case '-[MurzikTests.PersonalityEngineTests testContentStateUsesStaleToShowHunger]' passed (0.001 seconds).
-Test Case '-[MurzikTests.PersonalityEngineTests testCorruptStorageFallsBackToDefaults]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testCorruptStorageFallsBackToDefaults]' passed (0.012 seconds).
+Test Case2026-10-30 14:22:29.569357+0000 Murzik[3867:18481] [SceneKit] Error: Pass FloorPass is not linked to the rendering graph and will be ignored check it's input/output
+Test Case '-[MurzikTests.PersonalityEngineTests testCorruptStorageFallsBackToDefaults]' passed (0.051 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testEveryMoodHasTextAndSymbol]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testEveryMoodHasTextAndSymbol]' passed (0.071 seconds).
+2026-10-30 14:22:2Test Case '-[MurzikTests.PersonalityEngineTests testEveryMoodHasTextAndSymbol]' passed (0.066 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testFeedingAHungryCatMakesHimExcited]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testFeedingAHungryCatMakesHimExcited]' passed (0.001 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testFeedingAHungryCatMakesHimExcited]' passed (0.003 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testFeedingWakesHimUp]' started.
 Test Case '-[MurzikTests.PersonalityEngineTests testFeedingWakesHimUp]' passed (0.002 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testHungryDateMatchesSimulation]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testHungryDateMatchesSimulation]' passed (0.002 seconds).
+Test Case '-[Murzik2026-10-30 14:22:29.836994+0000 Murzik[3867:18500] [SceneKit] Error: Pass FloorPass is not linked to the rendering graph and will be ignored check it's input/output
 Test Case '-[MurzikTests.PersonalityEngineTests testHungryDateWhenAlreadyHungryIsNow]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testHungryDateWhenAlreadyHungryIsNow]' passed (0.002 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testHungryDateWhenAlreadyHungryIsNow]' passed (0.001 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testHungryDateWhileAwake]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testHungryDateWhileAwake]' passed (0.056 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testHungryDateWhileAwake]' passed (0.003 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testPetMakesMurzikLoving]' started.
 Test Case '-[MurzikTests.PersonalityEngineTests testPetMakesMurzikLoving]' passed (0.002 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testPettingASleepingCatKeepsHimAsleep]' started.
 Test Case '-[MurzikTests.PersonalityEngineTests testPettingASleepingCatKeepsHimAsleep]' passed (0.001 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testPetWhenVeryHappyIsExcited]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testPetWhenVeryHappyIsExcited]' passed (0.002 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testPetWhenVeryHappyIsExcited]' passed (0.001 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testPlayCostsEnergyAndFood]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testPlayCostsEnergyAndFood]' passed (0.001 seconds).
+Test Case '-2026-10-30 14:22:30.136566+0000 Murzik[3867:18481] [SceneKit] Error: Pass FloorPass is not linked to the rendering graph and will be ignored check it's input/output
 Test Case '-[MurzikTests.PersonalityEngineTests testReactionExpiresBackToBaseMood]' started.
 Test Case '-[MurzikTests.PersonalityEngineTests testReactionExpiresBackToBaseMood]' passed (0.001 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testReactionFromTheFutureIsIgnored]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testReactionFromTheFutureIsIgnored]' passed (0.001 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testReactionFromTheFutureIsIgnored]' passed (0.002 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testSleepAndWake]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testSleepAndWake]' passed (0.001 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testSleepAndWake]' passed (0.002 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testSleepingCatStaysAsleepWhenStaleIfStillSleeping]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testSleepingCatStaysAsleepWhenStaleIfStillSleeping]' passed (0.002 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testSleepingCatStaysAsleepWhenStaleIfStillSleeping]' passed (0.001 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testSleepRestoresEnergyAndWakesUpWhenFull]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testSleepRestoresEnergyAndWakesUpWhenFull]' passed (0.001 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testSleepRestoresEnergyAndWakesUpWhenFull]' passed (0.002 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testStillSleepingBeforeRested]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testStillSleepingBeforeRested]' passed (0.001 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testStillSleepingBeforeRested]' passed (0.093 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testStorageRoundTrip]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testStorageRoundTrip]' passed (0.009 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testStorageRoundTrip]' passed (0.008 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testTooTiredToPlay]' started.
 Test Case '-[MurzikTests.PersonalityEngineTests testTooTiredToPlay]' passed (0.001 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testValuesClampAtZero]' started.
-Test Case '-[MurzikTests.PersonalityEngineTests testValuesClampAtZero]' passed (0.001 seconds).
+Test Case '-[MurzikTests.PersonalityEngineTests testValuesClampAtZero]' passed (0.002 seconds).
 Test Case '-[MurzikTests.PersonalityEngineTests testWakingAnAwakeCatDoesNothing]' started.
 Test Case '-[MurzikTests.PersonalityEngineTests testWakingAnAwakeCatDoesNothing]' passed (0.001 seconds).
-	 Executed 27 tests, with 0 failures (0 unexpected) in 0.363 (0.574) seconds
+	 Executed 27 tests, with 0 failures (0 unexpected) in 0.430 (1.184) seconds
 Test Case '-[MurzikTests.RenderTests testRenderAppIcon]' started.
-Test Case '-[MurzikTests.RenderTests testRenderAppIcon]' passed (0.186 seconds).
+Test Case '-[MurzikTests.RenderTests testRenderAppIcon]' passed (0.109 seconds).
 Test Case '-[MurzikTests.RenderTests testRenderCharacterSheet]' started.
-Test Case '-[MurzikTests.RenderTests testRenderCharacterSheet]' passed (0.363 seconds).
+Test Case '-[MurzikTests.RenderTests testRenderCharacterSheet]' passed (0.409 seconds).
 Test Case '-[MurzikTests.RenderTests testRenderDynamicIslandPresentations]' started.
-Test Case '-[MurzikTests.RenderTests testRenderDynamicIslandPresentations]' passed (0.351 seconds).
+Test Case '-[MurzikTests.RenderTests testRenderDynamicIslandPresentations]' passed (0.460 seconds).
 Test Case '-[MurzikTests.RenderTests testRenderExpandedIsland]' started.
-Test Case '-[MurzikTests.RenderTests testRenderExpandedIsland]' passed (2.203 seconds).
+Test Case '-[MurzikTests.RenderTests testRenderExpandedIsland]' passed (1.872 seconds).
 Test Case '-[MurzikTests.RenderTests testRenderFigureOnAppBackground]' started.
-Test Case '-[MurzikTests.RenderTests testRenderFigureOnAppBackground]' passed (0.146 seconds).
+Test Case '-[MurzikTests.RenderTests testRenderFigureOnAppBackground]' passed (0.119 seconds).
 Test Case '-[MurzikTests.RenderTests testRenderLockScreen]' started.
-Test Case '-[MurzikTests.RenderTests testRenderLockScreen]' passed (0.780 seconds).
+Test Case '-[MurzikTests.RenderTests testRenderLockScreen]' passed (0.775 seconds).
 Test Case '-[MurzikTests.RenderTests testRenderPoseSheet]' started.
-Test Case '-[MurzikTests.RenderTests testRenderPoseSheet]' passed (0.176 seconds).
+Test Case '-[MurzikTests.RenderTests testRenderPoseSheet]' passed (0.145 seconds).
 Test Case '-[MurzikTests.RenderTests testRenderWalkSequences]' started.
-Test Case '-[MurzikTests.RenderTests testRenderWalkSequences]' passed (4.479 seconds).
-	 Executed 8 tests, with 0 failures (0 unexpected) in 8.685 (8.691) seconds
+Test Case '-[MurzikTests.RenderTests testRenderWalkSequences]' passed (4.829 seconds).
+	 Executed 8 tests, with 0 failures (0 unexpected) in 8.718 (8.804) seconds
 Test Case '-[MurzikTests.SpriteExportTests testExportAllSprites]' started.
-Test Case '-[MurzikTests.SpriteExportTests testExportAllSprites]' passed (6.896 seconds).
+2026-10-30 14:22:43.78731Test Case '-[MurzikTests.SpriteExportTests testExportAllSprites]' passed (4.504 seconds).
 Test Case '-[MurzikTests.SpriteExportTests testSpritesAreDeterministic]' started.
-Test Case '-[MurzikTests.SpriteExportTests testSpritesAreDeterministic]' passed (1.177 seconds).
-	 Executed 2 tests, with 0 failures (0 unexpected) in 8.073 (8.075) seconds
-	 Executed 100 tests, with 0 failures (0 unexpected) in 48.873 (54.631) seconds
-	 Executed 100 tests, with 0 failures (0 unexpected) in 48.873 (54.635) seconds
+Test Case '-[MurzikTests.SpriteExportTests testSpritesAreDeterministic]' passed (0.705 seconds).
+	 Executed 2 tests, with 0 failures (0 unexpected) in 5.209 (5.227) seconds
+	 Executed 100 tests2026-10-30 14:22:44.622045+0000 Murzik[3867:18501] [SceneKit] Error: Pass FloorPass is not linked to the rendering graph and will be ignored check it's input/output
+	 Executed 100 tests, with 0 failures (0 unexpected) in 42.520 (44.740) seconds
 Test Case '-[MurzikUITests.IslandWalkerUITests testWalkerInteraction]' started.
-/Users/runner/work/cat-island/cat-island/UITests/IslandWalkerUITests.swift:74: error: -[MurzikUITests.IslandWalkerUITests testWalkerInteraction] : Failed to get matching snapshots: Timed out while evaluating UI query.
-Test Case '-[MurzikUITests.IslandWalkerUITests testWalkerInteraction]' failed (153.981 seconds).
+Test Case '-[MurzikUITests.IslandWalkerUITests testWalkerInteraction]' passed (213.123 seconds).
 Test Case '-[MurzikUITests.IslandWalkerUITests testWalkerMoods]' started.
-Test Case '-[MurzikUITests.IslandWalkerUITests testWalkerMoods]' passed (106.273 seconds).
+Test Case '-[MurzikUITests.IslandWalkerUITests testWalkerMoods]' passed (83.346 seconds).
 Test Case '-[MurzikUITests.IslandWalkerUITests testWalkerShowcase]' started.
-Test Case '-[MurzikUITests.IslandWalkerUITests testWalkerShowcase]' passed (52.881 seconds).
-	 Executed 3 tests, with 1 failure (0 unexpected) in 313.134 (313.167) seconds
+Test Case '-[MurzikUITests.IslandWalkerUITests testWalkerShowcase]' passed (88.793 seconds).
+	 Executed 3 tests, with 0 failures (0 unexpected) in 385.263 (385.303) seconds
 Test Case '-[MurzikUITests.LiveActivityUITests test1PetIntentWalksToTheCushion]' started.
-Test Case '-[MurzikUITests.LiveActivityUITests test1PetIntentWalksToTheCushion]' passed (56.282 seconds).
+Test Case '-[MurzikUITests.LiveActivityUITests test1PetIntentWalksToTheCushion]' passed (64.502 seconds).
 Test Case '-[MurzikUITests.LiveActivityUITests test2WalkAcrossTheIslandWhenLeavingTheApp]' started.
-Test Case '-[MurzikUITests.LiveActivityUITests test2WalkAcrossTheIslandWhenLeavingTheApp]' passed (141.011 seconds).
+Test Case '-[MurzikUITests.LiveActivityUITests test2WalkAcrossTheIslandWhenLeavingTheApp]' passed (105.315 seconds).
 Test Case '-[MurzikUITests.LiveActivityUITests test3RealTimePawTrail]' started.
-Test Case '-[MurzikUITests.LiveActivityUITests test3RealTimePawTrail]' passed (150.792 seconds).
+Test Case '-[MurzikUITests.LiveActivityUITests test3RealTimePawTrail]' passed (85.110 seconds).
 Test Case '-[MurzikUITests.LiveActivityUITests test4FeedIntentWalksToTheBowl]' started.
-Test Case '-[MurzikUITests.LiveActivityUITests test4FeedIntentWalksToTheBowl]' passed (91.472 seconds).
+Test Case '-[MurzikUITests.LiveActivityUITests test4FeedIntentWalksToTheBowl]' passed (86.714 seconds).
 Test Case '-[MurzikUITests.LiveActivityUITests test5TapExpandedIslandButtons]' started.
-Test Case '-[MurzikUITests.LiveActivityUITests test5TapExpandedIslandButtons]' passed (100.000 seconds).
-	 Executed 5 tests, with 0 failures (0 unexpected) in 539.557 (539.567) seconds
+Test Case '-[MurzikUITests.LiveActivityUITests test5TapExpandedIslandButtons]' passed (98.049 seconds).
+	 Executed 5 tests, with 0 failures (0 unexpected) in 439.690 (439.700) seconds
 Test Case '-[MurzikUITests.MurzikUITests testAppAndDynamicIsland]' started.
-Test Case '-[MurzikUITests.MurzikUITests testAppAndDynamicIsland]' passed (151.854 seconds).
-	 Executed 1 test, with 0 failures (0 unexpected) in 151.854 (151.856) seconds
-	 Executed 9 tests, with 1 failure (0 unexpected) in 1004.545 (1004.594) seconds
-	 Executed 9 tests, with 1 failure (0 unexpected) in 1004.545 (1004.596) seconds
-** TEST FAILED **
+Test Case '-[MurzikUITests.MurzikUITests testAppAndDynamicIsland]' passed (170.526 seconds).
+	 Executed 1 test, with 0 failures (0 unexpected) in 170.526 (170.529) seconds
+	 Executed 9 tests, with 0 failures (0 unexpected) in 995.478 (995.555) seconds
+	 Executed 9 tests, with 0 failures (0 unexpected) in 995.478 (995.559) seconds
+** TEST SUCCEEDED **
