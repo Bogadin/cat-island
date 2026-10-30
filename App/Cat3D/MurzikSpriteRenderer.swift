@@ -26,7 +26,7 @@ final class MurzikSpriteRenderer {
     static let rawPixels = 576
     static let rawHalfHeight: Float = 0.9
     /// Final pixels per scene unit (same for all sprites so Murzik keeps his size across poses).
-    static let finalPixelsPerUnit: Float = 172
+    static let finalPixelsPerUnit: Float = 188
     static let bottomMargin: CGFloat = 0.04
 
     let engine: MurzikEngine
@@ -68,7 +68,7 @@ final class MurzikSpriteRenderer {
         case .sleepy:
             return Spec(behavior: .loaf, t: 0, mood: .sleepy, azimuth: q, elevation: 0.2, lookAtCamera: true)
         case .sleeping:
-            return Spec(behavior: .sleep, t: 0, mood: .sleeping, azimuth: q, elevation: 0.45,
+            return Spec(behavior: .sleep, t: 0, mood: .sleeping, azimuth: 0.35, elevation: 0.5,
                         fx: [(.zzz, SIMD3(0.06, 0.2, 0.05), 1.3)])
         case .playful:
             return Spec(behavior: .crouch, t: 0.9, mood: .playful, azimuth: side, elevation: 0.05)

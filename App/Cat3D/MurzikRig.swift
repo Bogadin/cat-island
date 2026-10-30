@@ -58,7 +58,6 @@ final class MurzikRig {
     private(set) var earPivots: [SCNNode] = []
     private(set) var legs: [Leg] = []
     private(set) var tailNodes: [SCNNode] = []
-    private var tailMeshes: [SCNNode] = []
     private(set) var eyes: [Eye] = []
     private let chestMesh = SCNNode()
     private let bellyMesh = SCNNode()
@@ -80,6 +79,10 @@ final class MurzikRig {
     static let hindL1: Float = 0.12
     static let hindL2: Float = 0.12
     static let tailSeg: Float = 0.05
+    /// Chest / hips meshes sit away from their pivots so spine bends change the silhouette.
+    static let chestOffset: Float = 0.09
+    static let hipsOffset: Float = -0.1
+    static let tailRoot = SIMD3<Float>(-0.245, 0.055, 0)
 
     init(style: Style = .app) {
         self.style = style
@@ -221,7 +224,7 @@ final class MurzikRig {
         bodyNode.addChildNode(bellyMesh)
         addCollider(bellyMesh, 0.14)
 
-        chestNode.simdPosition = SIMD3(0.13, 0.02, 0)
+        chestNode.simdPosition = SIMD3(0.04, 0.02, 0)
         bodyNode.addChildNode(chestNode)
         let chestBall = MurzikRig.sphere(0.165, fur)
         chestBall.simdScale = SIMD3(1.0, 1.02, 0.94)
@@ -230,18 +233,20 @@ final class MurzikRig {
         bib.simdPosition = SIMD3(0.055, -0.03, 0)
         bib.simdScale = SIMD3(0.9, 1.05, 1.0)
         chestMesh.addChildNode(bib)
+        chestMesh.simdPosition = SIMD3(MurzikRig.chestOffset, 0, 0)
         chestNode.addChildNode(chestMesh)
-        addCollider(chestNode, 0.16)
+        addCollider(chestMesh, 0.16)
 
-        hipsNode.simdPosition = SIMD3(-0.14, 0.0, 0)
+        hipsNode.simdPosition = SIMD3(-0.04, 0.0, 0)
         bodyNode.addChildNode(hipsNode)
         let hipBall = MurzikRig.sphere(0.168, fur)
         hipBall.simdScale = SIMD3(1.0, 0.97, 1.0)
+        hipBall.simdPosition = SIMD3(MurzikRig.hipsOffset, 0, 0)
         hipsNode.addChildNode(hipBall)
-        addCollider(hipsNode, 0.155)
+        addCollider(hipBall, 0.155)
         for s: Float in [-1, 1] {
             let haunch = MurzikRig.sphere(0.095, fur)
-            haunch.simdPosition = SIMD3(-0.01, -0.045, s * 0.085)
+            haunch.simdPosition = SIMD3(MurzikRig.hipsOffset - 0.01, -0.045, s * 0.085)
             hipsNode.addChildNode(haunch)
         }
 
@@ -256,7 +261,7 @@ final class MurzikRig {
     }
 
     private func buildHead() {
-        neckNode.simdPosition = SIMD3(0.09, 0.09, 0)
+        neckNode.simdPosition = SIMD3(MurzikRig.chestOffset + 0.09, 0.09, 0)
         chestNode.addChildNode(neckNode)
         let neckMesh = MurzikRig.capsule(radius: 0.085, length: 0.08, fur)
         neckMesh.simdPosition = SIMD3(0.02, 0.05, 0)
@@ -275,8 +280,8 @@ final class MurzikRig {
             cheek.simdPosition = SIMD3(0.05, -0.068, s * 0.086)
             cheek.simdScale = SIMD3(1.0, 0.92, 1.0)
             headNode.addChildNode(cheek)
-            let pad = MurzikRig.sphere(0.036, fur)
-            pad.simdPosition = SIMD3(0.15, -0.064, s * 0.03)
+            let pad = MurzikRig.sphere(0.033, fur)
+            pad.simdPosition = SIMD3(0.146, -0.06, s * 0.029)
             headNode.addChildNode(pad)
             // Blush
             let b = MurzikRig.sphere(0.034, MurzikRig.flat(UIColor(red: 1.0, green: 0.42, blue: 0.56, alpha: 1)), segments: 24)
@@ -330,9 +335,9 @@ final class MurzikRig {
 
         jawNode.simdPosition = SIMD3(0.1, -0.075, 0)
         headNode.addChildNode(jawNode)
-        let jawMesh = MurzikRig.sphere(0.042, fur)
-        jawMesh.simdPosition = SIMD3(0.055, -0.03, 0)
-        jawMesh.simdScale = SIMD3(1.15, 0.6, 1.1)
+        let jawMesh = MurzikRig.sphere(0.032, fur)
+        jawMesh.simdPosition = SIMD3(0.04, -0.016, 0)
+        jawMesh.simdScale = SIMD3(1.2, 0.55, 1.15)
         jawNode.addChildNode(jawMesh)
         let tongueMesh = MurzikRig.sphere(0.024, pink)
         tongueMesh.simdScale = SIMD3(1.3, 0.45, 1.0)
@@ -505,34 +510,124 @@ final class MurzikRig {
         }
         // Order: FL, FR, HL, HR
         legs = [
-            makeLeg(parent: chestNode, anchor: SIMD3(0.05, -0.08, -0.075), l1: MurzikRig.frontL1, l2: MurzikRig.frontL2, r1: 0.044, r2: 0.036, front: true),
-            makeLeg(parent: chestNode, anchor: SIMD3(0.05, -0.08, 0.075), l1: MurzikRig.frontL1, l2: MurzikRig.frontL2, r1: 0.044, r2: 0.036, front: true),
-            makeLeg(parent: hipsNode, anchor: SIMD3(0.0, -0.06, -0.085), l1: MurzikRig.hindL1, l2: MurzikRig.hindL2, r1: 0.052, r2: 0.034, front: false),
-            makeLeg(parent: hipsNode, anchor: SIMD3(0.0, -0.06, 0.085), l1: MurzikRig.hindL1, l2: MurzikRig.hindL2, r1: 0.052, r2: 0.034, front: false),
+            makeLeg(parent: chestNode, anchor: SIMD3(MurzikRig.chestOffset + 0.05, -0.08, -0.075), l1: MurzikRig.frontL1, l2: MurzikRig.frontL2, r1: 0.044, r2: 0.036, front: true),
+            makeLeg(parent: chestNode, anchor: SIMD3(MurzikRig.chestOffset + 0.05, -0.08, 0.075), l1: MurzikRig.frontL1, l2: MurzikRig.frontL2, r1: 0.044, r2: 0.036, front: true),
+            makeLeg(parent: hipsNode, anchor: SIMD3(MurzikRig.hipsOffset, -0.06, -0.085), l1: MurzikRig.hindL1, l2: MurzikRig.hindL2, r1: 0.052, r2: 0.034, front: false),
+            makeLeg(parent: hipsNode, anchor: SIMD3(MurzikRig.hipsOffset, -0.06, 0.085), l1: MurzikRig.hindL1, l2: MurzikRig.hindL2, r1: 0.052, r2: 0.034, front: false),
         ]
     }
 
     private func buildTail() {
         var parent = hipsNode
-        var offset = SIMD3<Float>(-0.145, 0.055, 0)
+        var offset = MurzikRig.tailRoot
         let n = CatPose.tailCount
-        for i in 0..<n {
+        for _ in 0..<n {
             let seg = SCNNode()
             seg.simdPosition = offset
             parent.addChildNode(seg)
-            let k = Float(i) / Float(n - 1)
-            let r = CM.mix(0.03, 0.021, k)
-            let mesh = MurzikRig.capsule(radius: r, length: MurzikRig.tailSeg, fur)
-            mesh.simdPosition = SIMD3(-MurzikRig.tailSeg / 2, 0, 0)
-            mesh.simdOrientation = simd_quatf(angle: .pi / 2, axis: SIMD3(0, 0, 1))
-            let holder = SCNNode()
-            holder.addChildNode(mesh)
-            seg.addChildNode(holder)
-            tailMeshes.append(holder)
             tailNodes.append(seg)
             parent = seg
             offset = SIMD3(-MurzikRig.tailSeg, 0, 0)
         }
+        // One smooth tube skinned to the tail bones (no visible segment seams).
+        let tube = SCNNode(geometry: MurzikRig.tailTube())
+        tube.geometry?.materials = [fur]
+        hipsNode.addChildNode(tube)
+        var inverseBinds: [NSValue] = []
+        for i in 0..<n {
+            let x = MurzikRig.tailRoot.x - Float(i) * MurzikRig.tailSeg
+            let bind = SCNMatrix4MakeTranslation(x, MurzikRig.tailRoot.y, MurzikRig.tailRoot.z)
+            inverseBinds.append(NSValue(scnMatrix4: SCNMatrix4Invert(bind)))
+        }
+        let geo = tube.geometry!
+        let (weights, indices) = MurzikRig.tailSkinSources(geo)
+        let skinner = SCNSkinner(baseGeometry: geo, bones: tailNodes, boneInverseBindTransforms: inverseBinds,
+                                 boneWeights: weights, boneIndices: indices)
+        skinner.skeleton = hipsNode
+        tube.skinner = skinner
+        tailTube = tube
+    }
+
+    private var tailTube: SCNNode?
+    private static var tailVertexS: [Float] = []
+
+    /// Tapered tube along -X starting at `tailRoot` (hips frame), with a rounded tip.
+    static func tailTube() -> SCNGeometry {
+        let n = CatPose.tailCount
+        let length = Float(n) * tailSeg
+        let rings = 60
+        let radial = 18
+        var verts: [SCNVector3] = []
+        var normals: [SCNVector3] = []
+        var sAlong: [Float] = []
+        var idx: [Int32] = []
+        func radius(_ s: Float) -> Float { CM.mix(0.031, 0.02, s / length) }
+        // Body rings + tip cap rings.
+        let capRings = 8
+        let total = rings + capRings
+        for r in 0...total {
+            var s: Float
+            var rad: Float
+            var nx: Float = 0
+            var scale: Float = 1
+            if r <= rings {
+                s = Float(r) / Float(rings) * length
+                rad = radius(s)
+            } else {
+                let a = Float(r - rings) / Float(capRings) * (CM.pi / 2)
+                let rt = radius(length)
+                s = length + sin(a) * rt
+                rad = rt
+                scale = cos(a)
+                nx = -sin(a)
+            }
+            for k in 0...radial {
+                let th = Float(k) / Float(radial) * CM.tau
+                let cy = cos(th), cz = sin(th)
+                verts.append(SCNVector3(tailRoot.x - s, tailRoot.y + cy * rad * scale, tailRoot.z + cz * rad * scale))
+                let nn = simd_normalize(SIMD3<Float>(nx, cy * (1 - abs(nx)) + 0.0001, cz * (1 - abs(nx))))
+                normals.append(SCNVector3(nn.x, nn.y, nn.z))
+                sAlong.append(min(s, length - 0.001))
+            }
+        }
+        let row = Int32(radial + 1)
+        for r in 0..<Int32(total) {
+            for k in 0..<Int32(radial) {
+                let a = r * row + k
+                let b = a + row
+                idx += [a, b, a + 1, a + 1, b, b + 1]
+            }
+        }
+        tailVertexS = sAlong
+        let g = SCNGeometry(sources: [SCNGeometrySource(vertices: verts), SCNGeometrySource(normals: normals)],
+                            elements: [SCNGeometryElement(indices: idx, primitiveType: .triangles)])
+        return g
+    }
+
+    /// Bone weights/indices: each vertex blends the two bones nearest to it along the tail.
+    static func tailSkinSources(_ g: SCNGeometry) -> (SCNGeometrySource, SCNGeometrySource) {
+        let n = CatPose.tailCount
+        var w: [Float] = []
+        var ix: [UInt16] = []
+        for s in tailVertexS {
+            let u = s / tailSeg - 0.5
+            var a = Int(floor(u))
+            var t = u - Float(a)
+            if a < 0 { a = 0; t = 0 }
+            if a >= n - 1 { a = n - 1; t = 0 }
+            let b = min(a + 1, n - 1)
+            let tb = CM.ease(t)
+            w.append(1 - tb); w.append(tb)
+            ix.append(UInt16(a)); ix.append(UInt16(b))
+        }
+        let count = tailVertexS.count
+        let wData = w.withUnsafeBufferPointer { Data(buffer: $0) }
+        let iData = ix.withUnsafeBufferPointer { Data(buffer: $0) }
+        let ws = SCNGeometrySource(data: wData, semantic: .boneWeights, vectorCount: count, usesFloatComponents: true,
+                                   componentsPerVector: 2, bytesPerComponent: 4, dataOffset: 0, dataStride: 8)
+        let isrc = SCNGeometrySource(data: iData, semantic: .boneIndices, vectorCount: count, usesFloatComponents: false,
+                                     componentsPerVector: 2, bytesPerComponent: 2, dataOffset: 0, dataStride: 4)
+        return (ws, isrc)
     }
 
     // MARK: - Apply pose
@@ -570,8 +665,6 @@ final class MurzikRig {
         for i in 0..<tailNodes.count {
             let a = p.tail[i]
             tailNodes[i].simdOrientation = simd_quatf(angle: a.y, axis: SIMD3(0, 1, 0)) * simd_quatf(angle: -a.x, axis: SIMD3(0, 0, 1))
-            let k = 1 + 0.55 * p.puff
-            tailMeshes[i].simdScale = SIMD3(1, k, k)
         }
 
         // Legs (IK)

@@ -103,7 +103,7 @@ final class Cat3DRenderTests: XCTestCase {
             engine.stage.aim(azimuth: shot.azimuth, elevation: shot.elevation, distance: shot.distance, target: SIMD3(0.02, 0.3, 0))
             let cam = engine.cameraNode.simdWorldPosition
             engine.setStaticPose(shot.behavior, t: shot.t, gait: shot.gait, mood: shot.mood, lookAt: shot.look ? cam : nil)
-            engine.showBowl(at: shot.bowl ? SIMD2(0.36, 0) : nil, fill: 0.8)
+            engine.showBowl(at: shot.bowl ? SIMD2(0.31, 0) : nil, fill: 0.8)
             engine.showToy(at: shot.toy ? SIMD2(0.62, 0.05) : nil)
             let head = engine.rig.headWorld
             for (kind, offset) in shot.fx { engine.addStaticFX(kind, at: head + offset, scale: 1.1) }

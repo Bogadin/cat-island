@@ -246,18 +246,22 @@ enum Poses {
         ]
         p.pawTilt = [0, 0, 0, 0]
         // Tail wrapped around the front, on the floor (toward the cat's right / camera side).
-        p.tail = Poses.floorTail(side: -1)
+        p.tail = Poses.floorTail(side: -1, wrap: 0.34, parentPitch: 0.2, dropSegments: 3)
         return p
     }
 
-    /// Tail that drops to the floor and wraps around the body (side -1 = cat's right, +1 = left).
-    static func floorTail(side: Float, wrap: Float = 0.3) -> [SIMD2<Float>] {
-        let lifts: [Float] = [-0.8, 0.26, 0.25, 0.22, 0.12, 0.02, 0.0, 0.0, 0.03, 0.06]
-        var t: [SIMD2<Float>] = []
-        for i in 0..<CatPose.tailCount {
-            let sway: Float = i == 0 ? 0.45 : wrap
-            t.append(SIMD2(lifts[i], side * sway))
+    /// Tail that drops to the floor and then wraps around the body in the floor plane.
+    /// side -1 = toward the cat's right, +1 = left. `parentPitch` = nose-up pitch of the hips frame.
+    static func floorTail(side: Float, wrap: Float = 0.3, parentPitch: Float = 0, dropSegments: Int = 3) -> [SIMD2<Float>] {
+        let steep: Float = 1.2
+        var t = [SIMD2<Float>](repeating: SIMD2(0, 0), count: CatPose.tailCount)
+        t[0] = SIMD2(-(steep - parentPitch), side * 0.45)
+        let level = min(max(dropSegments, 1), CatPose.tailCount - 2)
+        t[level] = SIMD2(steep, side * wrap)
+        for i in (level + 1)..<CatPose.tailCount {
+            t[i] = SIMD2(0, side * wrap)
         }
+        t[CatPose.tailCount - 1].x = 0.25
         return t
     }
 
@@ -283,7 +287,7 @@ enum Poses {
         p.pawTilt = [-1.4, -1.4, -1.3, -1.3]
         lookAround(&p, t * 0.6, amount: 0.5)
         let n = CatPose.tailCount
-        p.tail = Poses.floorTail(side: -1, wrap: 0.22)
+        p.tail = Poses.floorTail(side: -1, wrap: 0.3, dropSegments: 4)
         p.tail[n - 1].x += 0.2 * max(0, sin(t * 0.9))
         p.breathAmp = 1.1
         p.earL.x = 0.1
@@ -305,7 +309,7 @@ enum Poses {
         p.pawTilt = [0, 0, -0.3, -0.3]
         lookAround(&p, t * 0.7, amount: 0.7)
         let n = CatPose.tailCount
-        p.tail = Poses.floorTail(side: -1, wrap: 0.16)
+        p.tail = Poses.floorTail(side: -1, wrap: 0.22, dropSegments: 4)
         p.tail[n - 1].x += 0.25 * max(0, sin(t * 1.1))
         p.tail[n - 2].x += 0.1 * max(0, sin(t * 1.1))
         return p
@@ -315,19 +319,19 @@ enum Poses {
     static func sleep(_ t: Float) -> CatPose {
         var p = CatPose()
         p.bodyPos = SIMD3(0.0, 0.15, 0)
-        p.body.x = 0.1
-        p.chest.y = -0.62
-        p.hips.y = 0.6
-        p.neck.y = -0.8
-        p.neck.z = -0.5
-        p.head.y = -0.5
-        p.head.z = -0.05
-        p.head.x = -0.3
+        p.body.x = 0.08
+        p.chest.y = -0.95
+        p.hips.y = 0.85
+        p.neck.y = -0.95
+        p.neck.z = -0.55
+        p.head.y = -0.55
+        p.head.z = -0.1
+        p.head.x = -0.35
         p.feetGround = 0
         p.feet = [SIMD3(0.09, -0.06, 0.0), SIMD3(0.1, -0.055, 0.0), SIMD3(0.1, -0.06, 0), SIMD3(0.11, -0.055, 0)]
         p.pawTilt = [-1.2, -1.2, -1.2, -1.2]
         let n = CatPose.tailCount
-        p.tail = Poses.floorTail(side: -1, wrap: 0.36)
+        p.tail = Poses.floorTail(side: -1, wrap: 0.42, dropSegments: 4)
         p.tail[n - 1].y += -0.12 * sin(t * 0.7)
         p.breathAmp = 1.6
         p.breathRate = 0.22
@@ -524,12 +528,14 @@ enum Poses {
 
     static func eat(_ t: Float) -> CatPose {
         var p = stand()
-        p.bodyPos = SIMD3(-0.03, 0.27, 0)
-        p.body.z = -0.2
-        p.neck.z = -0.75
-        p.head.z = -0.42
-        p.feet[0] = SIMD3(0.16, g, -0.075)
-        p.feet[1] = SIMD3(0.16, g, 0.075)
+        p.bodyPos = SIMD3(-0.04, 0.235, 0)
+        p.body.z = -0.3
+        p.chest.z = -0.1
+        p.hips.z = 0.12
+        p.neck.z = -0.7
+        p.head.z = -0.45
+        p.feet[0] = SIMD3(0.13, g, -0.075)
+        p.feet[1] = SIMD3(0.13, g, 0.075)
         p.feet[2] = SIMD3(-0.16, g, -0.09)
         p.feet[3] = SIMD3(-0.16, g, 0.09)
         let chew = sin(t * CM.tau * 2.6)
@@ -574,10 +580,10 @@ enum Poses {
     static func surprised(_ t: Float) -> CatPose {
         let base = stand()
         var arch = stand()
-        arch.bodyPos = SIMD3(0, 0.355, 0)
-        arch.chest.z = -0.38
-        arch.hips.z = 0.42
-        arch.neck.z = 0.42
+        arch.bodyPos = SIMD3(0, 0.37, 0)
+        arch.chest.z = -0.55
+        arch.hips.z = 0.55
+        arch.neck.z = 0.6
         arch.head.z = 0.05
         arch.feet[0] = SIMD3(0.17, g, -0.075)
         arch.feet[1] = SIMD3(0.17, g, 0.075)

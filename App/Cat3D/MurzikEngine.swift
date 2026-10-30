@@ -206,11 +206,11 @@ final class MurzikEngine: NSObject, SCNSceneRendererDelegate, @unchecked Sendabl
             }
         case .feed:
             let fwd = forward
-            var bp = position + fwd * 0.42
+            var bp = position + fwd * 0.31
             bp = clampToRug(bp, radius: 0.82)
             let p: [Step] = isAsleep ? [.act(.stretch)] : []
             let seq: [Step] = [
-                .event(.showBowl(bp)), .walk(.bowl, stopShort: 0.36), .turn(.bowl), .act(.eat, 7.0),
+                .event(.showBowl(bp)), .walk(.bowl, stopShort: 0.31), .turn(.bowl), .act(.eat, 7.0),
                 .event(.hideBowl), .act(.sit, 1.0), .act(.groom, 4.2), .act(.sit, 2.0, look: true),
             ]
             setPlan(p + seq)
