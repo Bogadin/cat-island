@@ -17,6 +17,7 @@ final class LiveActivityUITests: XCTestCase {
 
     /// Saves the top `fraction` of the screen (where the island is).
     private func capture(_ name: String, fraction: CGFloat) {
+        logMarker("shot \(name)")
         let shot = XCUIScreen.main.screenshot()
         var image = shot.image
         if let cg = image.cgImage {
@@ -31,6 +32,21 @@ final class LiveActivityUITests: XCTestCase {
         add(attachment)
         if let dir = islandDir, let data = image.pngData() {
             try? data.write(to: dir.appendingPathComponent("\(name).png"))
+        }
+    }
+
+    /// Writes a marker line into the shared update log so test steps line up with sent updates.
+    private func logMarker(_ text: String) {
+        guard let url = islandDir?.appendingPathComponent("sent-log.txt") else { return }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm:ss.SSS"
+        let line = Data("\(formatter.string(from: .now)) ---- \(text)\n".utf8)
+        if let handle = try? FileHandle(forWritingTo: url) {
+            handle.seekToEndOfFile()
+            handle.write(line)
+            try? handle.close()
+        } else {
+            try? line.write(to: url)
         }
     }
 
@@ -49,7 +65,12 @@ final class LiveActivityUITests: XCTestCase {
     private func launchFed(_ arguments: [String] = []) -> XCUIApplication {
         let app = XCUIApplication()
         app.launchArguments = arguments
+        if let dir = islandDir {
+            // The app appends every island update it sends to this file (DEBUG builds).
+            app.launchEnvironment["MURZIK_ISLAND_LOG"] = dir.appendingPathComponent("sent-log.txt").path
+        }
         app.launch()
+        logMarker("launch \(name) \(arguments.joined(separator: " "))")
         let feed = app.buttons["action.feed"]
         XCTAssertTrue(feed.waitForExistence(timeout: 15), "Feed button not found")
         feed.tap()
@@ -70,7 +91,7 @@ final class LiveActivityUITests: XCTestCase {
         let app = launchFed()
 
         XCUIDevice.shared.press(.home)
-        film("walk", count: 8, every: 0)
+        film("walk", count: 6, every: 1.5)
         pause(3)
         capture("walk-settled", fraction: 0.075)
 
@@ -78,7 +99,7 @@ final class LiveActivityUITests: XCTestCase {
         XCTAssertTrue(app.buttons["action.feed"].waitForExistence(timeout: 10))
         pause(2)
         XCUIDevice.shared.press(.home)
-        film("walkback", count: 8, every: 0)
+        film("walkback", count: 6, every: 1.5)
         pause(3)
         capture("walkback-settled", fraction: 0.075)
     }
@@ -104,18 +125,19 @@ final class LiveActivityUITests: XCTestCase {
         continueAfterFailure = true
         _ = launchFed(["-uitest-intent-after-walk", "feed"])
         XCUIDevice.shared.press(.home)
-        film("intent-feed", count: 14, every: 0)
-        pause(3)
-        capture("intent-feed-settled", fraction: 0.075)
+        // Crossing (~10 s), then the Feed intent: watch it in the expanded island.
+        pause(9)
         expandIsland()
-        capture("intent-feed-expanded", fraction: 0.3)
+        film("intent-feed", count: 7, every: 1.5, fraction: 0.3)
+        pause(3)
+        capture("intent-feed-settled", fraction: 0.3)
     }
 
     func test4PetIntentWalksToTheCushion() throws {
         continueAfterFailure = true
         _ = launchFed(["-uitest-intent-after-walk", "pet"])
         XCUIDevice.shared.press(.home)
-        film("intent-pet", count: 14, every: 0)
+        film("intent-pet", count: 9, every: 1.5)
         pause(3)
         capture("intent-pet-settled", fraction: 0.075)
     }

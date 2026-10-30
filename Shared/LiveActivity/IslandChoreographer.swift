@@ -34,6 +34,9 @@ enum IslandChoreographer {
         }
         guard id != .invalid else { return }
         backgroundTask = id
+        #if DEBUG
+        debugLog("background: start walk")
+        #endif
         walkTask = Task { @MainActor in
             // Let the app finish closing so the island is on screen when he starts walking.
             try? await Task.sleep(nanoseconds: 900_000_000)
@@ -64,6 +67,9 @@ enum IslandChoreographer {
         }
         // Nothing to show (e.g. "sleep"): reconcile has already updated the mood.
         guard mood != nil || action == .pet || action == .feed else { return }
+        #if DEBUG
+        debugLog("react action=\(action?.rawValue ?? "nil") mood=\(mood?.rawValue ?? "nil")")
+        #endif
         let beats = IslandChoreography.reaction(
             to: action,
             reactionMood: mood,
@@ -112,8 +118,28 @@ enum IslandChoreographer {
             let now = Date.now
             let state = PersonalityEngine.advance(storage.load(now: now), to: now)
             await LiveActivityController.update(state: state, now: now, scene: scene)
+            #if DEBUG
+            IslandChoreographer.debugLog("sent step=\(scene.step) pose=\(scene.pose.rawValue) frame=\(scene.frame) pos=\(String(format: "%.2f", scene.position)) effect=\(scene.effect.rawValue) mood=\(PersonalityEngine.mood(for: state, at: now).rawValue)")
+            #endif
         }
     }
+
+    #if DEBUG
+    /// UI tests pass MURZIK_ISLAND_LOG (a file path) to record every update the app sends.
+    static func debugLog(_ line: String) {
+        guard let path = ProcessInfo.processInfo.environment["MURZIK_ISLAND_LOG"] else { return }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm:ss.SSS"
+        let text = "\(formatter.string(from: .now)) \(line)\n"
+        if let handle = FileHandle(forWritingAtPath: path) {
+            handle.seekToEndOfFile()
+            handle.write(Data(text.utf8))
+            try? handle.close()
+        } else {
+            try? Data(text.utf8).write(to: URL(fileURLWithPath: path))
+        }
+    }
+    #endif
 
     // MARK: Helpers
 
