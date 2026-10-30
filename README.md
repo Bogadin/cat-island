@@ -36,7 +36,7 @@ A small black cat who lives in the iPhone's Dynamic Island.
 
 צריך: אייפון עם Dynamic Island (14 Pro ומעלה, iOS 17+), כבל, מחשב Windows ו-Apple ID רגיל.
 
-1. **הורדת האפליקציה:** מורידים את `Murzik.ipa` מדף ה-[Releases](https://github.com/Bogadin/cat-island/releases/latest).
+1. **הורדת האפליקציה:** מורידים את [Murzik.ipa](https://github.com/Bogadin/cat-island/releases/latest/download/Murzik.ipa) (הגרסה האחרונה תמיד בקישור הזה).
 2. **התקנת התוכנות:** מתקינים את [Sideloadly](https://sideloadly.io). צריך גם את **iTunes** ו-**iCloud** בגרסה מהאתר של אפל, ולא מה-Microsoft Store. בדף ההורדה של Sideloadly יש קישורים לשתיהן.
 3. **חיבור הטלפון:** מחברים את האייפון בכבל. בטלפון מאשרים "סמוך על המחשב הזה".
 4. **התקנה:** פותחים את Sideloadly, גוררים אליה את `Murzik.ipa`, מקלידים את ה-Apple ID ולוחצים **Start**. את הסיסמה מקלידים רק בתוך Sideloadly.

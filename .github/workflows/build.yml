@@ -137,15 +137,21 @@ jobs:
           done
 
       - name: Publish release
-        if: steps.ipa.outcome == 'success' && github.ref == 'refs/heads/main'
+        if: steps.ipa.outcome == 'success' && steps.test.outcome == 'success' && github.ref == 'refs/heads/main'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release delete latest --yes --cleanup-tag 2>/dev/null || true
-          gh release create latest build/Murzik.ipa \
-            --title "Murzik (build ${{ github.run_number }})" \
-            --notes "Unsigned IPA. Install with Sideloadly (see README). Commit ${GITHUB_SHA::7}. Tests: ${{ steps.test.outcome }}." \
-            --target "$GITHUB_SHA"
+          TAG="build-${{ github.run_number }}"
+          for attempt in 1 2 3; do
+            if gh release create "$TAG" build/Murzik.ipa \
+                 --title "Murzik (build ${{ github.run_number }})" \
+                 --notes "Unsigned IPA. Install with Sideloadly (see README). Commit ${GITHUB_SHA::7}." \
+                 --target "$GITHUB_SHA" --latest; then
+              break
+            fi
+            echo "::warning::release attempt $attempt failed"; sleep 10
+          done
+          gh release view "$TAG" --json assets -q '.assets[].name'
 
       - name: Fail if tests or build failed
         if: steps.test.outcome != 'success' || steps.ipa.outcome != 'success'
