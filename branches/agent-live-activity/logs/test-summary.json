@@ -3,7 +3,7 @@
     {
       "device" : {
         "architecture" : "arm64",
-        "deviceId" : "6EEDD2B9-6E06-4333-91B6-8661FDCCBA47",
+        "deviceId" : "36E2B8D9-F7DC-43ED-8383-C3824D1485A8",
         "deviceName" : "iPhone 17 Pro Max",
         "modelName" : "iPhone 17 Pro Max",
         "osBuildNumber" : "23F77",
@@ -23,11 +23,11 @@
   "environmentDescription" : "Murzik · Built with macOS 26.6.2",
   "expectedFailures" : 0,
   "failedTests" : 0,
-  "finishTime" : 1793297476.994,
+  "finishTime" : 1793345217.406,
   "passedTests" : 54,
   "result" : "Passed",
   "skippedTests" : 0,
-  "startTime" : 1793296643.323,
+  "startTime" : 1793344393.949,
   "statistics" : [
 
   ],
@@ -38,8 +38,8 @@
   "topInsights" : [
     {
       "category" : "Longest Test Runs",
-      "impact" : "45% of duration",
-      "text" : "1 longest test run with outlier durations exceeding 2.89s (three standard deviations)"
+      "impact" : "48% of duration",
+      "text" : "1 longest test run with outlier durations exceeding 2.83s (three standard deviations)"
     }
   ],
   "totalTestCount" : 54
