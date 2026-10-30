@@ -154,6 +154,7 @@ final class MurzikStage {
         f.materials = [m]
         floor.geometry = f
         floor.name = "murzik.floor"
+        floor.simdPosition = SIMD3(0, -0.025, 0)
     }
 
     private func buildRug() {

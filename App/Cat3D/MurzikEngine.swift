@@ -532,7 +532,7 @@ final class MurzikEngine: NSObject, SCNSceneRendererDelegate, @unchecked Sendabl
         case .hungry:
             f.pupil = 0.85; f.lidUpper = 0.04; f.gaze.y = 0.25
         case .loving:
-            f.lidUpper = 0.95; f.lidLower = 0.55; f.blush = 1
+            f.lidUpper = 1; f.lidLower = 0.55; f.blush = 1
         case .surprised:
             f.lidUpper = 0; f.pupil = 1; f.jaw = 0.3
         case .excited:

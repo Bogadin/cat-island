@@ -214,7 +214,7 @@ final class MurzikRig {
 
         // Torso
         let belly = MurzikRig.sphere(1, fur)
-        belly.simdScale = SIMD3(0.27, 0.163, 0.158)
+        belly.simdScale = SIMD3(0.28, 0.168, 0.162)
         bellyMesh.addChildNode(belly)
         bellyMesh.simdPosition = SIMD3(-0.005, -0.012, 0)
         let back = MurzikRig.sphere(1, fur)

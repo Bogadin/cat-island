@@ -246,7 +246,7 @@ enum Poses {
         ]
         p.pawTilt = [0, 0, 0, 0]
         // Tail wrapped around the front, on the floor (toward the cat's right / camera side).
-        p.tail = Poses.floorTail(side: -1, wrap: 0.34, parentPitch: 0.2, dropSegments: 3)
+        p.tail = Poses.floorTail(side: -1, wrap: 0.46, parentPitch: 0.2, dropSegments: 3)
         return p
     }
 
@@ -254,6 +254,8 @@ enum Poses {
     /// side -1 = toward the cat's right, +1 = left. `parentPitch` = nose-up pitch of the hips frame.
     static func floorTail(side: Float, wrap: Float = 0.3, parentPitch: Float = 0, dropSegments: Int = 3) -> [SIMD2<Float>] {
         let steep: Float = 1.2
+        // A segment points backward (-X), so a positive yaw swings it toward the cat's right (+Z).
+        let side = -side
         var t = [SIMD2<Float>](repeating: SIMD2(0, 0), count: CatPose.tailCount)
         t[0] = SIMD2(-(steep - parentPitch), side * 0.45)
         let level = min(max(dropSegments, 1), CatPose.tailCount - 2)
@@ -287,7 +289,7 @@ enum Poses {
         p.pawTilt = [-1.4, -1.4, -1.3, -1.3]
         lookAround(&p, t * 0.6, amount: 0.5)
         let n = CatPose.tailCount
-        p.tail = Poses.floorTail(side: -1, wrap: 0.3, dropSegments: 4)
+        p.tail = Poses.floorTail(side: -1, wrap: 0.4, dropSegments: 4)
         p.tail[n - 1].x += 0.2 * max(0, sin(t * 0.9))
         p.breathAmp = 1.1
         p.earL.x = 0.1
@@ -309,7 +311,7 @@ enum Poses {
         p.pawTilt = [0, 0, -0.3, -0.3]
         lookAround(&p, t * 0.7, amount: 0.7)
         let n = CatPose.tailCount
-        p.tail = Poses.floorTail(side: -1, wrap: 0.22, dropSegments: 4)
+        p.tail = Poses.floorTail(side: -1, wrap: 0.3, dropSegments: 4)
         p.tail[n - 1].x += 0.25 * max(0, sin(t * 1.1))
         p.tail[n - 2].x += 0.1 * max(0, sin(t * 1.1))
         return p
@@ -331,7 +333,7 @@ enum Poses {
         p.feet = [SIMD3(0.09, -0.06, 0.0), SIMD3(0.1, -0.055, 0.0), SIMD3(0.1, -0.06, 0), SIMD3(0.11, -0.055, 0)]
         p.pawTilt = [-1.2, -1.2, -1.2, -1.2]
         let n = CatPose.tailCount
-        p.tail = Poses.floorTail(side: -1, wrap: 0.42, dropSegments: 4)
+        p.tail = Poses.floorTail(side: -1, wrap: 0.5, dropSegments: 4)
         p.tail[n - 1].y += -0.12 * sin(t * 0.7)
         p.breathAmp = 1.6
         p.breathRate = 0.22
@@ -560,7 +562,7 @@ enum Poses {
         p.body.x = 0.04 * rub
         // Purr vibration.
         p.bodyPos.y += 0.0018 * sin(t * CM.tau * 24)
-        p.face.lidUpper = 0.95
+        p.face.lidUpper = 1
         p.face.lidLower = 0.6
         p.face.blush = 1
         p.face.jaw = 0.0
