@@ -97,18 +97,25 @@ final class MurzikStage {
     private func buildLights() {
         let s = config.isSprite
         // Key: from upper left of the camera.
-        let key = directional(s ? 1100 : 1000, UIColor(red: 1.0, green: 0.96, blue: 0.9, alpha: 1), yaw: -0.5, pitch: -0.75)
+        // Key: from the upper left/front. Lives in the orbit rig (not the camera) so its shadow frustum
+        // is centred on Murzik.
+        let key = directional(s ? 1100 : 1000, UIColor(red: 1.0, green: 0.96, blue: 0.9, alpha: 1), yaw: 0, pitch: 0)
+        key.removeFromParentNode()
+        cameraRig.addChildNode(key)
+        key.simdPosition = SIMD3(-1.7, 3.2, 2.3)
+        key.simdLook(at: SIMD3(0, 0, 0), up: SIMD3(0, 1, 0), localFront: SIMD3(0, 0, -1))
         keyLight = key.light!
         if config.showsStage {
             keyLight.castsShadow = true
             keyLight.shadowMode = .deferred
-            keyLight.shadowColor = UIColor(white: 0, alpha: 0.38)
+            keyLight.shadowColor = UIColor(white: 0, alpha: 0.45)
+            keyLight.automaticallyAdjustsShadowProjection = false
             keyLight.shadowRadius = 9
             keyLight.shadowSampleCount = 16
             keyLight.shadowMapSize = CGSize(width: 2048, height: 2048)
-            keyLight.orthographicScale = 1.8
+            keyLight.orthographicScale = 1.4
             keyLight.zNear = 0.1
-            keyLight.zFar = 20
+            keyLight.zFar = 12
         }
         // Fill from the right, cool.
         _ = directional(s ? 380 : 300, UIColor(red: 0.8, green: 0.86, blue: 1.0, alpha: 1), yaw: 0.9, pitch: -0.2)
@@ -161,26 +168,26 @@ final class MurzikStage {
         let r = CGFloat(MurzikStage.rugRadius)
         let base = SCNCylinder(radius: r, height: 0.02)
         base.radialSegmentCount = 96
-        base.materials = [MurzikRig.pbr(UIColor(red: 0.90, green: 0.80, blue: 0.74, alpha: 1), roughness: 0.95)]
+        base.materials = [MurzikRig.pbr(UIColor(red: 0.70, green: 0.52, blue: 0.50, alpha: 1), roughness: 0.95)]
         let baseN = SCNNode(geometry: base)
         baseN.simdPosition = SIMD3(0, -0.012, 0)
         rug.addChildNode(baseN)
         let ring = SCNTorus(ringRadius: r - 0.06, pipeRadius: 0.014)
         ring.ringSegmentCount = 120
         ring.pipeSegmentCount = 12
-        ring.materials = [MurzikRig.pbr(UIColor(red: 0.86, green: 0.6, blue: 0.6, alpha: 1), roughness: 0.9)]
+        ring.materials = [MurzikRig.pbr(UIColor(red: 0.85, green: 0.5, blue: 0.55, alpha: 1), roughness: 0.9)]
         let ringN = SCNNode(geometry: ring)
         ringN.simdPosition = SIMD3(0, -0.006, 0)
         ringN.simdScale = SIMD3(1, 0.5, 1)
         rug.addChildNode(ringN)
         let inner = SCNCylinder(radius: r * 0.68, height: 0.004)
         inner.radialSegmentCount = 96
-        inner.materials = [MurzikRig.pbr(UIColor(red: 0.94, green: 0.86, blue: 0.80, alpha: 1), roughness: 0.95)]
+        inner.materials = [MurzikRig.pbr(UIColor(red: 0.76, green: 0.60, blue: 0.56, alpha: 1), roughness: 0.95)]
         let innerN = SCNNode(geometry: inner)
         innerN.simdPosition = SIMD3(0, -0.0035, 0)
         rug.addChildNode(innerN)
         // Little paw-print dots around the inner circle.
-        let dotMat = MurzikRig.pbr(UIColor(red: 0.88, green: 0.68, blue: 0.66, alpha: 1), roughness: 0.95)
+        let dotMat = MurzikRig.pbr(UIColor(red: 0.62, green: 0.44, blue: 0.43, alpha: 1), roughness: 0.95)
         for i in 0..<12 {
             let a = Float(i) / 12 * CM.tau
             let d = SCNCylinder(radius: 0.022, height: 0.004)

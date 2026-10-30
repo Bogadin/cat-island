@@ -77,7 +77,7 @@ final class Cat3DRenderTests: XCTestCase {
             Shot(name: "hero-idle-stand", behavior: .idle, t: 2.0, azimuth: 0.95, look: true),
             Shot(name: "hero-walk-side", behavior: .walk, t: 0.3, gait: 0.3, azimuth: .pi / 2, elevation: 0.12),
             Shot(name: "hero-trot", behavior: .trot, t: 0.2, gait: 0.2, mood: .playful, azimuth: 1.25, elevation: 0.15),
-            Shot(name: "hero-sleep-curled", behavior: .sleep, t: 0, mood: .sleeping, azimuth: 0.7, elevation: 0.6, distance: 2.4,
+            Shot(name: "hero-sleep-curled", behavior: .sleep, t: 0, mood: .sleeping, azimuth: 1.0, elevation: 0.42, distance: 2.4,
                  fx: [(.zzz, SIMD3(0.06, 0.2, 0.05)), (.zzz, SIMD3(0.14, 0.34, 0.02))]),
             Shot(name: "hero-loaf-sleepy", behavior: .loaf, t: 0, mood: .sleepy, azimuth: q, look: true),
             Shot(name: "hero-groom", behavior: .groom, t: 1.1, azimuth: 0.8),

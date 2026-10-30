@@ -437,7 +437,7 @@ final class MurzikRig {
             // Eyelids: fur-coloured hemispherical shells hugging the eye that rotate over it.
             for (i, lid) in [e.upperLid, e.lowerLid].enumerated() {
                 let holder = SCNNode()
-                holder.simdScale = SIMD3(1.02, 1.1, 0.64)
+                holder.simdScale = SIMD3(1.0, 1.08, 0.6)
                 e.socket.addChildNode(holder)
                 holder.addChildNode(lid)
                 let hemi = SCNNode(geometry: lidGeometry)
@@ -725,7 +725,7 @@ final class MurzikRig {
             e.lowerLid.isHidden = closedAmt > 0.99
             e.lowerLid.simdOrientation = simd_quatf(angle: CM.pi / 2 - CM.pi / 2 * 0.8 * low, axis: SIMD3(1, 0, 0))
             e.open.isHidden = closedAmt > 0.99
-            e.highlights.isHidden = up > 0.7
+            e.highlights.isHidden = up > 0.35
             e.closedArc.isHidden = happy || closedAmt < 0.01
             e.happyArc.isHidden = !happy || closedAmt < 0.01
             e.closedArc.opacity = CGFloat(closedAmt)

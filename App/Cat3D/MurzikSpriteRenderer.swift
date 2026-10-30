@@ -68,7 +68,7 @@ final class MurzikSpriteRenderer {
         case .sleepy:
             return Spec(behavior: .loaf, t: 0, mood: .sleepy, azimuth: q, elevation: 0.2, lookAtCamera: true)
         case .sleeping:
-            return Spec(behavior: .sleep, t: 0, mood: .sleeping, azimuth: 0.35, elevation: 0.5,
+            return Spec(behavior: .sleep, t: 0, mood: .sleeping, azimuth: 1.0, elevation: 0.38,
                         fx: [(.zzz, SIMD3(0.06, 0.2, 0.05), 1.3)])
         case .playful:
             return Spec(behavior: .crouch, t: 0.9, mood: .playful, azimuth: side, elevation: 0.05)
