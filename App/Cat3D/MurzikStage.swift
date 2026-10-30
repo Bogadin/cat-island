@@ -107,7 +107,7 @@ final class MurzikStage {
         keyLight = key.light!
         if config.showsStage {
             keyLight.castsShadow = true
-            keyLight.shadowMode = .deferred
+            keyLight.shadowMode = .forward
             keyLight.shadowColor = UIColor(white: 0, alpha: 0.45)
             keyLight.automaticallyAdjustsShadowProjection = false
             keyLight.shadowRadius = 9
