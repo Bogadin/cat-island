@@ -98,6 +98,8 @@ final class MurzikEngine: NSObject, SCNSceneRendererDelegate, @unchecked Sendabl
     // Look-at smoothing (yaw, pitch, weight)
     private var look = SIMD3<Float>(0, 0, 0)
 
+    private let contactShadow = MurzikStage.contactShadow()
+
     /// When false (sprite / hero renders), the brain and clock are not used.
     let autonomous: Bool
 
@@ -109,6 +111,10 @@ final class MurzikEngine: NSObject, SCNSceneRendererDelegate, @unchecked Sendabl
         self.autonomous = autonomous
         super.init()
         scene.rootNode.addChildNode(rig.root)
+        if stageConfig.showsStage {
+            contactShadow.simdPosition = SIMD3(0, 0.003, 0)
+            scene.rootNode.addChildNode(contactShadow)
+        }
         place()
         rig.apply(lastBlended, time: 0)
     }
@@ -630,6 +636,18 @@ final class MurzikEngine: NSObject, SCNSceneRendererDelegate, @unchecked Sendabl
         rig.root.simdOrientation = simd_quatf(angle: heading, axis: SIMD3(0, 1, 0))
     }
 
+    /// Moves the soft contact shadow under the body; it fades and shrinks when Murzik jumps.
+    private func updateContactShadow() {
+        guard contactShadow.parent != nil else { return }
+        let b = rig.bodyNode.simdConvertPosition(SIMD3(0, 0, 0), to: nil)
+        let lift = max(0, b.y - 0.3)
+        contactShadow.simdPosition = SIMD3(b.x, 0.003, b.z)
+        contactShadow.simdOrientation = rig.root.simdOrientation * simd_quatf(angle: -.pi / 2, axis: SIMD3(1, 0, 0))
+        let k = max(0.4, 1 - lift * 2.5)
+        contactShadow.simdScale = SIMD3(0.8 * k, 0.5 * k, 1)
+        contactShadow.opacity = CGFloat(k)
+    }
+
     private func renderFrame(time: Double, dt: Float, userLook: SIMD3<Float>?) {
         place()
         let base = blendedPose(time: time)
@@ -650,6 +668,7 @@ final class MurzikEngine: NSObject, SCNSceneRendererDelegate, @unchecked Sendabl
         look.z += (targetW - look.z) * k
         let p = finalize(base, time: time, mood: mood, lookYaw: look.x, lookPitch: look.y, lookWeight: look.z)
         rig.apply(p, time: time)
+        updateContactShadow()
         updateProps(time: time)
         updateFX(time: time)
     }
@@ -703,6 +722,7 @@ final class MurzikEngine: NSObject, SCNSceneRendererDelegate, @unchecked Sendabl
             p = finalize(base, time: 0.05, mood: mood, lookYaw: y, lookPitch: pi, lookWeight: w, blinks: false)
             rig.apply(p, time: 0)
         }
+        updateContactShadow()
     }
 
     func showBowl(at p: SIMD2<Float>?, fill: Float = 1) {

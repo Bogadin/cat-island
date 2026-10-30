@@ -327,9 +327,9 @@ final class MurzikRig {
 
         // Mouth interior (scaled by jaw opening) + jaw.
         let inside = MurzikRig.sphere(0.05, MurzikRig.pbr(UIColor(red: 0.55, green: 0.12, blue: 0.2, alpha: 1), roughness: 0.5, emission: 0.25))
-        inside.simdScale = SIMD3(0.8, 0.75, 1.0)
+        inside.simdScale = SIMD3(0.62, 0.62, 0.85)
         mouthInside.addChildNode(inside)
-        mouthInside.simdPosition = SIMD3(0.15, -0.088, 0)
+        mouthInside.simdPosition = SIMD3(0.138, -0.085, 0)
         mouthInside.simdScale = SIMD3(repeating: 0.01)
         headNode.addChildNode(mouthInside)
 

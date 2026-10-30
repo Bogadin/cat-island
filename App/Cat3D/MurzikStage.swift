@@ -102,15 +102,15 @@ final class MurzikStage {
         let key = directional(s ? 1100 : 1000, UIColor(red: 1.0, green: 0.96, blue: 0.9, alpha: 1), yaw: 0, pitch: 0)
         key.removeFromParentNode()
         cameraRig.addChildNode(key)
-        key.simdPosition = SIMD3(-1.7, 3.2, 2.3)
+        key.simdPosition = SIMD3(-0.9, 3.8, 1.3)
         key.simdLook(at: SIMD3(0, 0, 0), up: SIMD3(0, 1, 0), localFront: SIMD3(0, 0, -1))
         keyLight = key.light!
         if config.showsStage {
             keyLight.castsShadow = true
             keyLight.shadowMode = .forward
-            keyLight.shadowColor = UIColor(white: 0, alpha: 0.45)
+            keyLight.shadowColor = UIColor(white: 0, alpha: 0.32)
             keyLight.automaticallyAdjustsShadowProjection = false
-            keyLight.shadowRadius = 9
+            keyLight.shadowRadius = 14
             keyLight.shadowSampleCount = 16
             keyLight.shadowMapSize = CGSize(width: 2048, height: 2048)
             keyLight.orthographicScale = 1.4
@@ -149,6 +149,34 @@ final class MurzikStage {
                 ctx.cgContext.drawLinearGradient(grad, start: .zero, end: CGPoint(x: 0, y: size.height), options: [])
             }
         }
+    }
+
+    /// Soft radial blob used as a contact shadow under the cat.
+    static func contactShadow() -> SCNNode {
+        let size = CGSize(width: 128, height: 128)
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = 1
+        format.opaque = false
+        let img = UIGraphicsImageRenderer(size: size, format: format).image { ctx in
+            let colors = [UIColor(white: 0, alpha: 0.55).cgColor, UIColor(white: 0, alpha: 0.0).cgColor]
+            if let g = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: colors as CFArray, locations: [0, 1]) {
+                let c = CGPoint(x: 64, y: 64)
+                ctx.cgContext.drawRadialGradient(g, startCenter: c, startRadius: 0, endCenter: c, endRadius: 64, options: [])
+            }
+        }
+        let plane = SCNPlane(width: 1, height: 1)
+        let m = SCNMaterial()
+        m.lightingModel = .constant
+        m.diffuse.contents = img
+        m.writesToDepthBuffer = false
+        m.blendMode = .alpha
+        plane.materials = [m]
+        let n = SCNNode(geometry: plane)
+        n.simdOrientation = simd_quatf(angle: -.pi / 2, axis: SIMD3(1, 0, 0))
+        n.castsShadow = false
+        n.renderingOrder = -1
+        n.name = "murzik.contactShadow"
+        return n
     }
 
     // MARK: Floor & rug

@@ -89,7 +89,7 @@ final class Cat3DRenderTests: XCTestCase {
             Shot(name: "hero-crouch-toy", behavior: .crouch, t: 0.9, mood: .playful, azimuth: 1.2, elevation: 0.18, toy: true),
             Shot(name: "hero-pounce", behavior: .pounce, t: 0.5, mood: .playful, azimuth: .pi / 2, elevation: 0.1),
             Shot(name: "hero-surprised", behavior: .surprised, t: 0.7, mood: .surprised, azimuth: 1.1, elevation: 0.12),
-            Shot(name: "hero-jump-excited", behavior: .jump, t: 0.53, mood: .excited, azimuth: q, look: true),
+            Shot(name: "hero-jump-excited", behavior: .jump, t: 0.53, mood: .excited, azimuth: q, distance: 3.4, look: true),
             Shot(name: "hero-meow-hungry", behavior: .meow, t: 0.7, mood: .hungry, azimuth: q, look: true),
             Shot(name: "hero-lie", behavior: .lie, t: 0, azimuth: q, look: true),
             Shot(name: "hero-front", behavior: .sit, t: 0, azimuth: 0.0, elevation: 0.12, look: true),
