@@ -53,6 +53,8 @@ final class StageDirector: ObservableObject {
     private var lastToyPlay: Date = .distantPast
 
     init() {
+        // The room already draws its own rug; keep only the 3D contact shadow.
+        cat.setRugVisible(false)
         cat.onPetted = { [weak self] in
             self?.pet()
         }
