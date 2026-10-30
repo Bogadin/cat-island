@@ -23,11 +23,11 @@
   "environmentDescription" : "Murzik · Built with macOS 26.6.2",
   "expectedFailures" : 0,
   "failedTests" : 0,
-  "finishTime" : 1793346293.975,
+  "finishTime" : 1793347283.624,
   "passedTests" : 54,
   "result" : "Passed",
   "skippedTests" : 0,
-  "startTime" : 1793345473.764,
+  "startTime" : 1793346503.445,
   "statistics" : [
 
   ],
@@ -38,8 +38,8 @@
   "topInsights" : [
     {
       "category" : "Longest Test Runs",
-      "impact" : "63% of duration",
-      "text" : "2 longest test runs with outlier durations exceeding 1.99s (three standard deviations)"
+      "impact" : "49% of duration",
+      "text" : "2 longest test runs with outlier durations exceeding 2.78s (three standard deviations)"
     }
   ],
   "totalTestCount" : 54
