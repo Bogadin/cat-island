@@ -32,10 +32,10 @@ final class StageDirector: ObservableObject {
     let cat = Murzik3DController()
 
     // Stage camera framing (horizontal FOV in degrees, distance and target height in metres, pitch in radians).
-    static let cameraFieldOfView: CGFloat = 40
-    static let cameraDistance: Float = 3.48
-    static let cameraTargetHeight: Float = 1.18
-    static let cameraPitch: Float = 0.07
+    static let cameraFieldOfView: CGFloat = 42
+    static let cameraDistance: Float = 3.46
+    static let cameraTargetHeight: Float = 1.04
+    static let cameraPitch: Float = 0.082
 
     @Published private(set) var isPurring = false
     @Published private(set) var toyMode = false
