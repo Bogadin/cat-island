@@ -11,8 +11,8 @@
         "platform" : "iOS Simulator"
       },
       "expectedFailures" : 0,
-      "failedTests" : 1,
-      "passedTests" : 41,
+      "failedTests" : 0,
+      "passedTests" : 42,
       "skippedTests" : 0,
       "testPlanConfiguration" : {
         "configurationId" : "1",
@@ -22,31 +22,24 @@
   ],
   "environmentDescription" : "Murzik · Built with macOS 26.6.2",
   "expectedFailures" : 0,
-  "failedTests" : 1,
-  "finishTime" : 1793347514.522,
-  "passedTests" : 41,
-  "result" : "Failed",
+  "failedTests" : 0,
+  "finishTime" : 1793348110.834,
+  "passedTests" : 42,
+  "result" : "Passed",
   "skippedTests" : 0,
-  "startTime" : 1793346982.443,
+  "startTime" : 1793347745.342,
   "statistics" : [
 
   ],
   "testFailures" : [
-    {
-      "failureText" : "Failed to activate application 'com.bogadin.murzik at /Users/runner/Library/Developer/Xcode/DerivedData/Murzik-godrylvsbhpbrkajpxqswasefsxa/Build/Products/Debug-iphonesimulator/Murzik.app' (current state: Running Background)",
-      "targetName" : "MurzikUITests",
-      "testIdentifier" : 42,
-      "testIdentifierString" : "MurzikUITests/testAppAndDynamicIsland()",
-      "testIdentifierURL" : "test://com.apple.xcode/Murzik/MurzikUITests/MurzikUITests/testAppAndDynamicIsland",
-      "testName" : "testAppAndDynamicIsland()"
-    }
+
   ],
   "title" : "Test - Murzik",
   "topInsights" : [
     {
       "category" : "Longest Test Runs",
-      "impact" : "51% of duration",
-      "text" : "2 longest test runs with outlier durations exceeding 4.86s (three standard deviations)"
+      "impact" : "35% of duration",
+      "text" : "1 longest test run with outlier durations exceeding 5.52s (three standard deviations)"
     }
   ],
   "totalTestCount" : 42
