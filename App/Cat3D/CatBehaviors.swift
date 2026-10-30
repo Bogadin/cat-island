@@ -319,14 +319,14 @@ enum Poses {
     static func sleep(_ t: Float) -> CatPose {
         var p = CatPose()
         p.bodyPos = SIMD3(0.0, 0.15, 0)
-        p.body.x = 0.08
-        p.chest.y = -0.95
-        p.hips.y = 0.85
-        p.neck.y = -0.95
-        p.neck.z = -0.55
-        p.head.y = -0.55
-        p.head.z = -0.1
-        p.head.x = -0.35
+        p.body.x = 0.04
+        p.chest.y = -0.5
+        p.hips.y = 0.45
+        p.neck.y = -0.6
+        p.neck.z = -0.62
+        p.head.y = -0.35
+        p.head.z = -0.05
+        p.head.x = 0.22
         p.feetGround = 0
         p.feet = [SIMD3(0.09, -0.06, 0.0), SIMD3(0.1, -0.055, 0.0), SIMD3(0.1, -0.06, 0), SIMD3(0.11, -0.055, 0)]
         p.pawTilt = [-1.2, -1.2, -1.2, -1.2]

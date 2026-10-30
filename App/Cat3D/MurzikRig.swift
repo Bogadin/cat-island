@@ -100,7 +100,7 @@ final class MurzikRig {
         let m = SCNMaterial()
         m.lightingModel = .physicallyBased
         m.diffuse.contents = base
-        m.roughness.contents = NSNumber(value: 0.68)
+        m.roughness.contents = NSNumber(value: 0.76)
         m.metalness.contents = NSNumber(value: 0.0)
         let r = String(format: "%.3f", style.rimColor.x * style.rimStrength)
         let g = String(format: "%.3f", style.rimColor.y * style.rimStrength)

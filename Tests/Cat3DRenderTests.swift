@@ -216,3 +216,25 @@ final class Cat3DRenderTests: XCTestCase {
         for i in 0..<60 { c.engine.tick(systemTime: Double(i) / 30) }
     }
 }
+
+/// Writes numeric pose diagnostics (root frame) to `$RENDER_DIR/3d/pose-debug.txt`.
+@MainActor
+final class Cat3DPoseDebugTests: XCTestCase {
+    func testWritePoseDebug() throws {
+        let engine = MurzikEngine(autonomous: false)
+        var lines: [String] = []
+        func f(_ v: SIMD3<Float>) -> String { String(format: "(%.3f, %.3f, %.3f)", v.x, v.y, v.z) }
+        for b in [CatBehavior.idle, .sit, .loaf, .lie, .sleep, .eat, .groom, .crouch, .surprised] {
+            engine.setStaticPose(b, t: 0.5)
+            let root = engine.rig.root
+            let tip = root.simdConvertPosition(.zero, from: engine.rig.tailNodes.last!)
+            let mid = root.simdConvertPosition(.zero, from: engine.rig.tailNodes[4])
+            let head = engine.rig.headPositionInRoot
+            let paws = (0..<4).map { root.simdConvertPosition(.zero, from: engine.rig.legs[$0].paw) }
+            lines.append("\(b.rawValue): head \(f(head)) tailMid \(f(mid)) tailTip \(f(tip)) paws \(paws.map(f).joined(separator: " "))")
+        }
+        let text = lines.joined(separator: "\n")
+        print(text)
+        try text.write(to: SpriteExportTests.dir("3d").appendingPathComponent("pose-debug.txt"), atomically: true, encoding: .utf8)
+    }
+}
