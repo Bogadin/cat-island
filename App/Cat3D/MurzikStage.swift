@@ -174,7 +174,7 @@ final class MurzikStage {
         let n = SCNNode(geometry: plane)
         n.simdOrientation = simd_quatf(angle: -.pi / 2, axis: SIMD3(1, 0, 0))
         n.castsShadow = false
-        n.renderingOrder = -1
+        n.renderingOrder = 5   // after the opaque rug, depth-tested
         n.name = "murzik.contactShadow"
         return n
     }
