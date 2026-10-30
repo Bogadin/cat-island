@@ -1,128 +1,100 @@
-07:17:58.612 ---- launch -[LiveActivityUITests test1WalkAcrossTheIslandWhenLeavingTheApp] 
-07:18:01.876 react action=nil mood=happy
-07:18:02.111 sent step=2 pose=hop frame=0 pos=0.16 effect=hearts mood=happy
-07:18:03.840 sent step=3 pose=rest frame=0 pos=0.16 effect=hearts mood=happy
-07:18:08.091 sent step=4 pose=rest frame=0 pos=0.16 effect=none mood=happy
-07:18:09.584 ---- shot walk-00
-07:18:10.773 background: start walk
-07:18:12.918 sent step=5 pose=stretch frame=0 pos=0.16 effect=none mood=happy
-07:18:13.991 ---- shot walk-01
-07:18:14.767 sent step=6 pose=walk frame=1 pos=0.33 effect=none mood=happy
-07:18:17.428 sent step=7 pose=walk frame=5 pos=0.50 effect=none mood=happy
-07:18:18.091 sent step=8 pose=walk frame=1 pos=0.67 effect=none mood=happy
-07:18:18.585 ---- shot walk-02
-07:18:19.850 sent step=9 pose=walk frame=5 pos=0.84 effect=none mood=happy
-07:18:21.554 sent step=10 pose=rest frame=0 pos=0.84 effect=none mood=happy
-07:18:21.597 ---- shot walk-03
-07:18:25.202 ---- shot walk-04
-07:18:27.805 ---- shot walk-05
-07:18:35.563 ---- shot walk-settled
-07:18:43.805 ---- shot walkback-00
-07:18:45.043 background: start walk
-07:18:47.425 sent step=12 pose=stretch frame=0 pos=0.84 effect=none mood=happy
-07:18:48.193 ---- shot walkback-01
-07:18:49.173 sent step=13 pose=walk frame=1 pos=0.67 effect=none mood=happy
-07:18:50.835 sent step=14 pose=walk frame=5 pos=0.50 effect=none mood=happy
-07:18:51.426 ---- shot walkback-02
-07:18:52.545 sent step=15 pose=walk frame=1 pos=0.33 effect=none mood=happy
-07:18:54.259 sent step=16 pose=walk frame=5 pos=0.16 effect=none mood=happy
-07:18:54.489 ---- shot walkback-03
-07:18:56.014 sent step=17 pose=rest frame=0 pos=0.16 effect=none mood=happy
-07:18:57.105 ---- shot walkback-04
-07:19:00.655 ---- shot walkback-05
-07:19:07.827 ---- shot walkback-settled
-07:20:22.796 ---- launch -[LiveActivityUITests test2RealTimePawTrail] -uitest-fast-trail
-07:20:24.764 react action=nil mood=happy
-07:20:24.979 sent step=21 pose=hop frame=0 pos=0.16 effect=hearts mood=happy
-07:20:26.778 sent step=22 pose=rest frame=0 pos=0.16 effect=hearts mood=happy
-07:20:31.006 sent step=23 pose=rest frame=0 pos=0.16 effect=none mood=happy
-07:20:33.900 background: start walk
-07:20:35.980 sent step=24 pose=stretch frame=0 pos=0.16 effect=none mood=happy
-07:20:37.533 sent step=25 pose=walk frame=1 pos=0.33 effect=none mood=happy
-07:20:39.282 sent step=26 pose=walk frame=5 pos=0.50 effect=none mood=happy
-07:20:40.999 sent step=27 pose=walk frame=1 pos=0.67 effect=none mood=happy
-07:20:42.775 sent step=28 pose=walk frame=5 pos=0.84 effect=none mood=happy
-07:20:44.399 sent step=29 pose=rest frame=0 pos=0.84 effect=none mood=happy
-07:20:50.743 ---- shot trail-a
-07:20:57.222 ---- shot trail-b
-07:21:03.536 ---- shot trail-c
-07:21:26.161 ---- launch -[LiveActivityUITests test3FeedIntentWalksToTheBowl] -uitest-intent-after-walk feed
-07:21:27.635 react action=nil mood=happy
-07:21:27.850 sent step=33 pose=hop frame=0 pos=0.84 effect=hearts mood=happy
-07:21:29.655 sent step=34 pose=rest frame=0 pos=0.84 effect=hearts mood=happy
-07:21:33.905 sent step=35 pose=rest frame=0 pos=0.84 effect=none mood=happy
-07:21:36.636 background: start walk
-07:21:40.000 sent step=36 pose=stretch frame=0 pos=0.84 effect=none mood=happy
-07:21:41.934 sent step=37 pose=walk frame=1 pos=0.67 effect=none mood=happy
-07:21:43.794 sent step=38 pose=walk frame=5 pos=0.50 effect=none mood=happy
-07:21:44.977 sent step=39 pose=walk frame=1 pos=0.33 effect=none mood=happy
-07:21:46.979 sent step=40 pose=walk frame=5 pos=0.16 effect=none mood=happy
-07:21:48.132 ---- shot intent-feed-00
-07:21:48.711 sent step=41 pose=rest frame=0 pos=0.16 effect=none mood=happy
-07:21:50.494 react action=feed mood=happy
-07:21:50.895 sent step=43 pose=walk frame=1 pos=0.10 effect=none mood=happy
-07:21:51.764 ---- shot intent-feed-01
-07:21:52.547 sent step=44 pose=eat frame=1 pos=0.10 effect=food mood=happy
-07:21:54.117 sent step=45 pose=hop frame=1 pos=0.10 effect=hearts mood=happy
-07:21:55.511 ---- shot intent-feed-02
-07:21:56.797 sent step=46 pose=rest frame=0 pos=0.10 effect=none mood=happy
-07:21:59.119 ---- shot intent-feed-03
-07:22:03.286 ---- shot intent-feed-04
-07:22:06.635 ---- shot intent-feed-05
-07:22:10.858 ---- shot intent-feed-06
-07:22:17.763 ---- shot intent-feed-settled
-07:22:54.009 ---- launch -[LiveActivityUITests test4PetIntentWalksToTheCushion] -uitest-intent-after-walk pet
-07:23:08.929 react action=nil mood=happy
-07:23:09.151 sent step=50 pose=hop frame=0 pos=0.10 effect=hearts mood=happy
-07:23:10.910 sent step=51 pose=rest frame=0 pos=0.10 effect=hearts mood=happy
-07:23:15.355 sent step=52 pose=rest frame=0 pos=0.10 effect=none mood=happy
-07:23:20.717 ---- shot intent-pet-00
-07:23:24.804 background: start walk
-07:23:25.444 ---- shot intent-pet-01
-07:23:27.663 sent step=53 pose=stretch frame=0 pos=0.10 effect=none mood=happy
-07:23:28.433 ---- shot intent-pet-02
-07:23:29.466 sent step=54 pose=walk frame=1 pos=0.25 effect=none mood=happy
-07:23:31.080 sent step=55 pose=walk frame=5 pos=0.40 effect=none mood=happy
-07:23:31.172 ---- shot intent-pet-03
-07:23:32.850 sent step=56 pose=walk frame=1 pos=0.54 effect=none mood=happy
-07:23:34.059 ---- shot intent-pet-04
-07:23:34.686 sent step=57 pose=walk frame=5 pos=0.69 effect=none mood=happy
-07:23:36.274 sent step=58 pose=walk frame=1 pos=0.84 effect=none mood=happy
-07:23:36.429 ---- shot intent-pet-05
-07:23:37.901 sent step=59 pose=rest frame=0 pos=0.84 effect=none mood=happy
-07:23:38.960 ---- shot intent-pet-06
-07:23:39.981 react action=pet mood=excited
-07:23:40.259 sent step=61 pose=walk frame=1 pos=0.90 effect=none mood=excited
-07:23:41.561 ---- shot intent-pet-07
-07:23:42.022 sent step=62 pose=hop frame=1 pos=0.90 effect=sparkles mood=excited
-07:23:43.700 sent step=63 pose=rest frame=1 pos=0.90 effect=sparkles mood=excited
-07:23:44.215 ---- shot intent-pet-08
-07:23:46.067 sent step=64 pose=rest frame=0 pos=0.90 effect=none mood=happy
-07:23:49.731 ---- shot intent-pet-settled
-07:24:06.011 ---- launch -[LiveActivityUITests test5TapExpandedIslandButtons] 
-07:24:08.597 react action=nil mood=happy
-07:24:08.824 sent step=68 pose=hop frame=0 pos=0.90 effect=hearts mood=happy
-07:24:10.514 sent step=69 pose=rest frame=0 pos=0.90 effect=hearts mood=happy
-07:24:14.937 sent step=70 pose=rest frame=0 pos=0.90 effect=none mood=happy
-07:24:17.431 background: start walk
-07:24:19.941 sent step=71 pose=stretch frame=0 pos=0.90 effect=none mood=happy
-07:24:21.681 sent step=72 pose=walk frame=1 pos=0.75 effect=none mood=happy
-07:24:23.421 sent step=73 pose=walk frame=5 pos=0.60 effect=none mood=happy
-07:24:25.183 sent step=74 pose=walk frame=1 pos=0.46 effect=none mood=happy
-07:24:26.835 sent step=75 pose=walk frame=5 pos=0.31 effect=none mood=happy
-07:24:28.451 sent step=76 pose=walk frame=1 pos=0.16 effect=none mood=happy
-07:24:30.093 sent step=77 pose=rest frame=0 pos=0.16 effect=none mood=happy
-07:24:34.093 ---- shot expanded
-07:24:39.552 ---- shot tap-pet-00
-07:24:41.666 ---- shot tap-pet-01
-07:24:43.872 ---- shot tap-pet-02
-07:24:46.351 ---- shot tap-pet-03
-07:24:50.011 ---- shot tap-pet-04
-07:24:50.892 react action=pet mood=excited
-07:24:51.104 sent step=79 pose=walk frame=1 pos=0.41 effect=none mood=excited
-07:24:52.785 sent step=80 pose=walk frame=5 pos=0.65 effect=none mood=excited
-07:24:54.338 sent step=81 pose=walk frame=1 pos=0.90 effect=none mood=excited
-07:24:55.955 sent step=82 pose=hop frame=1 pos=0.90 effect=sparkles mood=excited
-07:24:57.711 sent step=83 pose=rest frame=1 pos=0.90 effect=sparkles mood=happy
-07:24:59.402 sent step=84 pose=rest frame=0 pos=0.90 effect=none mood=happy
-07:25:07.058 ---- shot tap-pet-settled
+07:35:41.748 ---- launch -[LiveActivityUITests test1WalkAcrossTheIslandWhenLeavingTheApp] 
+07:35:43.710 react action=nil mood=happy
+07:35:50.117 sent step=2 pose=rest frame=0 pos=0.16 effect=none mood=happy
+07:35:51.305 ---- shot walk-00
+07:35:52.622 background: start walk
+07:35:55.807 sent step=3 pose=walk frame=1 pos=0.39 effect=none mood=happy
+07:35:56.847 ---- shot walk-01
+07:35:58.819 sent step=4 pose=walk frame=5 pos=0.61 effect=none mood=happy
+07:35:59.064 ---- shot walk-02
+07:36:01.747 sent step=5 pose=walk frame=1 pos=0.84 effect=none mood=happy
+07:36:02.815 ---- shot walk-03
+07:36:04.958 ---- shot walk-04
+07:36:05.432 sent step=6 pose=rest frame=0 pos=0.84 effect=none mood=happy
+07:36:07.948 ---- shot walk-05
+07:36:14.854 ---- shot walk-settled
+07:36:22.059 ---- shot walkback-00
+07:36:23.395 background: start walk
+07:36:25.629 sent step=8 pose=walk frame=1 pos=0.61 effect=none mood=happy
+07:36:25.961 ---- shot walkback-01
+07:36:27.865 ---- shot walkback-02
+07:36:28.816 sent step=9 pose=walk frame=5 pos=0.39 effect=none mood=happy
+07:36:30.126 ---- shot walkback-03
+07:36:32.209 sent step=10 pose=walk frame=1 pos=0.16 effect=none mood=happy
+07:36:34.074 ---- shot walkback-04
+07:36:34.744 sent step=11 pose=rest frame=0 pos=0.16 effect=none mood=happy
+07:36:36.586 ---- shot walkback-05
+07:36:42.189 ---- shot walkback-settled
+07:37:16.089 ---- launch -[LiveActivityUITests test2RealTimePawTrail] -uitest-fast-trail
+07:37:17.901 react action=nil mood=happy
+07:37:24.510 sent step=15 pose=rest frame=0 pos=0.16 effect=none mood=happy
+07:37:26.926 background: start walk
+07:37:29.153 sent step=16 pose=walk frame=1 pos=0.39 effect=none mood=happy
+07:37:32.266 sent step=17 pose=walk frame=5 pos=0.61 effect=none mood=happy
+07:37:35.212 sent step=18 pose=walk frame=1 pos=0.84 effect=none mood=happy
+07:37:38.329 sent step=19 pose=rest frame=0 pos=0.84 effect=none mood=happy
+07:37:45.056 ---- shot trail-a
+07:37:52.598 ---- shot trail-b
+07:38:02.840 ---- shot trail-c
+07:38:40.881 ---- launch -[LiveActivityUITests test3FeedIntentWalksToTheBowl] -uitest-intent-after-walk feed
+07:38:42.932 react action=nil mood=happy
+07:38:49.529 sent step=23 pose=rest frame=0 pos=0.84 effect=none mood=happy
+07:38:53.066 background: start walk
+07:38:55.960 sent step=24 pose=walk frame=1 pos=0.61 effect=none mood=happy
+07:38:59.004 sent step=25 pose=walk frame=5 pos=0.39 effect=none mood=happy
+07:39:02.307 sent step=26 pose=walk frame=1 pos=0.16 effect=none mood=happy
+07:39:04.742 ---- shot intent-feed-00
+07:39:05.612 sent step=27 pose=rest frame=0 pos=0.16 effect=none mood=happy
+07:39:08.405 react action=feed mood=happy
+07:39:08.941 sent step=29 pose=walk frame=1 pos=0.10 effect=none mood=happy
+07:39:10.686 ---- shot intent-feed-01
+07:39:12.612 sent step=30 pose=eat frame=1 pos=0.10 effect=food mood=happy
+07:39:14.386 sent step=31 pose=rest frame=0 pos=0.10 effect=none mood=happy
+07:39:15.266 ---- shot intent-feed-02
+07:39:20.571 ---- shot intent-feed-03
+07:39:24.929 ---- shot intent-feed-04
+07:39:29.600 ---- shot intent-feed-05
+07:39:35.636 ---- shot intent-feed-06
+07:39:43.073 ---- shot intent-feed-settled
+07:40:48.654 ---- launch -[LiveActivityUITests test4PetIntentWalksToTheCushion] -uitest-intent-after-walk pet
+07:41:07.357 react action=nil mood=happy
+07:41:13.963 sent step=35 pose=rest frame=0 pos=0.10 effect=none mood=happy
+07:41:14.973 ---- shot intent-pet-00
+07:41:16.522 background: start walk
+07:41:18.157 ---- shot intent-pet-01
+07:41:19.272 sent step=36 pose=walk frame=1 pos=0.35 effect=none mood=happy
+07:41:21.431 ---- shot intent-pet-02
+07:41:22.092 sent step=37 pose=walk frame=5 pos=0.59 effect=none mood=happy
+07:41:24.227 ---- shot intent-pet-03
+07:41:25.201 sent step=38 pose=walk frame=1 pos=0.84 effect=none mood=happy
+07:41:27.425 ---- shot intent-pet-04
+07:41:28.205 sent step=39 pose=rest frame=0 pos=0.84 effect=none mood=happy
+07:41:30.064 react action=pet mood=excited
+07:41:30.318 sent step=41 pose=walk frame=1 pos=0.90 effect=none mood=excited
+07:41:30.563 ---- shot intent-pet-05
+07:41:33.109 sent step=42 pose=hop frame=1 pos=0.90 effect=sparkles mood=excited
+07:41:33.641 ---- shot intent-pet-06
+07:41:36.331 sent step=43 pose=rest frame=0 pos=0.90 effect=none mood=happy
+07:41:36.813 ---- shot intent-pet-07
+07:41:39.582 ---- shot intent-pet-08
+07:41:45.851 ---- shot intent-pet-settled
+07:42:03.541 ---- launch -[LiveActivityUITests test5TapExpandedIslandButtons] 
+07:42:06.199 react action=nil mood=happy
+07:42:12.530 sent step=47 pose=rest frame=0 pos=0.90 effect=none mood=happy
+07:42:15.021 background: start walk
+07:42:17.223 sent step=48 pose=walk frame=1 pos=0.65 effect=none mood=happy
+07:42:20.227 sent step=49 pose=walk frame=5 pos=0.41 effect=none mood=happy
+07:42:23.085 sent step=50 pose=walk frame=1 pos=0.16 effect=none mood=happy
+07:42:26.414 sent step=51 pose=rest frame=0 pos=0.16 effect=none mood=happy
+07:42:31.296 ---- shot expanded
+07:42:37.868 ---- shot tap-pet-00
+07:42:39.167 ---- shot tap-pet-01
+07:42:42.217 ---- shot tap-pet-02
+07:42:45.259 ---- shot tap-pet-03
+07:42:46.288 ---- shot tap-pet-04
+07:42:49.393 react action=pet mood=excited
+07:42:49.625 sent step=53 pose=walk frame=1 pos=0.53 effect=none mood=excited
+07:42:52.357 sent step=54 pose=walk frame=5 pos=0.90 effect=none mood=excited
+07:42:54.859 sent step=55 pose=hop frame=5 pos=0.90 effect=sparkles mood=excited
+07:42:57.951 sent step=56 pose=rest frame=0 pos=0.90 effect=none mood=happy
+07:43:06.769 ---- shot tap-pet-settled
